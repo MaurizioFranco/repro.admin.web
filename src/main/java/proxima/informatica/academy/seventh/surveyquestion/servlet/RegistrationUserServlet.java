@@ -1,6 +1,7 @@
 package proxima.informatica.academy.seventh.surveyquestion.servlet;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 /**
  * Servlet implementation class RegistrationUserServlet
  */
+@WebServlet("/RegistrationServlet")
 public class RegistrationUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
