@@ -1,0 +1,23 @@
+body {
+	background-image: linear-gradient(to right, navy, white);
+/* 	margin: auto; */
+/* 	margin-top: 10%; */
+/* 	width: 50%; */
+	text-align: center;
+}
+
+label {
+	color: #003366;
+	font-size: 150%;
+	font-family: courier;
+}
+
+#button {
+	color: white;
+	background-color: grey;
+	padding: 14px 40px;
+}
+
+#button:hover {
+	background-color: silver;
+}
