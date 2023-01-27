@@ -1,11 +1,11 @@
-package repro.bo.giacomo.proxima.informatica.academy.seventh.servlet;
+package proxima.informatica.academy.seventh.surveyquestion.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import proxima.informatica.academy.dto.RoleDto;
-import repro.bo.giacomo.proxima.informatica.academy.seventh.service.RoleService;
+import proxima.informatica.academy.seventh.surveyquestion.service.RoleService;
 
 import java.io.IOException;
 

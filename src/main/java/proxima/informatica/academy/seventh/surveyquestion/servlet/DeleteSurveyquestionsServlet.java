@@ -1,4 +1,4 @@
-package repro.bo.giacomo.proxima.informatica.academy.seventh.servlet;
+package proxima.informatica.academy.seventh.surveyquestion.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,8 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import proxima.informatica.academy.dto.SurveyquestionsDto;
 import proxima.informatica.academy.hibernate.AbstractDBManager;
 import proxima.informatica.academy.hibernate.SurveyquestionsManager;
-import repro.bo.giacomo.proxima.informatica.academy.seventh.service.RoleService;
-import repro.bo.giacomo.proxima.informatica.academy.seventh.service.SurveyquestionsService;
+import proxima.informatica.academy.seventh.surveyquestion.service.RoleService;
+import proxima.informatica.academy.seventh.surveyquestion.service.SurveyquestionsService;
 
 import java.io.IOException;
 

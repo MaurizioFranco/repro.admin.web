@@ -1,4 +1,4 @@
-package repro.bo.giacomo.proxima.informatica.academy.seventh.servlet;
+package proxima.informatica.academy.seventh.surveyquestion.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;

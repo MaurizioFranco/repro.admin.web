@@ -1,4 +1,4 @@
-<%@page import="repro.bo.giacomo.proxima.informatica.academy.seventh.service.UserService"%>
+<%@page import="proxima.informatica.academy.seventh.surveyquestion.service.UserService"%>
 <%@page import="proxima.informatica.academy.dto.UserDto"%>
 <%@page import="proxima.informatica.academy.DatabaseManagerSingleton"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"

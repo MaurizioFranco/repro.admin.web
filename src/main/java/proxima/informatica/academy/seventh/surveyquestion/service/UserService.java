@@ -1,4 +1,4 @@
-package repro.bo.giacomo.proxima.informatica.academy.seventh.service;
+package proxima.informatica.academy.seventh.surveyquestion.service;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import org.proxima.common.mail.MailUtility;
 import proxima.informatica.academy.DatabaseManagerSingleton;
 import proxima.informatica.academy.dto.UserDto;
 import proxima.informatica.academy.hibernate.UserManager;
-import repro.bo.giacomo.proxima.informatica.academy.seventh.result.LoginResult;
+import proxima.informatica.academy.seventh.surveyquestion.result.LoginResult;
 
 public class UserService {
 
@@ -50,7 +50,7 @@ public class UserService {
 
 	public LoginResult login(String email) {
 		LoginResult result = new LoginResult();
-		UserDto user = DatabaseManagerSingleton.getInstance().selectByEmail(email);
+		UserDto user = UserManager.findByEmail(email);
 		if (user.getEmail() == null) {
 			result.setLoginResponse(false);
 			result.setLoginMessage("Email not found");
@@ -72,7 +72,7 @@ public class UserService {
 
 		try {
 		if (UserManager.insert(user) > 0) {
-			UserDto userForId = DatabaseManagerSingleton.getInstance().selectByEmail(user.getEmail());
+			UserDto userForId = UserManager.findByEmail(user.getEmail());
 			MailUtility.sendSimpleMail("dllgiacomo@gmail.com", "Create a new password",
 					"Click <a href='http://localhost:8080/repro.bo.giacomo/completeRegistration.jsp?id="
 							+ userForId.getId() + "'>here</a> to complete your registration");

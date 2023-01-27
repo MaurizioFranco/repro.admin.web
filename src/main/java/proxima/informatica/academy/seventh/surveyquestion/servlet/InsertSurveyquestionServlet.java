@@ -1,11 +1,11 @@
-package repro.bo.giacomo.proxima.informatica.academy.seventh.servlet;
+package proxima.informatica.academy.seventh.surveyquestion.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import proxima.informatica.academy.dto.SurveyquestionsDto;
-import repro.bo.giacomo.proxima.informatica.academy.seventh.service.SurveyquestionsService;
+import proxima.informatica.academy.seventh.surveyquestion.service.SurveyquestionsService;
 
 import java.io.IOException;
 

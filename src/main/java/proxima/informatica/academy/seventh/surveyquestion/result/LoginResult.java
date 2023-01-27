@@ -1,4 +1,4 @@
-package repro.bo.giacomo.proxima.informatica.academy.seventh.result;
+package proxima.informatica.academy.seventh.surveyquestion.result;
 
 public class LoginResult {
 

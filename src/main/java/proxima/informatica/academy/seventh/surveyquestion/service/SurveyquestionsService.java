@@ -1,4 +1,4 @@
-package repro.bo.giacomo.proxima.informatica.academy.seventh.service;
+package proxima.informatica.academy.seventh.surveyquestion.service;
 
 import java.util.ArrayList;
 import java.util.List;
