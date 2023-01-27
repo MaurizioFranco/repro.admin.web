@@ -1,4 +1,5 @@
-<%@page import="proxima.informatica.academy.seventh.surveyquestion.service.UserService"%>
+<%@page import="java.util.List"%>
+<%@page import="proxima.informatica.academy.seventh.user.service.UserService"%>
 <%@page import="proxima.informatica.academy.dto.UserDto"%>
 <%@page import="java.nio.file.attribute.UserPrincipalLookupService"%>
 <%@page import="java.util.ArrayList"%>
@@ -9,7 +10,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-<%-- <%@include file="authentication.jsp"%> --%>
+<%@include file="authentication.jsp"%>
 
 <head>
 
@@ -61,7 +62,7 @@
 			</tr>
 			</thead>
 			<%
-			ArrayList<UserDto> users = new ArrayList<UserDto>();
+			List<UserDto> users = new ArrayList<UserDto>();
 			users = UserService.getInstance().getAllUsers();
 			for (UserDto user : users) {
 				request.setAttribute("id", user.getId());

@@ -1,21 +1,25 @@
-package proxima.informatica.academy.seventh.surveyquestion.servlet;
+package proxima.informatica.academy.seventh.user.servlet;
+
+import java.io.IOException;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import proxima.informatica.academy.seventh.user.service.UserService;
 
 /**
- * Servlet implementation class LogoutServlet
+ * Servlet implementation class DeleteUserServlet
  */
-public class LogoutServlet extends HttpServlet {
+@WebServlet("/DeleteUserServlet")
+public class DeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LogoutServlet() {
+    public DeleteUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -25,15 +29,21 @@ public class LogoutServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getSession().invalidate();
-		request.setAttribute("logoutMessage", "logout");
-		request.getRequestDispatcher("login.jsp").forward(request, response);
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		if(UserService.getInstance().deleteUser(userId)) {
+			request.setAttribute("deleteUser", "OK");
+			request.getRequestDispatcher("user.jsp").forward(request, response);
+		}else {
+			request.setAttribute("deleteUser", "KO");
+			request.getRequestDispatcher("user.jsp").forward(request, response);
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
