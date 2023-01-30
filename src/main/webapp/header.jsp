@@ -38,7 +38,13 @@ background-color: grey
    	</li> 
    	  	<li class="nav-item square rounded p-1 hover">
   		<a class="nav-link text-white" href="insertSurveyquestion.jsp">Insert Survey Questions</a>
+   	</li>  
+   	  	<li class="nav-item square rounded p-1 hover">
+  		<a class="nav-link text-white" href="surveyreplies.jsp">Survey Replies</a>
    	</li> 
+   	  	<li class="nav-item square rounded p-1 hover">
+  		<a class="nav-link text-white" href="insertSurveyreplies.jsp">Insert Survey Replies</a>
+   	</li>
    	</ul>
    	<ul class="navbar-nav">
   	<li class="nav-item square rounded p-1">
