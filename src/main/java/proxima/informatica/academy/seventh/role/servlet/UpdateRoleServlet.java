@@ -1,17 +1,19 @@
-package proxima.informatica.academy.seventh.surveyquestion.servlet;
+package proxima.informatica.academy.seventh.role.servlet;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import proxima.informatica.academy.dto.RoleDto;
-import proxima.informatica.academy.seventh.surveyquestion.service.RoleService;
+import proxima.informatica.academy.seventh.role.service.RoleService;
 
 import java.io.IOException;
 
 /**
  * Servlet implementation class UpdateRoleServlet
  */
+@WebServlet("/UpdateRoleServlet")
 public class UpdateRoleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
