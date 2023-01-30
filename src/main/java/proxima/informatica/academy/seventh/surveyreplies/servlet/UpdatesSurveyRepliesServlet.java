@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Servlet implementation class DeleteUserService
+ * @author Giammarco Lucchetti
  */
 @WebServlet("/UpdateSurveyRepliesServlet")
 public class UpdatesSurveyRepliesServlet extends HttpServlet {
@@ -39,41 +40,36 @@ public class UpdatesSurveyRepliesServlet extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-		doPost(request, response);
-	}
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String idSelected = request.getParameter("id_input");
-		logger.debug(idSelected);
+		logger.debug("UpdateSurveyServlet-START");
+		String idSelected = request.getParameter("surveyRepliesIdToUpdate");
+		logger.debug("ID Selected : " + idSelected);
 		int id = Integer.parseInt(idSelected);
 		int result = 0;
-		String survey_id = request.getParameter("survey_id_input");
-		String user_id = request.getParameter("user_id_input");
-		String answers = request.getParameter("answers_input");
-		String pdfFileName = request.getParameter("pdffilename_input");
-		String points = request.getParameter("points_input");
+		String survey_id = request.getParameter("survey_IdToUpdate");
+		String user_id = request.getParameter("user_IdToUpdate");
+		String answers = request.getParameter("answersToUpdate");
+		String pdfFileName = request.getParameter("pdfFileNameToUpdate");
+		String points = request.getParameter("pointsToUpdate");
 		
 		try {
 			result = updateSurveyReplies(id,survey_id,user_id,answers,pdfFileName,points);
-			logger.debug("result = "+result);
+			logger.debug("Update result  = "+result);
 		} catch (ClassNotFoundException | SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(result > 0) {	
-			request.setAttribute("updateSurevyreplies","OK");
-			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
+//			request.setAttribute("updateSurevyreplies","OK");
+//			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
+			response.getWriter().append("OK");
 		}else {
-			request.setAttribute("updateSurveyreplies","KO");
-			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
+//			request.setAttribute("updateSurveyreplies","KO");
+//			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
+			response.getWriter().append("OK");
 		}
-		
-		//request.getRequestDispatcher("users.jsp").forward(request,response);
 	}
 	
 	private int updateSurveyReplies(int id,String survey_id,String user_id,String answers,String pdfFileName,String points) throws ClassNotFoundException, SQLException, IOException {

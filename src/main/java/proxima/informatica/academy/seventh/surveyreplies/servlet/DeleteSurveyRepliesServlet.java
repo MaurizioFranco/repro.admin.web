@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Servlet implementation class DeleteUserService
+ * @author Giammarco Lucchetti
  */
 @WebServlet("/DeleteSurveyRepliesServlet")
 public class DeleteSurveyRepliesServlet extends HttpServlet {
@@ -45,27 +46,27 @@ public class DeleteSurveyRepliesServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.debug("DeleteSurveyServlet-START");
 		String idSelected = request.getParameter("selectedSurveyrepliesId");
 		int id = Integer.parseInt(idSelected);
 		boolean result = false;
-		logger.debug("sto eliminando");
 		
 		try {
 			result = deleteRowSurveyReplies(id);
-			logger.debug("result = "+result);
+			logger.debug("Delete result = "+result);
 		} catch (ClassNotFoundException | SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		if(result == true) {
-			request.setAttribute("deleteSurveyReplies","OK");
-			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
+//			request.setAttribute("deleteSurveyReplies","OK");
+//			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
+			response.getWriter().append("OK");
 		}else {
-			request.setAttribute("deleteSurveyReplies","KO");
-			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
+//			request.setAttribute("deleteSurveyReplies","KO");
+//			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
+			response.getWriter().append("KO");
 		}
-		
-		//request.getRequestDispatcher("users.jsp").forward(request,response);
 	}
 	
 	private boolean deleteRowSurveyReplies(int id) throws ClassNotFoundException, SQLException, IOException {
