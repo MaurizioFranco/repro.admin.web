@@ -56,12 +56,44 @@
 		console.log("showUpdateRoleModal!!!");
 		const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
+			  console.log(this.responseText);
 			  var role = JSON.parse(this.responseText) ;
 			  console.log(role);
 			  initializeUpdateForm (role);
 		    }
 		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetRoleServlet?id=14", true);
 		  xhttp.send();
+	}
+	
+	function update () {
+		console.log("update - START");
+		var idToUpdate = document.getElementById("roleIdToUpdate").value ; 
+		var roleLabelToUpdate = document.getElementById("roleLabelToUpdate").value ; 
+		var roleDescriptionToUpdate = document.getElementById("roleDescriptionToUpdate").value ; 
+		var roleLevelToUpdate = document.getElementById("roleLevelToUpdate").value ; 
+		console.log("idToUpdate: " + idToUpdate + " - roleLabelToUpdate: " + roleLabelToUpdate + " - roleDescriptionToUpdate: " + roleDescriptionToUpdate + " - roleLevelToUpdate: " + roleLevelToUpdate);
+		
+		var formData = new FormData(); 
+		formData.append("id", idToUpdate);
+		formData.append("label", roleLabelToUpdate);
+		formData.append("description", roleDescriptionToUpdate);
+		if (roleLevelToUpdate!=null) {		
+			formData.append("level", roleLevelToUpdate);
+		}
+		
+	    
+		
+		const xhttp = new XMLHttpRequest();
+		  xhttp.onload = function() {
+			  console.log(this.responseText);
+// 			  var role = JSON.parse(this.responseText) ;
+// 			  console.log(role);
+// 			  initializeUpdateForm (role);
+		    }
+		  xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateRoleServlet", true);
+		  xhttp.send(formData);
+		
+		
 	}
 	
 	
@@ -149,7 +181,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form action="./UpdateRoleServlet" method="post">
+      <form id="updateRoleForm">
 	      <div class="modal-body">
 			
 			  	<label>ID</label><br>
@@ -162,16 +194,11 @@
 		  		<input type="text" name="roleDescriptionToUpdate" id="roleDescriptionToUpdate" value=""><br>
 			
 		  		<label>Email</label><br>
-		  		<input type="number" name="roleLevelToUpdate" id="roleLevelToUpdate" value=""><br>
-		  		
-				
-		  		
-			
+		  		<input type="number" name="roleLevelToUpdate" id="roleLevelToUpdate" value=""><br>		  		
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
-	        <input class="btn btn-primary" type="submit" id="button" value="Update">
+	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
 	      </div>
       </form> 
     </div>
