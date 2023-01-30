@@ -112,5 +112,48 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
+<div class="modal fade" id="updateCadndateStateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="./UpdateCandidateStatesServlet" method="post">
+	      <div class="modal-body">
+			
+			  	<label>ID</label><br>
+		  		<input type="number" name="roleIdToUpdate" id="roleIdToUpdate" value=""><br>
+		  		
+			  	
+			  	<label>Role Id</label><br>
+		  		<input type="number" name="roleIdToUpdate" id="roleIdToUpdate" value=""><br>
+		  		
+		  		<label>Status code</label><br>
+		  		<input type="text" name="status_code" id="status_code" value=""><br>
+		  		
+		  		<label>Status label</label><br>
+		  		<input type="text" name="status_label" id="status_label" value=""><br>
+			
+		  		<label>Status description</label><br>
+		  		<input type="number" name="status_description" id="status_description" value=""><br>
+		  		
+		  		<label>Status color</label><br>
+		  		<input type="number" name="status_color" id="status_color" value=""><br>
+		  				  		
+			
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	        <input class="btn btn-primary" type="submit" id="button" value="Update">
+	      </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
 </body>
 </html>

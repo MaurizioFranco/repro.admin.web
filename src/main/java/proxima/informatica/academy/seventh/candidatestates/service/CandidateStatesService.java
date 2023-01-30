@@ -23,7 +23,7 @@ public class CandidateStatesService {
 	}
 
 
-	public boolean insert(CandidateStatesDto candidate) {
+	public static boolean insert(CandidateStatesDto candidate) {
 		boolean response = false;
 
 		if (CandidateStatesManager.insert(candidate)>1)
@@ -31,7 +31,7 @@ public class CandidateStatesService {
 		return response;
 	}
 	
-	public CandidateStatesDto selectById(int id) {
+	public static CandidateStatesDto selectById(int id) {
 		CandidateStatesDto candidateRetrived = new CandidateStatesDto();
 		candidateRetrived = CandidateStatesManager.selectById(id);
 
@@ -46,7 +46,7 @@ public class CandidateStatesService {
 		return listRoles;
 	}
 	
-	public boolean delete(CandidateStatesDto candidate) throws ClassNotFoundException {
+	public static boolean delete(CandidateStatesDto candidate) throws ClassNotFoundException {
 		boolean response = false;
 
 		if (CandidateStatesManager.delete(candidate))
@@ -55,7 +55,7 @@ public class CandidateStatesService {
 		return response;
 	}
 	
-	public List<CandidateStatesDto> selectAll() throws ClassNotFoundException {
+	public static List<CandidateStatesDto> selectAll() throws ClassNotFoundException {
 		List<CandidateStatesDto> candidates= CandidateStatesManager.selectAll();
 			return candidates;
 	}

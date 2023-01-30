@@ -1,18 +1,13 @@
 package proxima.informatica.academy.seventh.candidatestates.servlet;
 
-import java.io.File;
 import java.io.IOException;
-import java.sql.Date;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.Part;
 import proxima.informatica.academy.dto.CandidateStatesDto;
-import proxima.informatica.academy.hibernate.CandidateStatesManager;
+import proxima.informatica.academy.seventh.candidatestates.service.CandidateStatesService;
 
 
 /**
@@ -53,6 +48,6 @@ public class InsertCandidateStatesServlet extends HttpServlet {
 		candidate.setStatus_color(request.getParameter("statuscolor"));
 		candidate.setStatus_description(request.getParameter("stausdescription"));
 		candidate.setStatus_label(request.getParameter("statuslabel"));
-		CandidateStatesManager.insert(candidate);
+		CandidateStatesService.insert(candidate);
 	}
 }
