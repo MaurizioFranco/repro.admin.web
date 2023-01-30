@@ -13,7 +13,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import proxima.informatica.academy.dto.CandidateStatesDto;
 import proxima.informatica.academy.hibernate.CandidateStatesManager;
-import proxima.informatica.academy.seventh.surveyquestion.service.UserService;
 
 
 /**

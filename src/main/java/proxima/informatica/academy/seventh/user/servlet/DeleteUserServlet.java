@@ -1,28 +1,25 @@
-package proxima.informatica.academy.seventh.surveyquestion.servlet;
+package proxima.informatica.academy.seventh.user.servlet;
 
 import java.io.IOException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.seventh.surveyquestion.service.RoleService;
+import proxima.informatica.academy.seventh.user.service.UserService;
 
 /**
- * Servlet implementation class DeleteServlet
+ * Servlet implementation class DeleteUserServlet
  */
-public class DeleteRoleServlet extends HttpServlet {
+@WebServlet("/DeleteUserServlet")
+public class DeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final static Logger logger = LoggerFactory.getLogger(DeleteRoleServlet.class);
-
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteRoleServlet() {
+    public DeleteUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,7 +29,14 @@ public class DeleteRoleServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-
+		int userId = Integer.parseInt(request.getParameter("userId"));
+		if(UserService.getInstance().deleteUser(userId)) {
+			request.setAttribute("deleteUser", "OK");
+			request.getRequestDispatcher("user.jsp").forward(request, response);
+		}else {
+			request.setAttribute("deleteUser", "KO");
+			request.getRequestDispatcher("user.jsp").forward(request, response);
+		}
 	}
 
 	/**
@@ -40,15 +44,7 @@ public class DeleteRoleServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int roleId = Integer.parseInt(request.getParameter("roleId"));
-		logger.debug("Role ID to delete: "+roleId);
-		if(RoleService.getInstance().deleteRole(roleId)) {
-			request.setAttribute("deleteRole", "OK");
-			request.getRequestDispatcher("role.jsp").forward(request, response);
-		}else {
-			request.setAttribute("deleteRole", "KO");
-			request.getRequestDispatcher("role.jsp").forward(request, response);
-		}
+		doGet(request, response);
 	}
 
 }

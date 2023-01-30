@@ -1,4 +1,4 @@
-<%@page import="proxima.informatica.academy.seventh.surveyquestion.service.UserService"%>
+<%@page import="proxima.informatica.academy.seventh.user.service.UserService"%>
 <%@page import="proxima.informatica.academy.dto.UserDto"%>
 <%@page import="proxima.informatica.academy.DatabaseManagerSingleton"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -17,13 +17,11 @@
 </head>
 <body>
 <%@include file="header.jsp" %>
-<% System.out.println(request.getParameter("userId"));%>
 <% UserDto user = UserService.getInstance().selectById(Integer.parseInt(request.getParameter("userId"))); %>
-<% System.out.println(user.toString());%>
 	<form action="./UpdateUserServlet" method="post">
 		
-	  	<label>ID</label><br>
-  		<input type="number" name="id" value="<%= user.getId() %>"><br>
+  		<input type="hidden" name="id" value="<%= user.getId() %>">
+  		<input type="hidden" name="regdate" value="<%= user.getRegdate() %>">
   		
   		<label>First Name</label><br>
   		<input type="text" name="firstname" value="<%= user.getFirstname() %>"><br>
@@ -40,9 +38,6 @@
   		<label>Data of Birth</label><br>
   		<input type="date" name="dateofbirth" value="<%= user.getDateofbirth() %>"><br>
   		
-  		<label>Registration Date</label><br>
-  		<input type="datetime-local" name="regdate" value="<%= user.getRegdate() %>"><br>
-  		
   		<label>Role</label><br>
   		<input type="number" name="role" value="<%= user.getRole() %>"><br>
   		
@@ -53,12 +48,6 @@
   		<input type="text" name="note" value="<%= user.getNote() %>"><br>
   		
   		<label>Enabled</label><br>
-<!-- 		<select name="enabled"> -->
-<%-- 			<option <% if(user.getEnabled()) out.print("selected='selected'"); %>value="true">True</option> --%>
-<%-- 			<option <% if(!user.getEnabled()) out.print("selected='selected'"); %>value="false">False</option> --%>
-<!-- 		</select> -->
-<!--   		<br> -->
-<!--   		  		<label>Enabled2</label><br> -->
   		<input type="checkbox" name="enabled" <% if(user.getEnabled()) out.print("checked"); %>><br>
   		<br>
   		

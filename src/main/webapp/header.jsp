@@ -38,13 +38,24 @@ background-color: grey
    	</li> 
    	  	<li class="nav-item square rounded p-1 hover">
   		<a class="nav-link text-white" href="insertSurveyquestion.jsp">Insert Survey Questions</a>
-   	</li> 
+   	</li>  
    	  	<li class="nav-item square rounded p-1 hover">
+  		<a class="nav-link text-white" href="surveyreplies.jsp">Survey Replies</a>
+   	</li>
+ 	<li class="nav-item square rounded p-1 hover">
+  		<a class="nav-link text-white" href="insertSurveyreplies.jsp">Insert Survey Replies</a>
+   	</li>
+   	<li class="nav-item square rounded p-1 hover">
+  		<a class="nav-link text-white" href="surveys.jsp">Surveys</a>
+   	</li> 
+   	<li class="nav-item square rounded p-1 hover">
   		<a class="nav-link text-white" href="insertCandidatestates.jsp">Insert Candidate States</a>
    	</li> 
    	<li class="nav-item square rounded p-1 hover">
   		<a class="nav-link text-white" href="candidatestates.jsp">Candidate States</a>
    	</li> 
+  		<a class="nav-link text-white" href="insertSurvey.jsp">Insert Survey</a>
+   	</li>  
    	</ul>
    	<ul class="navbar-nav">
   	<li class="nav-item square rounded p-1">

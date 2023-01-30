@@ -1,12 +1,14 @@
-package proxima.informatica.academy.seventh.surveyquestion.servlet;
+package proxima.informatica.academy.seventh.user.servlet;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 import proxima.informatica.academy.dto.UserDto;
-import proxima.informatica.academy.seventh.surveyquestion.service.UserService;
+import proxima.informatica.academy.seventh.user.service.UserService;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +20,10 @@ import java.time.LocalDateTime;
 /**
  * Servlet implementation class RegistrationUserServlet
  */
+@MultipartConfig(fileSizeThreshold = 1024 * 1024,
+maxFileSize = 1024 * 1024 * 5, 
+maxRequestSize = 1024 * 1024 * 5 * 5)
+@WebServlet("/RegistrationUserServlet")
 public class RegistrationUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -50,7 +56,6 @@ public class RegistrationUserServlet extends HttpServlet {
 		UserDto user = new UserDto();
 		user.setFirstname(request.getParameter("firstname"));
 		user.setLastname(request.getParameter("lastname"));
-//		user.setPassword(request.getParameter("password"));
 		user.setEmail(request.getParameter("email"));
 		user.setDateofbirth(Date.valueOf(request.getParameter("dateofbirth")));
 		user.setRegdate(Timestamp.valueOf(LocalDateTime.now()));
@@ -58,10 +63,6 @@ public class RegistrationUserServlet extends HttpServlet {
 		user.setImgpath(request.getParameter("imgpath"));
 		user.setNote(request.getParameter("note"));
 		user.setEnabled(false);
-//		if (request.getParameter("enabled") != null)
-//			user.setEnabled(true);
-//		else
-//			user.setEnabled(false);
 		String UPLOAD_DIRECTORY = "C:\\logs\\uploads";
 		for (Part part : request.getParts()) {
 			String fileName = getFileName(part);

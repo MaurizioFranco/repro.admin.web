@@ -45,7 +45,6 @@
 		    <groupId>ch.qos.logback</groupId>
 		    <artifactId>logback-classic</artifactId>
 		    <version>1.4.5</version>
-		    <scope>test</scope>
 		</dependency>
 		<dependency>
 		    <groupId>ch.qos.logback</groupId>
@@ -75,7 +74,24 @@
 		    <artifactId>jaxb-runtime</artifactId>
 		    <version>4.0.0</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl -->
+		<dependency>
+		    <groupId>org.codehaus.jackson</groupId>
+		    <artifactId>jackson-core-asl</artifactId>
+		    <version>1.9.13</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-mapper-asl -->
+		<dependency>
+		    <groupId>org.codehaus.jackson</groupId>
+		    <artifactId>jackson-mapper-asl</artifactId>
+		    <version>1.9.13</version>
+		</dependency>
+				
 	</dependencies>
+	
+	
+	
+	
 	<build>
 		<finalName>repro.bo.giacomo</finalName>
 		<pluginManagement>

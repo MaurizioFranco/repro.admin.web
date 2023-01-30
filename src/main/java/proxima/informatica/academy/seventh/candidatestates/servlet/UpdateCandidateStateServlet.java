@@ -1,13 +1,13 @@
 package proxima.informatica.academy.seventh.candidatestates.servlet;
 
+import java.io.IOException;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import proxima.informatica.academy.dto.RoleDto;
-import proxima.informatica.academy.seventh.surveyquestion.service.RoleService;
-
-import java.io.IOException;
+import proxima.informatica.academy.seventh.role.service.RoleService;
 
 /**
  * Servlet implementation class UpdateRoleServlet
