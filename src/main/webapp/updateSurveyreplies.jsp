@@ -1,4 +1,4 @@
-<%@page import="proxima.informatica.academy.seventh.surveyquestion.service.SurveyRepliesService"%>
+<%@page import="proxima.informatica.academy.seventh.surveyreplies.service.SurveyRepliesService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@page import="proxima.informatica.academy.hibernate.SurveyrepliesManager"%>
@@ -7,6 +7,9 @@
 
 
 <html>
+
+<%-- <%@include file="authentication.jsp"%> --%>
+
 <head>
 <meta charset="ISO-8859-1">
 <title>UpdateSurveyReplies</title>

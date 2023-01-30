@@ -1,4 +1,4 @@
-<%@page import="proxima.informatica.academy.seventh.surveyquestion.service.SurveyRepliesService"%>
+<%@page import="proxima.informatica.academy.seventh.surveyreplies.service.SurveyRepliesService"%>
 <%@page import="proxima.informatica.academy.dto.SurveyrepliesDto"%>
 
 <%@page import="java.util.ArrayList"%>
@@ -12,9 +12,9 @@
 <%
 String surveyRepliesEliminato="";
 if(request.getAttribute("deleteSurveyReplies") == "OK"){
-	surveyRepliesEliminato = "Sei riuscito ad eliminare l utente selezionato";
+	surveyRepliesEliminato = "Sei riuscito ad eliminare il surveyreplies selezionato";
 }if(request.getAttribute("deleteSurveyReplies") == "KO"){
-	surveyRepliesEliminato = "Non sei riuscito ad eliminare l utente selezionato";
+	surveyRepliesEliminato = "Non sei riuscito ad eliminare il surveyreplies selezionato";
 }
 %>
 
@@ -38,6 +38,9 @@ if(request.getAttribute("loginMessage") != null){
 %>
 
 <html>
+
+<%-- <%@include file="authentication.jsp"%> --%>
+
 <head>
 <meta charset="ISO-8859-1">
 <title>SurveyReplies</title>
@@ -90,7 +93,7 @@ if(request.getAttribute("loginMessage") != null){
 			for (SurveyrepliesDto tableSurveyReplies : surveyreplies) {
 			%>
 			<tr>
-				<td class="table-warning"><input type="radio" name="selectedSurveyrepliesId"
+				<td><input type="radio" name="selectedSurveyrepliesId"
 					value="<%out.print(tableSurveyReplies.getId());%>"onclick="javascript:abilitaBottone();"></td>
 				<td>
 					<%

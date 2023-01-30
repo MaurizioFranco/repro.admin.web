@@ -3,6 +3,9 @@
 <!DOCTYPE html>
 
 <html>
+
+<%-- <%@include file="authentication.jsp"%> --%>
+
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert SurveyReplies</title>
