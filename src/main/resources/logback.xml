@@ -3,8 +3,7 @@
 <configuration>
 
   <appender name="file" class="ch.qos.logback.core.FileAppender">
-        <file>/logs/repro.admin.web.log</file>
-        <append>true</append>
+        <file>/logs/repro.admin.web.log</file>        
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
