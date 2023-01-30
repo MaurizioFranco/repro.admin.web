@@ -53,6 +53,11 @@
 		%>
 		<form action="./LoginServlet" method="post">
 			<div class="form-group">
+					
+		<% if(session.getAttribute("url") != null){%>
+		<input type="hidden" name="url" value="<%out.print(session.getAttribute("url"));%>">
+		<% } %>
+		
 				<label id="email">Email</label>
 				<input class="form-control" type="email" name="email">
 			</div>

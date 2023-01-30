@@ -1,22 +1,22 @@
-package proxima.informatica.academy.seventh.surveyquestion.servlet;
+package proxima.informatica.academy.seventh.user.servlet;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.DatabaseManagerSingleton;
 import proxima.informatica.academy.dto.UserDto;
-import proxima.informatica.academy.seventh.surveyquestion.service.UserService;
+import proxima.informatica.academy.seventh.user.service.UserService;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import org.proxima.common.mail.MailUtility;
 
 /**
  * Servlet implementation class CompleteRegistrationServlet
  */
+@WebServlet("/CompleteRegistrationServlet")
 public class CompleteRegistrationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -64,7 +64,7 @@ public class CompleteRegistrationServlet extends HttpServlet {
 	}
 
 	private void sendEmailToAdmin(int userId) {
-		ArrayList<UserDto> listAdmin = UserService.getInstance().getAllUsersByRole();
+		List<UserDto> listAdmin = UserService.getInstance().getAllUsersByRole();
 		String[] adminEmails = new String[listAdmin.size()];
 		System.out.println(listAdmin.size());
 		for (int i = 0; i < listAdmin.size(); i++) {
@@ -72,7 +72,7 @@ public class CompleteRegistrationServlet extends HttpServlet {
 		}
 		
 		MailUtility.sendSimpleMail(adminEmails, "Confirm Registration",
-				"Clicca <a href='http://localhost:8080/repro.bo.giacomo/updateUser.jsp?userId="	+ userId + "'>qui</a> per completare la registrazione");
+				"Clicca <a href='http://localhost:8080/repro.admin.web/updateUser.jsp?userId="	+ userId + "'>qui</a> per completare la registrazione");
 	}
 
 }

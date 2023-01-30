@@ -1,23 +1,23 @@
-package proxima.informatica.academy.seventh.surveyquestion.servlet;
-
-import java.io.IOException;
+package proxima.informatica.academy.seventh.user.servlet;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.seventh.surveyquestion.service.UserService;
+import java.io.IOException;
 
 /**
- * Servlet implementation class DeleteUserServlet
+ * Servlet implementation class LogoutServlet
  */
-public class DeleteUserServlet extends HttpServlet {
+@WebServlet("/LogoutServlet")
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public DeleteUserServlet() {
+    public LogoutServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -27,21 +27,15 @@ public class DeleteUserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int userId = Integer.parseInt(request.getParameter("userId"));
-		if(UserService.getInstance().deleteUser(userId)) {
-			request.setAttribute("deleteUser", "OK");
-			request.getRequestDispatcher("user.jsp").forward(request, response);
-		}else {
-			request.setAttribute("deleteUser", "KO");
-			request.getRequestDispatcher("user.jsp").forward(request, response);
-		}
+		request.getSession().invalidate();
+		request.setAttribute("logoutMessage", "logout");
+		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 
