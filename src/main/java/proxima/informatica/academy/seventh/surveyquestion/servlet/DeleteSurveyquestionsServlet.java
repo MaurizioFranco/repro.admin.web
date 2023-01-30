@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import proxima.informatica.academy.dto.SurveyquestionsDto;
 import proxima.informatica.academy.hibernate.AbstractDBManager;
 import proxima.informatica.academy.hibernate.SurveyquestionsManager;
-import proxima.informatica.academy.seventh.surveyquestion.service.RoleService;
+import proxima.informatica.academy.seventh.role.service.RoleService;
 import proxima.informatica.academy.seventh.surveyquestion.service.SurveyquestionsService;
 
 import java.io.IOException;
