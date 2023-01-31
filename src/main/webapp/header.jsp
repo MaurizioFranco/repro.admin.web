@@ -38,7 +38,13 @@ background-color: grey
    	</li> 
    	  	<li class="nav-item square rounded p-1 hover">
   		<a class="nav-link text-white" href="insertSurveyquestion.jsp">Insert Survey Questions</a>
+   	</li>
+   		<li class="nav-item square rounded p-1 hover">
+  		<a class="nav-link text-white" href="candidates.jsp">Candidates</a>
    	</li> 
+   	  	<li class="nav-item square rounded p-1 hover">
+  		<a class="nav-link text-white" href="insertCandidates.jsp">Insert Candidates</a>
+   	</li>  
    	</ul>
    	<ul class="navbar-nav">
   	<li class="nav-item square rounded p-1">
@@ -79,6 +85,15 @@ if(request.getAttribute("deleteSurveyquestions") == "KO"){ %>
 <% } %>
 
 <% 
+if(request.getAttribute("deleteCandidates") == "OK"){ %>
+	<p> Deleted Candidates </p>
+<% } %>
+<% 
+if(request.getAttribute("deleteCandidates") == "KO"){ %>
+	<p> Unable to delete Candidates </p>
+<% } %>
+
+<% 
 if(request.getAttribute("updateUser") == "OK"){ %>
 	<p> Updated user</p>
 <% } %>
@@ -112,6 +127,15 @@ if(request.getAttribute("insertSurveyquestions") == "OK"){ %>
 <% 
 if(request.getAttribute("insertSurveyquestions") == "KO"){ %>
 	<p> Unable to insert  Survey Questions  </p>
+<% } %>
+
+<%
+if(request.getAttribute("insertCandidates") == "OK"){ %>
+	<p> Inserted Candidates </p>
+<% } %>
+<% 
+if(request.getAttribute("insertCandidates") == "KO"){ %>
+	<p> Unable to insert Candidates  </p>
 <% } %>
 
 

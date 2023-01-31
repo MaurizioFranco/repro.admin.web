@@ -74,7 +74,7 @@ public class DeleteCandidatesServlet extends HttpServlet {
 		if(CandidatesService.getInstance().selectCandidatesById(id) == null) {
 			value = true;
 		}
-		return value;
+		return value; 
 	}
 
 }

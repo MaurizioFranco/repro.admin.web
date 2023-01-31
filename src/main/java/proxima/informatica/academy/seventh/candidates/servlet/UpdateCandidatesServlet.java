@@ -22,14 +22,14 @@ import proxima.informatica.academy.seventh.candidates.service.CandidatesService;
  * Servlet implementation class DeleteUserService
  */
 @WebServlet("/UpdateCandidatesServlet")
-public class UpdatesCandidatesServlet extends HttpServlet {
+public class UpdateCandidatesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final static Logger logger = LoggerFactory.getLogger(UpdatesCandidatesServlet.class);
+	private final static Logger logger = LoggerFactory.getLogger(UpdateCandidatesServlet.class);
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdatesCandidatesServlet() {
+    public UpdateCandidatesServlet() {
         super();
         // TODO Auto-generated constructor stub
     }

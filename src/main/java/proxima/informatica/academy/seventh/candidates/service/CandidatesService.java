@@ -19,7 +19,9 @@ import org.slf4j.LoggerFactory;
 import proxima.informatica.academy.DatabaseManagerSingleton;
 import proxima.informatica.academy.dto.AbstractCommonDto;
 import proxima.informatica.academy.dto.CandidatesDto;
+import proxima.informatica.academy.dto.SurveyquestionsDto;
 import proxima.informatica.academy.hibernate.CandidatesManager;
+import proxima.informatica.academy.hibernate.SurveyquestionsManager;
 
 public class CandidatesService {
 
@@ -36,7 +38,7 @@ public class CandidatesService {
 		return instance;
 	}
 	
-	public int insertSurveyreplies(CandidatesDto candidatesToInsert) {
+	public int insertCandidates(CandidatesDto candidatesToInsert) {
 		return CandidatesManager.insert(candidatesToInsert);
 	}
 	
@@ -54,5 +56,13 @@ public class CandidatesService {
 	
 	public CandidatesDto updateCandidates(CandidatesDto item) {
 		return (CandidatesDto) CandidatesManager.update(item);
+	}
+	
+	public List<CandidatesDto> getAllCandidates() {
+		List<CandidatesDto> candidates = new ArrayList<CandidatesDto>();
+
+		candidates = CandidatesManager.selectAll2();
+
+		return candidates;
 	}
 }

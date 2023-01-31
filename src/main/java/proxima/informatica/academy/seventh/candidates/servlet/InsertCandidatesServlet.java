@@ -113,7 +113,7 @@ public class InsertCandidatesServlet extends HttpServlet {
 		candidatesToInsert.setInserted_by(inserted_by);
 		candidatesToInsert.setCandidate_state_code(candidate_state_code);
 		
-		value = CandidatesService.getInstance().insertSurveyreplies(candidatesToInsert);
+		value = CandidatesService.getInstance().insertCandidates(candidatesToInsert);
 		
 		return value;
 	}
