@@ -1,6 +1,9 @@
 package proxima.informatica.academy.seventh.service;
 
 
+import java.util.List;
+
+import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.entity.Surveys;
 import centauri.academy.proxima.cerepro.repository.SurveysRepository;
 
@@ -30,11 +33,9 @@ public class SurveyService {
 		return response;
 	}
 	
-//	public List<Surveys> findAllSurveys() {
-//		List<Surveys> listSurveys = new ArrayList<Surveys>();
-//		listSurveys = surveyRepository.findAll();
-//		return listSurveys;
-//	}
+	public List<EntityInterface> getAllSurveys() {
+		return surveyRepository.findAll();
+	}
 	
 	public boolean deleteSurvey(int id) {
 		boolean response = false;
