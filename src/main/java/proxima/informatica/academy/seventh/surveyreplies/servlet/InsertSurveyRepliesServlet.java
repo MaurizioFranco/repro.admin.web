@@ -51,15 +51,15 @@ public class InsertSurveyRepliesServlet extends HttpServlet {
 		boolean finalResult = false;
 		try {
 			//rowsUpdate = insertNewUser(email,password,firstName,lastName,birthDate);
-			value = insertNewSurveyReplies(survey_id,user_id,answers,pdfFileName,points);
-			logger.debug("Insert value  = "+value);
+			finalResult = insertNewSurveyReplies(survey_id,user_id,answers,pdfFileName,points);
+			logger.debug("Insert value  = "+finalResult);
 		} catch (ClassNotFoundException | SQLException | IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		try {
-			if (value > 0) {
+			if (finalResult == true) {
 				response.getWriter().append("OK");
 			} else {
 //				request.getRequestDispatcher("insertSurveyreplies.jsp").forward(request, response);

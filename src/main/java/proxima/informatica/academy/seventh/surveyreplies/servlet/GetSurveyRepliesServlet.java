@@ -5,13 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.AbstractCommonDto;
-import proxima.informatica.academy.dto.RoleDto;
-import proxima.informatica.academy.dto.SurveyrepliesDto;
-import proxima.informatica.academy.dto.UserDto;
-import proxima.informatica.academy.hibernate.SurveyrepliesManager;
-import proxima.informatica.academy.seventh.role.service.RoleService;
-import proxima.informatica.academy.seventh.surveyreplies.service.SurveyRepliesService;
+import proxima.informatica.academy.seventh.service.SurveyRepliesService;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -23,6 +17,8 @@ import java.time.LocalDateTime;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import centauri.academy.proxima.cerepro.entity.SurveysReplies;
 
 
 /**
@@ -47,7 +43,7 @@ public class GetSurveyRepliesServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("GetSurveyRepliesServlet.START");
-		SurveyrepliesDto item = null ;
+		SurveysReplies item = null ;
 		try {
 			String itemId = request.getParameter("id") ;
 			logger.debug("GetSurveyrepliesServlet.DEBUG - roleId: " + itemId);

@@ -1,6 +1,6 @@
-<%@page import="proxima.informatica.academy.seventh.surveyreplies.service.SurveyRepliesService"%>
-<%@page import="proxima.informatica.academy.dto.SurveyrepliesDto"%>
 
+<%@page import="proxima.informatica.academy.seventh.service.SurveyRepliesService"%>
+<%@page import="centauri.academy.proxima.cerepro.entity.SurveysReplies"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -89,15 +89,16 @@ if(request.getAttribute("loginMessage") != null){
 			  console.log(surveyReplies);
 			  initializeUpdateForm (surveyReplies);
 		    }
-		  xhttp.open("GET", "http://localhost:8080/repro.bo.giacomo/GetSurveyRepliesServlet?id=2", true);
+		  var id= document.querySelector('input[name="selectedSurveyrepliesId"]:checked').value;
+		  xhttp.open("GET", "http://localhost:8080/repro.bo.giacomo/GetSurveyRepliesServlet?id=" + id +"", true);
 		  xhttp.send();
 	}
 	
 	function update(){
 		console.log("update - START");
 		var idToUpdate = $("#surveyRepliesIdToUpdate").val();
-		var survey_idToUpdate = $("#survey_IdToUpdate").val();
-		var user_idToUpdate = $("#user_IdToUpdate").val();
+		var survey_IdToUpdate = $("#survey_IdToUpdate").val();
+		var user_IdToUpdate = $("#user_IdToUpdate").val();
 		var answersToUpdate = $("#answersToUpdate").val();
 		var pdfFileNameToUpdate = $("#pdfFileNameToUpdate").val();
 		var pointsToUpdate = $("#pointsToUpdate").val();
@@ -105,8 +106,8 @@ if(request.getAttribute("loginMessage") != null){
 		
 		var itemToUpdate = {
 		"id":idToUpdate,
-		"survey_id":survey_idToUpdate,
-		"user_id":user_idToUpdate,
+		"survey_id":survey_IdToUpdate,
+		"user_id":user_IdToUpdate,
 		"answers":answersToUpdate,
 		"pdffilename":pdfFileNameToUpdate,
 		"points":pointsToUpdate
@@ -156,8 +157,8 @@ if(request.getAttribute("loginMessage") != null){
 				<th scope="col">POINTS</th>
 			</tr>
 			<%
-			List<SurveyrepliesDto> surveyreplies = SurveyRepliesService.getInstance().selectAllSurveyreplies();
-			for (SurveyrepliesDto tableSurveyReplies : surveyreplies) {
+			List<SurveysReplies> surveyreplies = SurveyRepliesService.getInstance().getAllSurveyReplies();
+			for (SurveysReplies tableSurveyReplies : surveyreplies) {
 			%>
 			<tr>
 				<td><input type="radio" name="selectedSurveyrepliesId"
@@ -169,32 +170,32 @@ if(request.getAttribute("loginMessage") != null){
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getSurvey_id());
+					out.print(tableSurveyReplies.getSurveyId());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getUser_id());
+					out.print(tableSurveyReplies.getUserId());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getStarttime());
+					out.print(tableSurveyReplies.getStartTime());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getEndtime());
+					out.print(tableSurveyReplies.getEndTime());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getAnswers());
+					out.print(tableSurveyReplies.getAnswer());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getPdffilename());
+					out.print(tableSurveyReplies.getPdfFileName());
 					%>
 				</td>
 				<td>

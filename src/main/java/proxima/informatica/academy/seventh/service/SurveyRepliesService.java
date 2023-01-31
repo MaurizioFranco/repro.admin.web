@@ -17,6 +17,7 @@ import org.proxima.common.mail.MailUtility;
 //import org.proxima.common.mail.MailUtility;
 import org.slf4j.LoggerFactory;
 
+import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.entity.SurveysReplies;
 import centauri.academy.proxima.cerepro.repository.SurveyRepliesRepository;
 
@@ -49,6 +50,18 @@ public class SurveyRepliesService {
 //	public List<SurveyReplies> selectAllSurveyreplies() {
 //		return surveyRepliesRepository.selectAll();
 //	}
+	public List<SurveysReplies> getAllSurveyReplies() {
+		List<EntityInterface> listEntityInterface = new ArrayList<EntityInterface>();
+		List<SurveysReplies> listSurveysQuestions = new ArrayList<SurveysReplies>();
+
+		listEntityInterface = surveyRepliesRepository.findAll(SurveysReplies.class);
+		
+		for (EntityInterface entity : listEntityInterface) {
+			listSurveysQuestions.add((SurveysReplies)entity);
+		}
+
+		return listSurveysQuestions;
+	}
 	
 	public void deleteSurveyreplies(SurveysReplies surveyrepliesToDelete) {
 		surveyRepliesRepository.delete(surveyrepliesToDelete.getId());
