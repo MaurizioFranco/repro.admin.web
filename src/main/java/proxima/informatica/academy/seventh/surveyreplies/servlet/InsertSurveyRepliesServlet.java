@@ -12,15 +12,13 @@ import java.time.LocalTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import centauri.academy.proxima.cerepro.entity.SurveysReplies;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.SurveyrepliesDto;
-import proxima.informatica.academy.dto.UserDto;
-import proxima.informatica.academy.hibernate.SurveyrepliesManager;
-import proxima.informatica.academy.seventh.surveyreplies.service.SurveyRepliesService;
+import proxima.informatica.academy.seventh.service.SurveyRepliesService;
 
 /**
  * Servlet implementation class LoginServlet
@@ -50,7 +48,7 @@ public class InsertSurveyRepliesServlet extends HttpServlet {
 		String answers = request.getParameter("answers_input");
 		String pdfFileName = request.getParameter("pdffilename_input");
 		String points = request.getParameter("points_input");
-		int value = 0;
+		boolean finalResult = false;
 		try {
 			//rowsUpdate = insertNewUser(email,password,firstName,lastName,birthDate);
 			value = insertNewSurveyReplies(survey_id,user_id,answers,pdfFileName,points);
@@ -62,7 +60,6 @@ public class InsertSurveyRepliesServlet extends HttpServlet {
 		
 		try {
 			if (value > 0) {
-//				request.getRequestDispatcher("surveyreplies.jsp").forward(request, response);
 				response.getWriter().append("OK");
 			} else {
 //				request.getRequestDispatcher("insertSurveyreplies.jsp").forward(request, response);
@@ -74,25 +71,25 @@ public class InsertSurveyRepliesServlet extends HttpServlet {
 		}
 	}
 
-	private int insertNewSurveyReplies(String survey_id, String user_id, String answers, String pdfFileName,
+	private boolean insertNewSurveyReplies(String survey_id, String user_id, String answers, String pdfFileName,
 			String points)
 					throws ClassNotFoundException, SQLException, IOException, ParseException {
-		int value = 0;
-		SurveyrepliesDto surveyRepliesToInsert = new SurveyrepliesDto();
+		boolean result = false;
+		SurveysReplies surveyRepliesToInsert = new SurveysReplies();
 		Timestamp SurveyRepliesInsertedTime = Timestamp.valueOf(LocalDateTime.now());
-		BigInteger surveyid = new BigInteger(survey_id);
-		BigInteger userid = new BigInteger(user_id);
+		Long surveyid = Long.parseLong(survey_id);
+		Long userid = Long.parseLong(user_id);
 		
-		surveyRepliesToInsert.setSurvey_id(surveyid);
-		surveyRepliesToInsert.setUser_id(userid);
-		surveyRepliesToInsert.setStarttime(SurveyRepliesInsertedTime);
-		surveyRepliesToInsert.setEndtime(SurveyRepliesInsertedTime);
-		surveyRepliesToInsert.setAnswers(answers);
-		surveyRepliesToInsert.setPdffilename(pdfFileName);
+		surveyRepliesToInsert.setSurveyId(surveyid);
+		surveyRepliesToInsert.setUserId(userid);
+		surveyRepliesToInsert.setStartTime(SurveyRepliesInsertedTime);
+		surveyRepliesToInsert.setEndTime(SurveyRepliesInsertedTime);
+		surveyRepliesToInsert.setAnswer(answers);
+		surveyRepliesToInsert.setPdfFileName(pdfFileName);
 		surveyRepliesToInsert.setPoints(points);
 		
-		value = SurveyRepliesService.getInstance().insertSurveyreplies(surveyRepliesToInsert);
+		result = SurveyRepliesService.getInstance().insertSurveyreplies(surveyRepliesToInsert);
 		
-		return value;
+		return result;
 	}
 }
