@@ -1,6 +1,9 @@
+<%@page import="centauri.academy.proxima.cerepro.entity.EntityInterface"%>
+<%@page import="proxima.informatica.academy.seventh.service.SurveyService"%>
+<%@page import="centauri.academy.proxima.cerepro.repository.SurveysRepository"%>
+<%@page import="centauri.academy.proxima.cerepro.entity.Surveys"%>
 <%@page import="java.util.List"%>
-<%@page import="proxima.informatica.academy.seventh.surveyquestion.service.SurveyService"%>
-<%@page import="proxima.informatica.academy.dto.SurveyDto"%>
+
 <%@page import="java.nio.file.attribute.UserPrincipalLookupService"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -12,8 +15,6 @@
 
 
 <head>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
 
@@ -66,44 +67,18 @@
 		var descriptionToUpdate = document.getElementById("surveyDescriptionToUpdate").value;
 		console.log(idToUpdate, labelToUpdate, timeToUpdate, descriptionToUpdate);
 		
-// 		var formData = new FormData();
-// 		formaData.append("id", idToUpdate);
-// 		formaData.append("label", labelToUpdate);
-// 		formaData.append("time", timeToUpdate);
-// 		formaData.append("description", descriptionToUpdate);
+		var formData = new FormData();
+		formaData.append("id", idToUpdate);
+		formaData.append("label", labelToUpdate);
+		formaData.append("time", timeToUpdate);
+		formaData.append("description", descriptionToUpdate);
 		
-// 		const xhttp = new XMLHttpRequest();
-// 		xhttp.onload = function() {
-// 			console.log(this.responseText);
-// 		}
-// 		xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateSurveyServlet", true)
-// 		xhttp.send(formData);
-
-		var itemToUpdate = {
-        		    "id":surveyIdToUpdate, 
-        		    "label": surveyLabelToUpdate,
-        		    "time": surveyTimeToUpdate,
-        		    "description": surveyDescriptionToUpdate
-        		    }
-		
-		$.ajax({
-			  type: "POST",
-			  url: "http://localhost:8080/repro.admin.web/UpdateSurveyServlet",
-			  data: itemToUpdate,
-			  success: function (responseText) {
-				  console.log(responseText);
-				  if (responseText==='OK') {					 
-					  $('#errorUpdateMessage').show();
-					  $('#errorUpdateMessage').html(responseText);
-				  } else {
-					  $('#updateSurveyModal').modal('hide');
-					  
-				  }
-			  },
-			  dataType: "text"
-			});
-
-
+		const xhttp = new XMLHttpRequest();
+		xhttp.onload = function() {
+			console.log(this.responseText);
+		}
+		xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateSurveyServlet", true)
+		xhttp.send(formData);
 	}
 	
 </script>
@@ -132,8 +107,9 @@
 				</tr>
 			</thead>	
 			<%
-			List<SurveyDto> surveys = SurveyService.getInstance().selectAllSurveys();
-			for (SurveyDto survey : surveys) {
+			List<EntityInterface> items = SurveyService.getInstance().getAllSurveys();
+			for (EntityInterface item : items) {
+				Surveys survey = (Surveys)item;
 				request.setAttribute("id", survey.getId());
 				
 			%>
@@ -168,6 +144,7 @@
 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveyModal" onclick="showUpdateSurveyModal(); return false;">MODIFICA</button>
 	</form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
@@ -194,10 +171,10 @@
 		  		<input type="number" name="surveyTimeToUpdate" id="surveyTimeToUpdate" value=""><br>
 		  		
 		  		<label>Description</label><br>
-		  		<input type="text" name="surveyDescriptionToUpdate" id="surveyDescriptionToUpdate" value=""><br>		
+		  		<input type="text" name="surveyDescriptionToUpdate" id="surveyDescriptionToUpdate" value=""><br>
+			
 	      </div>
 	      <div class="modal-footer">
-	       	<label id="errorUpdateMessage" style="display:none;">ERRORE LA MODIFICA NON E' ANDATA A BUON FINE</label>
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary" onclick="update();">Save changes</button>
 	      </div>
