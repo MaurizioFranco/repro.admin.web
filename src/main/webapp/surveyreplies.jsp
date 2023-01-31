@@ -47,6 +47,11 @@ if(request.getAttribute("loginMessage") != null){
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
+<script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+
+    ></script>
+
 <script type="text/javascript">
 	function abilitaBottone() {
 		console.log("questa è una stampa di console");
@@ -90,28 +95,40 @@ if(request.getAttribute("loginMessage") != null){
 	
 	function update(){
 		console.log("update - START");
-		var idToUpdate = document.getElementById("surveyRepliesIdToUpdate").value;
-		var survey_idToUpdate = document.getElementById("survey_IdToUpdate").value;
-		var user_idToUpdate = document.getElementById("user_IdToUpdate").value;
-		var answersToUpdate = document.getElementById("answersToUpdate").value;
-		var pdfFileNameToUpdate = document.getElementById("pdfFileNameToUpdate").value;
-		var pointsToUpdate = document.getElementById("pointsToUpdate").value;
+		var idToUpdate = $("#surveyRepliesIdToUpdate").val();
+		var survey_idToUpdate = $("#survey_IdToUpdate").val();
+		var user_idToUpdate = $("#user_IdToUpdate").val();
+		var answersToUpdate = $("#answersToUpdate").val();
+		var pdfFileNameToUpdate = $("#pdfFileNameToUpdate").val();
+		var pointsToUpdate = $("#pointsToUpdate").val();
 		console.log(idToUpdate,survey_idToUpdate,user_idToUpdate,answersToUpdate,pdfFileNameToUpdate,pointsToUpdate);
 		
-		var formData = new FormData();
-		formData.append("id",idToUpdate);
-		formData.append("survey_id",survey_idToUpdate);
-		formData.append("user_id",user_idToUpdate);
-		formData.append("answers",answersToUpdate);
-		formData.append("pdffilename",pdfFileNameToUpdate);
-		formData.append("points",pointsToUpdate);
+		var itemToUpdate = {
+		"id":idToUpdate,
+		"survey_id":survey_idToUpdate,
+		"user_id":user_idToUpdate,
+		"answers":answersToUpdate,
+		"pdffilename":pdfFileNameToUpdate,
+		"points":pointsToUpdate
+		}
 		
-		const xhttp = new XMLHttpRequest();
-		  xhttp.onload = function() {
-			  console.log(this.responseText);
-		    }
-		  xhttp.open("POST", "http://localhost:8080/repro.bo.giacomo/UpdateSurveyRepliesServlet", true);
-		  xhttp.send(formData);
+		$.ajax({
+			type:"POST",
+			url: "http://localhost:8080/repro.bo.giacomo/UpdateSurveyRepliesServlet",
+			data:itemToUpdate,
+			success:function(result){
+				console.log(result);
+				if(result == 'OK'){
+		        	$('#updateSurveyRepliesModal').modal('hide');
+				}else{
+					result = 'KO';
+					$('#errorUpdateMessage').show();
+					$('#errorUpdateMessage').html(result);
+				}
+			},
+			dataType:"text"
+		});
+
 	}
 </script>
 
@@ -191,6 +208,7 @@ if(request.getAttribute("loginMessage") != null){
 			%>
 		</table>
 		<br />
+		
 		<button type="submit" id="deleteButton" value="CANCELLA" class="btn btn-danger" disabled onclick="javascript:deleteSurveyreplies();">ELIMINA</button>
 		
 		<button type="button" id="modificaButton" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveyRepliesModal" disabled onclick="showUpdateSurveyRepliesModal(); return false;">
@@ -198,8 +216,8 @@ if(request.getAttribute("loginMessage") != null){
 </button>
 	</form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
 <!-- Modal -->
 <div class="modal fade" id="updateSurveyRepliesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -234,6 +252,7 @@ if(request.getAttribute("loginMessage") != null){
 		  		
 	      </div>
 	      <div class="modal-footer">
+	      	<label id="errorUpdateMessage" style="display:none;">ERRORE LA MODIFICA NON è ANDATA A BUON FINE</label>
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
 	      </div>
