@@ -7,6 +7,7 @@ import org.proxima.common.mail.MailUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.entity.User;
 import centauri.academy.proxima.cerepro.repository.UserRepository;
 import proxima.informatica.academy.seventh.user.result.LoginResult;
@@ -82,6 +83,10 @@ public class UserService {
 		return userRetrived;
 	}	
 
+	public List<EntityInterface> getAllUsers() {
+		return userRepository.findAll();
+	}
+	
 	public List<User> getAllUsersByRole() {
 		List<User> listUsers = new ArrayList<User>();
 
