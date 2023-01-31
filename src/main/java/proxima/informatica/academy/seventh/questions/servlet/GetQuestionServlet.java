@@ -6,13 +6,13 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import centauri.academy.proxima.cerepro.entity.Questions;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.QuestionsDto;
-import proxima.informatica.academy.seventh.questions.service.QuestionsService;
+import proxima.informatica.academy.seventh.service.QuestionsService;
 
 /**
  * Servlet implementation class GetQuestionServlet
@@ -31,7 +31,7 @@ public class GetQuestionServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	logger.debug("GetQuestionServlet.START");
-		QuestionsDto item = null ;
+		Questions item = null ;
 		try {
 			String itemId = request.getParameter("id") ;
 			logger.debug("GetQuestionServlet.DEBUG - roleId: " + itemId);
