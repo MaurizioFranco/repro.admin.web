@@ -53,10 +53,7 @@ public class SurveyquestionsService {
 	}
 
 	public boolean deleteSurveyquestion(SurveysQuestions sq) {
-		boolean result = false;
-		if (surveyQuestionsRepo.delete(SurveysQuestions.class, sq.getId()))
-			result = true;
-		return result;
+		return surveyQuestionsRepo.delete(SurveysQuestions.class, sq.getId());
 	}
 
 	public boolean deleteSurveyquestionById(int id) {

@@ -12,7 +12,7 @@
 
 
 <head>
-
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 
 	function abilitaBottone() {
@@ -55,46 +55,43 @@
 			  console.log(role);
 			  initializeUpdateForm (role);
 		    }
-		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetSurveyquestionsServlet?id=1", true);
+		  var id= document.querySelector('input[name="sqId"]:checked').value;
+		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetSurveyquestionsServlet?sqId="+id, true);
 		  xhttp.send();
 	}
 	
 	function update () {
 		console.log("update - START");
-		var idToUpdate = document.getElementById("surveysQuestionsIdToUpdate").value ; 
-		var surveyIdToUpdate = document.getElementById("surveysQuestionsSurveyIdToUpdate").value ; 
-		var questionIdToUpdate = document.getElementById("surveysQuestionsQuestionIdToUpdate").value ; 
-		var positionToUpdate = document.getElementById("surveysQuestionsPositionToUpdate").value ; 
+		var idToUpdate = $("#surveysQuestionsIdToUpdate").val(); 
+		var surveyIdToUpdate = $("#surveysQuestionsSurveyIdToUpdate").val(); 
+		var questionIdToUpdate = $("#surveysQuestionsQuestionIdToUpdate").val(); 
+		var positionToUpdate = $("#surveysQuestionsPositionToUpdate").val(); 
 		console.log("idToUpdate: " + idToUpdate + " - surveyIdToUpdate: " + surveyIdToUpdate + " - questionIdToUpdate: " + questionIdToUpdate + " - positionToUpdate: " + positionToUpdate);
 		
-		var formData = new FormData(); 
-		if (roleLevelToUpdate!=null) {	
-			formData.append("id", idToUpdate);
-		}
-		if (roleLevelToUpdate!=null) {	
-			formData.append("surveyId", surveyIdToUpdate);
-		}
-		if (roleLevelToUpdate!=null) {	
-			formData.append("questionId", questionIdToUpdate);
-		}
-		if (roleLevelToUpdate!=null) {		
-			formData.append("position", positionToUpdate);
-		}
-		
-	    
-		
-		const xhttp = new XMLHttpRequest();
-		  xhttp.onload = function() {
-			  console.log(this.responseText);
-// 			  var role = JSON.parse(this.responseText) ;
-// 			  console.log(role);
-// 			  initializeUpdateForm (role);
-		    }
-		  xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateRoleServlet", true);
-		  xhttp.send(formData);
+		var itemToUpdate = {
+				"id":idToUpdate,
+				"surveyId":surveyIdToUpdate,
+				"questionId":questionIdToUpdate,
+				"position":positionToUpdate
+				}
+	
+		$.ajax({
+			type:"POST",
+			url: "http://localhost:8080/repro.admin.web/UpdateSurveyquestionsServlet",
+			data:itemToUpdate,
+			success:function(result){
+				console.log(result);
+				if(result == 'OK'){
+		        	$('#updateSurveysQuestionsModal').modal('hide');
+				}else{
+					result = 'KO';
+					$('#errorUpdateMessage').show();
+					$('#errorUpdateMessage').html(result);
+				}
+			},
+			dataType:"text"
+		});
 	}
-	
-	
 </script>
 <meta charset="ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -155,7 +152,9 @@
 			%>
 		</table>
 		<input class="btn btn-danger" type="submit" class="button" id="buttonDelete" value="Delete" disabled onclick="javascript:deleteUser();">
-		<input class="btn btn-primary" type="submit" class="button"	id="buttonUpdate" value="Update" disabled onclick="javascript:updateUser();">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveysQuestionsModal" onclick="showUpdateSurveysQuestionsModal(); return false;">
+  MODIFICA
+</button>
 	</form>
 </div>
 <!-- Modal -->
