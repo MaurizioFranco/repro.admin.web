@@ -50,4 +50,12 @@ public class SurveyquestionsService {
 			result = true;
 		return result;
 	}
+	
+	public boolean deleteSurveyquestionById(int id) {
+		return SurveyquestionsManager.delectById(id);
+	}
+	
+	public boolean updateSurveyquestions(SurveyquestionsDto sq) {
+		return SurveyquestionsManager.update(sq);
+	}
 }
