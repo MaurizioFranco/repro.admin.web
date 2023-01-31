@@ -131,6 +131,15 @@ if(request.getAttribute("insertSurveyquestions") == "KO"){ %>
 	<p> Unable to insert  Survey Questions  </p>
 <% } %>
 
+<%
+if(request.getAttribute("insertCandidateStates") == "OK"){ %>
+	<p> Inserted Candidate States Questions </p>
+<% } %>
+<% 
+if(request.getAttribute("insertCandidateStates") == "KO"){ %>
+	<p> Unable to insert Candidate States Questions  </p>
+<% } %>
+
 
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>

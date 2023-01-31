@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -16,6 +17,8 @@ import proxima.informatica.academy.hibernate.CandidateStatesManager;
 /**
  * Servlet implementation class DeleteServlet
  */
+
+@WebServlet("/DeleteCandidateStatesServlet")
 public class DeleteCandidateStatesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = LoggerFactory.getLogger(DeleteCandidateStatesServlet.class);
@@ -46,13 +49,16 @@ public class DeleteCandidateStatesServlet extends HttpServlet {
 		logger.debug("CandidateStates ID to delete: "+candidateStatesId);
 		CandidateStatesDto delCan = new CandidateStatesDto();
 		delCan.setId(candidateStatesId);
-		if(CandidateStatesManager.delete(delCan)) {
-			request.setAttribute("deleteCandidateStates", "OK");
-			request.getRequestDispatcher("CandidateStates.jsp").forward(request, response);
-		}else {
-			request.setAttribute("deleteCandidateStates", "KO");
-			request.getRequestDispatcher("role.jsp").forward(request, response);
-		}
+		
+		
+		boolean responseValue = CandidateStatesManager.delete(delCan);
+			if (responseValue) {
+				response.getWriter().append("OK");
+				request.getRequestDispatcher("candidatestates.jsp").forward(request, response); 
+			} else {
+				response.getWriter().append("KO");
+				request.getRequestDispatcher("candidatestates.jsp").forward(request, response);
+			}
 	}
 
 }

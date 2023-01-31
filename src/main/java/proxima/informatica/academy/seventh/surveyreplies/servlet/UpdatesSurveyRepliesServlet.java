@@ -5,15 +5,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.AbstractCommonDto;
 import proxima.informatica.academy.dto.SurveyrepliesDto;
-import proxima.informatica.academy.dto.UserDto;
-import proxima.informatica.academy.hibernate.SurveyrepliesManager;
 import proxima.informatica.academy.seventh.surveyreplies.service.SurveyRepliesService;
 
 import java.io.IOException;
-import java.math.BigInteger;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;

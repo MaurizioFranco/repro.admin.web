@@ -1,7 +1,5 @@
 package proxima.informatica.academy.seventh.candidatestates.service;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +19,16 @@ public class CandidateStatesService {
 		}
 		return instance;
 	}
+	
+	public boolean updateCandidateStates(CandidateStatesDto candidate) {
+		boolean response = false;
+
+		if (CandidateStatesManager.update(candidate) != null)
+			response = true;
+
+		return response;
+	}
+
 
 
 	public static boolean insert(CandidateStatesDto candidate) {
@@ -38,7 +46,7 @@ public class CandidateStatesService {
 		return candidateRetrived;
 	}
 
-	public List<CandidateStatesDto> getAllRoles() {
+	public static List<CandidateStatesDto> getAllRoles() {
 		List<CandidateStatesDto> listRoles = new ArrayList<CandidateStatesDto>();
 
 		listRoles = CandidateStatesManager.selectAll();
@@ -58,6 +66,15 @@ public class CandidateStatesService {
 	public static List<CandidateStatesDto> selectAll() throws ClassNotFoundException {
 		List<CandidateStatesDto> candidates= CandidateStatesManager.selectAll();
 			return candidates;
+	}
+
+	public static boolean update(CandidateStatesDto candidate) {
+		boolean response = false;
+
+		if (CandidateStatesManager.update(candidate) != null)
+			response = true;
+
+		return response;
 	}
 
 }

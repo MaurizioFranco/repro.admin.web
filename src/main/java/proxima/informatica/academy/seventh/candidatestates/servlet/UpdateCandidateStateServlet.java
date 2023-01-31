@@ -3,15 +3,18 @@ package proxima.informatica.academy.seventh.candidatestates.servlet;
 import java.io.IOException;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.RoleDto;
-import proxima.informatica.academy.seventh.role.service.RoleService;
+import proxima.informatica.academy.dto.CandidateStatesDto;
+import proxima.informatica.academy.seventh.candidatestates.service.CandidateStatesService;
 
 /**
  * Servlet implementation class UpdateRoleServlet
  */
+
+@WebServlet("/UpdateCandidateStatesServlet")
 public class UpdateCandidateStateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,19 +38,21 @@ public class UpdateCandidateStateServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		RoleDto role = new RoleDto();
-		role.setId(Integer.parseInt(request.getParameter("id")));
-		role.setLabel(request.getParameter("label"));
-		role.setDescription(request.getParameter("description"));
-		role.setLevel(Integer.parseInt(request.getParameter("level")));
-
-		if(RoleService.getInstance().updateRole(role)) {
-			request.setAttribute("updateRole", "OK");
-			request.getRequestDispatcher("role.jsp").forward(request, response); 
-		}else {
-			request.setAttribute("updateRole", "KO");
-			request.getRequestDispatcher("role.jsp").forward(request, response); 
+		CandidateStatesDto candidate = new CandidateStatesDto();
+		candidate.setRole_id(Integer.parseInt(request.getParameter("roleid")));
+		candidate.setStatus_code(Integer.parseInt(request.getParameter("statuscode")));
+		candidate.setStatus_color(request.getParameter("statuscolor"));
+		candidate.setStatus_description(request.getParameter("stausdescription"));
+		candidate.setStatus_label(request.getParameter("statuslabel"));
+		CandidateStatesService.update(candidate);
+		
+		boolean responseValue = CandidateStatesService.update(candidate);
+     	if (responseValue) {
+			response.getWriter().append("OK");
+			request.getRequestDispatcher("candidatestates.jsp").forward(request, response); 
+		} else {
+			response.getWriter().append("KO");
+			request.getRequestDispatcher("candidatestates.jsp").forward(request, response);
 		}
 	}
 

@@ -2,13 +2,10 @@ package proxima.informatica.academy.seventh.surveyreplies.servlet;
 
 import java.io.IOException;
 import java.math.BigInteger;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

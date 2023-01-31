@@ -39,7 +39,7 @@
 </script>
 <meta charset="ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>List Survey Questions</title>
+<title>List Candidate States</title>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
@@ -49,7 +49,7 @@
 <body>
 	<%@include file="header.jsp"%>
 <div class="container-fluid">
-<h1>Survey Question List</h1>
+<h1>Candidate States List</h1>
 	<form id="formSelectSurveyquestions">
 		<table class="table table-striped table-hover  table-bordered">
 			<thead class="thead-dark">
@@ -126,6 +126,49 @@
 			
 			  	<label>ID</label><br>
 		  		<input type="number" name="roleIdToUpdate" id="roleIdToUpdate" value=""><br>
+		  		
+			  	
+			  	<label>Role Id</label><br>
+		  		<input type="number" name="roleIdToUpdate" id="roleIdToUpdate" value=""><br>
+		  		
+		  		<label>Status code</label><br>
+		  		<input type="text" name="status_code" id="status_code" value=""><br>
+		  		
+		  		<label>Status label</label><br>
+		  		<input type="text" name="status_label" id="status_label" value=""><br>
+			
+		  		<label>Status description</label><br>
+		  		<input type="number" name="status_description" id="status_description" value=""><br>
+		  		
+		  		<label>Status color</label><br>
+		  		<input type="number" name="status_color" id="status_color" value=""><br>
+		  				  		
+			
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	        <input class="btn btn-primary" type="submit" id="button" value="Update">
+	      </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="updateCadndateStateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="./InsertCandidateStatesServlet" method="post">
+	      <div class="modal-body">
+			
+			  	<label>ID</label><br>
+		  		<input type="number" name="candidateStatesIdToInsert" id="candidateStatesIdToInsert" value=""><br>
 		  		
 			  	
 			  	<label>Role Id</label><br>
