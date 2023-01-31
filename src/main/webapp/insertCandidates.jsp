@@ -21,19 +21,19 @@
   		<input type="number" name="user_id"><br>
   		
   		<label>Course Code</label><br>
-  		<input type="number" name="course_code"><br>
+  		<input type="text" name="course_code"><br>
   		
   		<label>Candidacy Date Time</label><br>
   		<input type="number" name="candidacy_state_time"><br>
 	
   		<label>First Name</label><br>
-  		<input type="number" name="firstname"><br>
+  		<input type="text" name="firstname"><br>
   		
   		<label>Last Name</label><br>
-  		<input type="number" name="lastname"><br>
+  		<input type="text" name="lastname"><br>
   		
   		<label>Email</label><br>
-  		<input type="number" name="email"><br>
+  		<input type="text" name="email"><br>
   		
   		<label>Registration Date</label><br>
   		<input type="number" name="regdate"><br>
