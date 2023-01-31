@@ -49,6 +49,28 @@
 // 				document.getElementById("selectionForm").submit();
 			}
 			
+			
+			function initializeUpdateForm (item) {
+				console.log("initializeUpdateForm - START - " + item);
+				console.log(item);
+				document.getElementById("questionIdToUpdate").value = item.id;
+				document.getElementById("questionLabelToUpdate").value = item.label;
+				document.getElementById("questionDescriptionToUpdate").value = item.description;
+				
+			}
+			
+			function showUpdateQuestionModal () {
+				console.log("showUpdateRoleModal!!!");
+				const xhttp = new XMLHttpRequest();
+				  xhttp.onload = function() {
+					  var role = JSON.parse(this.responseText) ;
+					  console.log(role);
+					  initializeUpdateForm (role);
+				    }
+				  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id=24", true);
+				  xhttp.send();
+			}
+
 
 		</script>
 </head>
@@ -153,14 +175,49 @@
 			
 <!-- 			<input type="submit" value="Cancella" id="deleteButton" disabled onclick="javascript:deleteUser()"/> -->
 			<button type="button" class="btn btn-danger" id="deleteButton" disabled onclick="javascript:deleteQuestion()">Cancella</button>
-			<button type="button" class="btn btn-warning" id="modifyButton" disabled onclick="javascript:modifyQuestion()">Modifica</button>
+			<button type="button" class="btn btn-primary" id="modifyButton" data-toggle="modal" data-target="#updateQuestionModal" onclick="showUpdateQuestionModal(); return false;">
+			  MODIFICA
+			</button>
 			
-
-<!-- 			<input type="submit" value="Modifica" id="modificaButton" disabled onclick="javascript:modificaUser()"/> -->
-		</form>
+			</form>
 		<a href="insertQuestion.jsp">
-		<button type="button" class="btn btn-info" id="insertButton" >Inserisci question</button>
+			<button type="button" class="btn btn-info" id="insertButton" >Inserisci question</button>
 		</a>
+			
+			<!-- Modal -->
+			<div class="modal fade" id="updateQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <form action="./UpdateRoleServlet" method="post">
+				      <div class="modal-body">
+						
+						  	<label>ID</label><br>
+					  		<input type="number" name="questionIdToUpdate" id="questionIdToUpdate" value=""><br>
+					  		
+					  		<label>Label</label><br>
+					  		<input type="text" name="questionLabelToUpdate" id="questionLabelToUpdate" value=""><br>
+					  		
+					  		<label>Description</label><br>
+					  		<input type="text" name="questionDescriptionToUpdate" id="questionDescriptionToUpdate" value=""><br>
+						
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				        <button type="button" class="btn btn-primary">Save changes</button>
+				        <input class="btn btn-primary" type="submit" id="button" value="Update">
+				      </div>
+			      </form> 
+			    </div>
+			  </div>
+			</div>
+	
+	
 	
 	
 	
