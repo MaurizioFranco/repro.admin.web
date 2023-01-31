@@ -209,11 +209,29 @@ if(request.getAttribute("loginMessage") != null){
 		</table>
 		<br />
 		
-		<button type="submit" id="deleteButton" value="CANCELLA" class="btn btn-danger" disabled onclick="javascript:deleteSurveyreplies();">ELIMINA</button>
-		
-		<button type="button" id="modificaButton" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveyRepliesModal" disabled onclick="showUpdateSurveyRepliesModal(); return false;">
-  MODIFICA
-</button>
+		<button type="button" id="deleteButton"  class="btn btn-danger"  data-toggle="modal" data-target="#deleteSurveyRepliesModal" disabled>ELIMINA</button>
+		<button type="button" id="modificaButton" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveyRepliesModal" disabled onclick="showUpdateSurveyRepliesModal(); return false;">MODIFICA</button>
+
+<div class="modal" id=deleteSurveyRepliesModal tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminazione SurveyReplies</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Sei sicuro di volre rimuovere questo Survey Replies</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="javascript:deleteSurveyreplies();">SI</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 	</form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -260,7 +278,6 @@ if(request.getAttribute("loginMessage") != null){
     </div>
   </div>
 </div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 </body>

@@ -59,13 +59,13 @@ public class DeleteSurveyRepliesServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		if(result == true) {
-//			request.setAttribute("deleteSurveyReplies","OK");
-//			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
-			response.getWriter().append("OK");
+			request.setAttribute("deleteSurveyReplies","OK");
+			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
+//			response.getWriter().append("OK");
 		}else {
-//			request.setAttribute("deleteSurveyReplies","KO");
-//			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
-			response.getWriter().append("KO");
+			request.setAttribute("deleteSurveyReplies","KO");
+			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
+//			response.getWriter().append("KO");
 		}
 	}
 	
