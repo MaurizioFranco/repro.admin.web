@@ -55,7 +55,7 @@
 		<dependency>
 			<groupId>centauri.academy</groupId>
 			<artifactId>repro.persistence.hibernate</artifactId>
-			<version>0.6</version>
+			<version>0.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>centauri.academy</groupId>
@@ -66,14 +66,14 @@
 		<dependency>
 			<groupId>jakarta.xml.bind</groupId>
 			<artifactId>jakarta.xml.bind-api</artifactId>
-			<version>4.0.0</version>
+			<version>2.3.2</version>
 		</dependency>
 
 		<!-- Runtime, com.sun.xml.bind module -->
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
-			<version>4.0.0</version>
+			<version>2.3.2</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.codehaus.jackson/jackson-core-asl -->
 		<dependency>
