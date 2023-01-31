@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import centauri.academy.proxima.cerepro.entity.Questions;
+import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.repository.QuestionsRepository;
 
 
@@ -25,13 +26,10 @@ public class QuestionsService {
 		return instance;
 	}
 	
-//	public List<Questions> selectAll(){
-//		List<Questions> listQuestions = null;
-//		logger.debug("QuestionsService: selectAll - START");
-//		listQuestions = questionRepository.findAll();
-//		logger.debug("QuestionsService: selectAll - LIST SIZE: " + listQuestions.size());
-//		return listQuestions;
-//	}
+	public List<EntityInterface> selectAll(){	
+		logger.debug("QuestionsService: selectAll - START");
+		return questionRepository.findAll();
+	}
 	
 	public Questions selectById(int id) {
 		logger.debug("QuestionsService: Select by ID - START");
