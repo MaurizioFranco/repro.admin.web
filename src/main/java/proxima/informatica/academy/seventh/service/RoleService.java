@@ -38,21 +38,16 @@ public class RoleService {
 		return roleRetrived;
 	}
 
-	public List<Roles> getAllRoles() {
-		List<Roles> listRoles = new ArrayList<Roles>();
-
-		listRoles = roleRepository.findAll();
-
-		return listRoles;
-	}
+//	public List<Roles> getAllRoles() {
+//		List<Roles> listRoles = new ArrayList<Roles>();
+//
+//		listRoles = roleRepository.findAll();
+//
+//		return listRoles;
+//	}
 
 	public boolean updateRole(Roles role) {
-		boolean response = false;
-
-		if (roleRepository.update(role) != null)
-			response = true;
-
-		return response;
+		return roleRepository.update(role) ;
 	}
 
 	public boolean deleteRole(int id) {
