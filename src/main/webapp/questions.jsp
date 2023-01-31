@@ -1,7 +1,9 @@
-<%@page import="proxima.informatica.academy.seventh.questions.service.QuestionsService"%>
+<%@page import="centauri.academy.proxima.cerepro.entity.EntityInterface"%>
+<%@page import="centauri.academy.proxima.cerepro.entity.Questions"%>
+<%@page import="proxima.informatica.academy.seventh.service.QuestionsService"%>
 <%@page import="java.util.List"%>
 
-<%@page import="proxima.informatica.academy.dto.QuestionsDto"%>
+
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -18,10 +20,11 @@
     }
 %>
 <html>
+
 <head>
 <meta charset="ISO-8859-1">
  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-	 
+	 <%@include file="authentication.jsp"%>
 	 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
 <title>Questions</title>
@@ -45,6 +48,7 @@
 			
 			function modifyQuestion(){
 				console.log("modifica");
+				showUpdateQuestionModal();
 // 				document.getElementById("selectionForm").action="updateUser.jsp";
 // 				document.getElementById("selectionForm").submit();
 			}
@@ -60,44 +64,73 @@
 			}
 			
 			function showUpdateQuestionModal () {
-				console.log("showUpdateRoleModal!!!");
+				console.log("showUpdateQuestionModal!!!");
 				const xhttp = new XMLHttpRequest();
 				  xhttp.onload = function() {
 					  var role = JSON.parse(this.responseText) ;
 					  console.log(role);
 					  initializeUpdateForm (role);
 				    }
-				  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id=24", true);
+				  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id=46", true);
 				  xhttp.send();
 			}
 			
-			function update () {
-				console.log("update - START");
-				var idToUpdate = document.getElementById("questionIdToUpdate").value ; 
-				var roleLabelToUpdate = document.getElementById("questionLabelToUpdate").value ; 
-				var roleDescriptionToUpdate = document.getElementById("questionDescriptionToUpdate").value ;  
-				console.log("idToUpdate: " + idToUpdate + " - questionLabelToUpdate: " + questionLabelToUpdate + " - questionDescriptionToUpdate: " + questionDescriptionToUpdate);
+// 			function update () {
+// 				console.log("update - START");
+// 				var idToUpdate = document.getElementById("questionIdToUpdate").value ; 
+// 				var roleLabelToUpdate = document.getElementById("questionLabelToUpdate").value ; 
+// 				var roleDescriptionToUpdate = document.getElementById("questionDescriptionToUpdate").value ;  
+// 				console.log("idToUpdate: " + idToUpdate + " - questionLabelToUpdate: " + questionLabelToUpdate + " - questionDescriptionToUpdate: " + questionDescriptionToUpdate);
 				
-				var formData = new FormData(); 
-				formData.append("id", idToUpdate);
-				formData.append("label", questionLabelToUpdate);
-				formData.append("description", questionDescriptionToUpdate);
+// 				var formData = new FormData(); 
+// 				formData.append("id", idToUpdate);
+// 				formData.append("label", questionLabelToUpdate);
+// 				formData.append("description", questionDescriptionToUpdate);
 				
-				const xhttp = new XMLHttpRequest();
-				  xhttp.onload = function() {
-					  console.log(this.responseText);
-//		 			  var role = JSON.parse(this.responseText) ;
-//		 			  console.log(role);
-//		 			  initializeUpdateForm (role);
-				    }
-				  xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateQuestionServlet", true);
-				  xhttp.send(formData);
-			}
+// 				const xhttp = new XMLHttpRequest();
+// 				  xhttp.onload = function() {
+// 					  console.log(this.responseText);
+// //		 			  var role = JSON.parse(this.responseText) ;
+// //		 			  console.log(role);
+// //		 			  initializeUpdateForm (role);
+// 				    }
+// 				  xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateQuestionServlet", true);
+// 				  xhttp.send(formData);
+// 			}
 
+		function update(){
+			console.log("update - START");
+			var idToUpdate = $("#questionIdToUpdate").val();
+			var questionLabelToUpdate = $("#questionLabelToUpdate").val();
+			var questionDescriptionToUpdate = $("#questionDescriptionToUpdate").val();
+			console.log(idToUpdate,questionLabelToUpdate,questionDescriptionToUpdate);
+			
+			var itemToUpdate = {
+			"id":idToUpdate,
+			"label":questionLabelToUpdate,
+			"description":questionDescriptionToUpdate,
+			}
+			
+			$.ajax({
+				type:"POST",
+				url: "http://localhost:8080/repro.admin.web/UpdateQuestionServlet",
+				data:itemToUpdate,
+				success:function(result){
+					console.log(result);
+					if(result == 'OK'){
+			        	$('#updateQuestionModal').modal('hide');
+					}else{
+						
+					}
+				},
+				dataType:"text"
+			});
+		}
 
 		</script>
 </head>
 <body>
+<%@include file="header.jsp"%>
 				<%
 				if(insertStatus!=null){
 				%>
@@ -110,7 +143,7 @@
 				
 				<%
 
-				List<QuestionsDto> lista = null;
+				List<EntityInterface> lista = null;
 				lista = QuestionsService.getIstance().selectAll();
 					if(lista.size() == 0){
 				%>
@@ -162,7 +195,8 @@
 				<%
 					
 			   
-			   for (QuestionsDto item : lista) {
+			   for (EntityInterface entity : lista) {
+				   Questions item = (Questions)entity;
 				%>
 			    <tbody>
 			    	<tr>
@@ -186,7 +220,7 @@
 		 		    	<td><%= item.getCansf() %></td>
 		 		    	<td><%= item.getCansg() %></td>
 		 		    	<td><%= item.getCansh()%></td>
-		 		    	<td><%= item.getFull_answer()%></td>
+		 		    	<td><%= item.getFullAnswer()%></td>
 	 		    	</tr>
 	 		     
 				</tbody>
@@ -198,7 +232,7 @@
 			
 <!-- 			<input type="submit" value="Cancella" id="deleteButton" disabled onclick="javascript:deleteUser()"/> -->
 			<button type="button" class="btn btn-danger" id="deleteButton" disabled onclick="javascript:deleteQuestion()">Cancella</button>
-			<button type="button" class="btn btn-primary" id="modifyButton" data-toggle="modal" data-target="#updateQuestionModal" onclick="showUpdateQuestionModal(); return false;">
+			<button type="button" class="btn btn-primary" id="modifyButton" disabled data-toggle="modal" data-target="#updateQuestionModal" onclick="showUpdateQuestionModal(); return false;">
 			  MODIFICA
 			</button>
 			
@@ -244,7 +278,7 @@
 	
 	
 	
-	<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 	

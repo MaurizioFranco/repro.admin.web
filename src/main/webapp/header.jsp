@@ -63,6 +63,9 @@ background-color: grey
    	<li class="nav-item square rounded p-1 hover">
   		<a class="nav-link text-white" href="insertCandidates.jsp">Insert Candidates</a>
    	</li>  
+   	<li class="nav-item square rounded p-1 hover">
+  		<a class="nav-link text-white" href="questions.jsp">Questions</a>
+   	</li>
    	</ul>
    	<ul class="navbar-nav">
   	<li class="nav-item square rounded p-1">
@@ -71,6 +74,8 @@ background-color: grey
 	<li class="nav-item square rounded p-1 hover">
   		<a class="nav-link text-danger ml-auto" href="LogoutServlet">Logout</a>
    	</li> 
+   	
+   	
   </ul>
 </nav>
 <br>
