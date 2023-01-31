@@ -17,6 +17,7 @@ import proxima.informatica.academy.seventh.role.service.RoleService;
  */
 @WebServlet("/DeleteRoleServlet")
 public class DeleteRoleServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = LoggerFactory.getLogger(DeleteRoleServlet.class);
 
@@ -26,30 +27,21 @@ public class DeleteRoleServlet extends HttpServlet {
      */
     public DeleteRoleServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		logger.debug("DeleteRoleServlet.START");
 		int roleId = Integer.parseInt(request.getParameter("roleId"));
-		logger.debug("Role ID to delete: "+roleId);
-		if(RoleService.getInstance().deleteRole(roleId)) {
-			request.setAttribute("deleteRole", "OK");
-			request.getRequestDispatcher("role.jsp").forward(request, response);
-		}else {
-			request.setAttribute("deleteRole", "KO");
-			request.getRequestDispatcher("role.jsp").forward(request, response);
+		
+		boolean responseValue = RoleService.getInstance().deleteRole(roleId) ;
+        logger.debug("DeleteRoleServlet.DEBUG - responseValue: " + responseValue);
+		if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 

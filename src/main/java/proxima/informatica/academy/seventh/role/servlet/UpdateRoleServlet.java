@@ -10,46 +10,64 @@ import proxima.informatica.academy.seventh.role.service.RoleService;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Servlet implementation class UpdateRoleServlet
  */
 @WebServlet("/UpdateRoleServlet")
 public class UpdateRoleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private final static Logger logger = LoggerFactory.getLogger(UpdateRoleServlet.class);
+	
     /**
      * @see HttpServlet#HttpServlet()
      */
     public UpdateRoleServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
+    /**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.debug("UpdateRoleServlet.doGet START - " + request.getQueryString());
+		logger.debug("UpdateRoleServlet.doGet DEBUG - id: " + request.getParameter("id"));
 		RoleDto role = new RoleDto();
 		role.setId(Integer.parseInt(request.getParameter("id")));
 		role.setLabel(request.getParameter("label"));
 		role.setDescription(request.getParameter("description"));
 		role.setLevel(Integer.parseInt(request.getParameter("level")));
 
-		if(RoleService.getInstance().updateRole(role)) {
-			request.setAttribute("updateRole", "OK");
-			request.getRequestDispatcher("role.jsp").forward(request, response); 
-		}else {
-			request.setAttribute("updateRole", "KO");
-			request.getRequestDispatcher("role.jsp").forward(request, response); 
+		boolean responseValue = RoleService.getInstance().updateRole(role) ;
+        logger.debug("InsertRoleServlet.DEBUG - responseValue: " + responseValue);
+		if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
+		}
+	}
+    
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.debug("UpdateRoleServlet.START - " + request.getQueryString());
+		logger.debug("UpdateRoleServlet.DEBUG - id: " + request.getParameter("id"));
+		logger.debug("UpdateRoleServlet.DEBUG - id: " + request.getAttribute("id"));
+		RoleDto role = new RoleDto();
+		role.setId(Integer.parseInt(request.getParameter("id")));
+		role.setLabel(request.getParameter("label"));
+		role.setDescription(request.getParameter("description"));
+		role.setLevel(Integer.parseInt(request.getParameter("level")));
+
+		boolean responseValue = RoleService.getInstance().updateRole(role) ;
+        logger.debug("InsertRoleServlet.DEBUG - responseValue: " + responseValue);
+		if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 
