@@ -92,8 +92,6 @@
 		    }
 		  xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateRoleServlet", true);
 		  xhttp.send(formData);
-		
-		
 	}
 	
 	

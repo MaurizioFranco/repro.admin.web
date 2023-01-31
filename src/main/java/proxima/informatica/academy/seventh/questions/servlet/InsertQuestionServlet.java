@@ -7,8 +7,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import proxima.informatica.academy.dto.QuestionsDto;
 import proxima.informatica.academy.hibernate.QuestionsManager;
+import proxima.informatica.academy.seventh.role.servlet.InsertRoleServlet;
 
 import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Servlet implementation class InsertQuestionServlet
@@ -16,7 +20,7 @@ import java.io.IOException;
 @WebServlet("/InsertQuestionServlet")
 public class InsertQuestionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	private final static Logger logger = LoggerFactory.getLogger(InsertRoleServlet.class);
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -30,6 +34,7 @@ public class InsertQuestionServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.debug("InsertQuestionServlet.START");
 		String label = request.getParameter("label");
 		String description = request.getParameter("description");
 		int result = 0;
@@ -39,13 +44,11 @@ public class InsertQuestionServlet extends HttpServlet {
 		qs.setDescription(description);
 		result = QuestionsManager.insert(qs);
 		
-		if(result > 0) {
-			request.setAttribute("insertConfirmed", true);
-			request.getRequestDispatcher("./questions.jsp").forward(request, response);
-		}
-		else {
-			request.setAttribute("insertConfirmed", false);
-			request.getRequestDispatcher("./questions.jsp").forward(request, response);
+		logger.debug("InsertQuestionServlet.DEBUG - responseValue: " + result);
+		if (result > 0) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 
