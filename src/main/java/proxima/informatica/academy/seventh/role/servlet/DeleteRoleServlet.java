@@ -10,7 +10,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.seventh.role.service.RoleService;
+import proxima.informatica.academy.seventh.service.RoleService;
 
 /**
  * Servlet implementation class DeleteServlet

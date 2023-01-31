@@ -5,13 +5,13 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import centauri.academy.proxima.cerepro.entity.Roles;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.RoleDto;
-import proxima.informatica.academy.seventh.role.service.RoleService;
+import proxima.informatica.academy.seventh.service.RoleService;
 
 /**
  * Servlet implementation class InsertRoleServlet
@@ -34,7 +34,7 @@ public class InsertRoleServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		logger.debug("InsertRoleServlet.START");
-		RoleDto role = new RoleDto();
+		Roles role = new Roles();
 
 		role.setLabel(request.getParameter("label"));
 		role.setDescription(request.getParameter("description"));

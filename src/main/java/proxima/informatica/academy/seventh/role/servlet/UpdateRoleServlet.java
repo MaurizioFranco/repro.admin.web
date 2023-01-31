@@ -1,15 +1,17 @@
 package proxima.informatica.academy.seventh.role.servlet;
 
+import java.io.IOException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import centauri.academy.proxima.cerepro.entity.Roles;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import proxima.informatica.academy.seventh.service.RoleService;
 
 /**
  * Servlet implementation class UpdateRoleServlet
@@ -32,8 +34,8 @@ public class UpdateRoleServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("UpdateRoleServlet.doGet START - " + request.getQueryString());
 		logger.debug("UpdateRoleServlet.doGet DEBUG - id: " + request.getParameter("id"));
-		RoleDto role = new RoleDto();
-		role.setId(Integer.parseInt(request.getParameter("id")));
+		Roles role = new Roles();
+		role.setId(Long.valueOf(request.getParameter("id")));
 		role.setLabel(request.getParameter("label"));
 		role.setDescription(request.getParameter("description"));
 		role.setLevel(Integer.parseInt(request.getParameter("level")));
@@ -54,8 +56,8 @@ public class UpdateRoleServlet extends HttpServlet {
 		logger.debug("UpdateRoleServlet.START - " + request.getQueryString());
 		logger.debug("UpdateRoleServlet.DEBUG - id: " + request.getParameter("id"));
 		logger.debug("UpdateRoleServlet.DEBUG - id: " + request.getAttribute("id"));
-		RoleDto role = new RoleDto();
-		role.setId(Integer.parseInt(request.getParameter("id")));
+		Roles role = new Roles();
+		role.setId(Long.valueOf(request.getParameter("id")));
 		role.setLabel(request.getParameter("label"));
 		role.setDescription(request.getParameter("description"));
 		role.setLevel(Integer.parseInt(request.getParameter("level")));

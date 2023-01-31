@@ -6,13 +6,13 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import centauri.academy.proxima.cerepro.entity.Roles;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.RoleDto;
-import proxima.informatica.academy.seventh.role.service.RoleService;
+import proxima.informatica.academy.seventh.service.RoleService;
 
 /**
  * Servlet implementation class GetRoleServlet
@@ -36,7 +36,7 @@ public class GetRoleServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("GetRoleServlet.START");
-		RoleDto item = null ;
+		Roles item = null ;
 		try {
 			String itemId = request.getParameter("id") ;
 			logger.debug("GetRoleServlet.DEBUG - roleId: " + itemId);

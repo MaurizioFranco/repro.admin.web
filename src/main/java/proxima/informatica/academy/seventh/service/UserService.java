@@ -1,19 +1,19 @@
-package proxima.informatica.academy.seventh.user.service;
-
-import java.util.ArrayList;
-import java.util.List;
+package proxima.informatica.academy.seventh.service;
 
 import org.proxima.common.mail.MailUtility;
 
-import proxima.informatica.academy.dto.UserDto;
-import proxima.informatica.academy.hibernate.UserManager;
+import centauri.academy.proxima.cerepro.entity.User;
+import centauri.academy.proxima.cerepro.repository.UserRepository;
 import proxima.informatica.academy.seventh.user.result.LoginResult;
 
 public class UserService {
 
 	private final String USER_EMAIL = "dllgiacomo@gmail.com";
 
+	UserRepository userRepository = null ;
+	
 	private UserService() {
+		userRepository = new UserRepository () ;
 	}
 
 	private static UserService instance;
@@ -27,8 +27,8 @@ public class UserService {
 
 	public LoginResult login(String email, String password) {
 		LoginResult result = new LoginResult();
-		UserDto user = new UserDto();
-		user = UserManager.findByEmail(email);
+		User user = new User();
+		user = (User)userRepository.findByEmail(email);
 
 		if (user == null) {
 			result.setLoginResponse(false);
@@ -39,7 +39,7 @@ public class UserService {
 		} else if (!user.getPassword().equals(password)) {
 			result.setLoginResponse(false);
 			result.setLoginMessage("Password wrong");
-		} else if (user.getEnabled() == false) {
+		} else if (user.getenabled() == 0) {
 			result.setLoginResponse(false);
 			result.setLoginMessage("Account not activated");
 		} else {
@@ -49,12 +49,12 @@ public class UserService {
 		return result;
 	}
 
-	public boolean insert(UserDto user) {
+	public boolean insert(User user) {
 		boolean response = false;
 
 		try {
-			if (UserManager.insert(user) > 0) {
-				UserDto userForId = UserManager.findByEmail(user.getEmail());
+			if (userRepository.create(user) > 0) {
+				User userForId = (User)userRepository.findByEmail(user.getEmail());
 				MailUtility.sendSimpleMail(USER_EMAIL, "Create a new password",
 						"Click <a href='http://localhost:8080/repro.admin.web/completeRegistration.jsp?id="
 								+ userForId.getId() + "'>here</a> to complete your registration");
@@ -67,33 +67,34 @@ public class UserService {
 		return response;
 	}
 
-	public UserDto selectById(int id) {
-		UserDto userRetrived = new UserDto();
-		userRetrived = UserManager.selectById(id);
+	public User selectById(int id) {
+		User userRetrived = new User();
+		userRetrived = (User)userRepository.findById(id);
 
 		return userRetrived;
 	}
 
-	public List<UserDto> getAllUsers() {
-		List<UserDto> listUsers = new ArrayList<UserDto>();
+//	public List<User> getAllUsers() {
+//		List<User> listUsers = new ArrayList<User>();
+//
+//		listUsers = userRepository.findAll();
+//
+//		return listUsers;
+//	}
 
-		listUsers = UserManager.selectAll();
+//	public List<User> getAllUsersByRole() {
+//		List<User> listUsers = new ArrayList<User>();
+//
+//		//listUsers = userRepository.findByRole();
+//		listUsers = userRepository.findAll();
+//
+//		return listUsers;
+//	}
 
-		return listUsers;
-	}
-
-	public List<UserDto> getAllUsersByRole() {
-		List<UserDto> listUsers = new ArrayList<UserDto>();
-
-		listUsers = UserManager.findByRole();
-
-		return listUsers;
-	}
-
-	public boolean updateUser(UserDto user) {
+	public boolean updateUser(User user) {
 		boolean response = false;
 
-		if (UserManager.update(user))
+		if (userRepository.update(user))
 			response = true;
 
 		return response;
@@ -102,7 +103,7 @@ public class UserService {
 	public boolean deleteUser(int id) {
 		boolean response = false;
 
-		if (UserManager.deleteById(id, UserDto.class))
+		if (userRepository.delete(id))
 			response = true;
 
 		return response;
