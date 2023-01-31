@@ -37,13 +37,17 @@ public class UpdateSurveyquestionsServlet extends HttpServlet {
 			throws ServletException, IOException {
 		logger.debug("UpdateSurveyquestionsServlet - doPost - START");
 		SurveysQuestions item = new SurveysQuestions();
+		String surveyQuestionsId = request.getParameter("id");
 		String surveyId = request.getParameter("surveyId");
 		String questionId = request.getParameter("questionId");
 		String position = request.getParameter("position");
 
+		item.setId(Long.parseLong(surveyQuestionsId));
 		item.setSurveyId(Long.parseLong(surveyId));
 		item.setQuestionId(Long.parseLong(questionId));
 		item.setPosition(Integer.parseInt(position));
+
+		logger.debug("UpdateSurveyquestionsServlet - item - " + item.toString());
 
 		if (SurveyquestionsService.getInstance().updateSurveyquestions(item)) {
 			response.getWriter().append("OK");
