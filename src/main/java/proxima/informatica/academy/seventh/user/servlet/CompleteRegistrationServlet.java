@@ -1,17 +1,17 @@
 package proxima.informatica.academy.seventh.user.servlet;
 
+import java.io.IOException;
+import java.util.List;
+
+import org.proxima.common.mail.MailUtility;
+
+import centauri.academy.proxima.cerepro.entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.UserDto;
-import proxima.informatica.academy.seventh.user.service.UserService;
-
-import java.io.IOException;
-import java.util.List;
-
-import org.proxima.common.mail.MailUtility;
+import proxima.informatica.academy.seventh.service.UserService;
 
 /**
  * Servlet implementation class CompleteRegistrationServlet
@@ -25,16 +25,6 @@ public class CompleteRegistrationServlet extends HttpServlet {
 	 */
 	public CompleteRegistrationServlet() {
 		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -43,13 +33,12 @@ public class CompleteRegistrationServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String password1 = request.getParameter("password1");
 		String password2 = request.getParameter("password2");
 		int id = Integer.parseInt(request.getParameter("userId"));
 		if (password1.equals(password2)) {
 
-			UserDto user = UserService.getInstance().selectById(id);
+			User user = UserService.getInstance().selectById(id);
 			user.setPassword(password1);
 			UserService.getInstance().updateUser(user);
 			sendEmailToAdmin(id);
@@ -64,7 +53,7 @@ public class CompleteRegistrationServlet extends HttpServlet {
 	}
 
 	private void sendEmailToAdmin(int userId) {
-		List<UserDto> listAdmin = UserService.getInstance().getAllUsersByRole();
+		List<User> listAdmin = UserService.getInstance().getAllUsersByRole();
 		String[] adminEmails = new String[listAdmin.size()];
 		System.out.println(listAdmin.size());
 		for (int i = 0; i < listAdmin.size(); i++) {

@@ -1,6 +1,7 @@
+<%@page import="centauri.academy.proxima.cerepro.entity.Roles"%>
+<%@page import="proxima.informatica.academy.seventh.service.RoleService"%>
+<%@page import="centauri.academy.proxima.cerepro.entity.EntityInterface"%>
 <%@page import="java.util.List"%>
-<%@page import="proxima.informatica.academy.seventh.role.service.RoleService"%>
-<%@page import="proxima.informatica.academy.dto.RoleDto"%>
 <%@page import="java.nio.file.attribute.UserPrincipalLookupService"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -124,9 +125,9 @@
 				</tr>
 			</thead>	
 			<%
-			List<RoleDto> roles = new ArrayList<RoleDto>();
-			roles = RoleService.getInstance().getAllRoles();
-			for (RoleDto role : roles) {
+			List<EntityInterface> roles = RoleService.getInstance().getAllRoles();
+			for (EntityInterface item : roles) {
+				Roles role = (Roles)item ;
 				request.setAttribute("id", role.getId());
 				
 			%>

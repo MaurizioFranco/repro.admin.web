@@ -13,34 +13,28 @@ import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * @author Matteo Peruzza
+ *
+ */
+
 @WebServlet("/DeleteSurveyServlet")
 public class DeleteSurveyServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
 	private final static Logger logger = LoggerFactory.getLogger(DeleteSurveyServlet.class);
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public DeleteSurveyServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		logger.debug("DeleteSurveyServlet.START");
 		int surveyId = Integer.parseInt(request.getParameter("surveyId"));
-		logger.debug("Survey ID to delete: "+surveyId);
+		logger.debug("DeleteSurveyServlet DEBUG - Survey ID to delete: "+surveyId);
 		SurveyDto surveyToDelete = SurveyService.getInstance().selectSurveyById(surveyId);
+		logger.debug("DeleteSurveyServlet DEBUG - Survey to delete: "+surveyToDelete);
 		SurveyService.getInstance().deleteSurvey(surveyToDelete);
 		
 		if(SurveyService.getInstance().selectSurveyById(surveyId) == null) {

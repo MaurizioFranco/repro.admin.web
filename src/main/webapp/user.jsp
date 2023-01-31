@@ -1,6 +1,7 @@
+<%@page import="centauri.academy.proxima.cerepro.entity.User"%>
+<%@page import="centauri.academy.proxima.cerepro.entity.EntityInterface"%>
+<%@page import="proxima.informatica.academy.seventh.service.UserService"%>
 <%@page import="java.util.List"%>
-<%@page import="proxima.informatica.academy.seventh.user.service.UserService"%>
-<%@page import="proxima.informatica.academy.dto.UserDto"%>
 <%@page import="java.nio.file.attribute.UserPrincipalLookupService"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -62,9 +63,9 @@
 			</tr>
 			</thead>
 			<%
-			List<UserDto> users = new ArrayList<UserDto>();
-			users = UserService.getInstance().getAllUsers();
-			for (UserDto user : users) {
+			List<EntityInterface> items = UserService.getInstance().getAllUsers();
+			for (EntityInterface item : items) {
+				User user = (User)item;
 				request.setAttribute("id", user.getId());
 				
 			%>

@@ -1,13 +1,22 @@
 package proxima.informatica.academy.seventh.service;
 
-import org.proxima.common.mail.MailUtility;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.proxima.common.mail.MailUtility;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.entity.User;
 import centauri.academy.proxima.cerepro.repository.UserRepository;
 import proxima.informatica.academy.seventh.user.result.LoginResult;
+import proxima.informatica.academy.seventh.user.servlet.LoginServlet;
 
 public class UserService {
 
+	private final static Logger logger = LoggerFactory.getLogger(UserService.class);
+	
 	private final String USER_EMAIL = "dllgiacomo@gmail.com";
 
 	UserRepository userRepository = null ;
@@ -72,24 +81,19 @@ public class UserService {
 		userRetrived = (User)userRepository.findById(id);
 
 		return userRetrived;
+	}	
+
+	public List<EntityInterface> getAllUsers() {
+		return userRepository.findAll();
 	}
+	
+	public List<User> getAllUsersByRole() {
+		List<User> listUsers = new ArrayList<User>();
 
-//	public List<User> getAllUsers() {
-//		List<User> listUsers = new ArrayList<User>();
-//
-//		listUsers = userRepository.findAll();
-//
-//		return listUsers;
-//	}
+		listUsers = userRepository.findByRole();
 
-//	public List<User> getAllUsersByRole() {
-//		List<User> listUsers = new ArrayList<User>();
-//
-//		//listUsers = userRepository.findByRole();
-//		listUsers = userRepository.findAll();
-//
-//		return listUsers;
-//	}
+		return listUsers;
+	}
 
 	public boolean updateUser(User user) {
 		boolean response = false;

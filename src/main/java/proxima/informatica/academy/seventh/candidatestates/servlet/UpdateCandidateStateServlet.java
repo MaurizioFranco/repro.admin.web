@@ -2,12 +2,12 @@ package proxima.informatica.academy.seventh.candidatestates.servlet;
 
 import java.io.IOException;
 
+import centauri.academy.proxima.cerepro.entity.CandidateStates;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.RoleDto;
-import proxima.informatica.academy.seventh.role.service.RoleService;
+import proxima.informatica.academy.seventh.service.CandidateStatesService;
 
 /**
  * Servlet implementation class UpdateRoleServlet
@@ -36,13 +36,15 @@ public class UpdateCandidateStateServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		RoleDto role = new RoleDto();
-		role.setId(Integer.parseInt(request.getParameter("id")));
-		role.setLabel(request.getParameter("label"));
-		role.setDescription(request.getParameter("description"));
-		role.setLevel(Integer.parseInt(request.getParameter("level")));
+		CandidateStates candidate = new CandidateStates();
+		candidate.setId((long) Integer.parseInt(request.getParameter("id")));
+		candidate.setRole_id((long) Integer.parseInt(request.getParameter("role_id")));
+		candidate.setStatus_code(Integer.parseInt(request.getParameter("status_code")));
+		candidate.setStatus_description(request.getParameter("status_description"));
+		candidate.setStatus_label(request.getParameter("status_label"));
+		candidate.setStatus_color(request.getParameter("status_color"));
 
-		if(RoleService.getInstance().updateRole(role)) {
+		if(CandidateStatesService.getInstance().update(candidate)) {
 			request.setAttribute("updateRole", "OK");
 			request.getRequestDispatcher("role.jsp").forward(request, response); 
 		}else {

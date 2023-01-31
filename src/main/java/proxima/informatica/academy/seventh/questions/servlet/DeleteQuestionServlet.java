@@ -10,8 +10,9 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.seventh.questions.service.QuestionsService;
-import proxima.informatica.academy.seventh.role.servlet.DeleteRoleServlet;
+import proxima.informatica.academy.seventh.service.QuestionsService;
+
+
 
 
 /**
@@ -21,7 +22,7 @@ import proxima.informatica.academy.seventh.role.servlet.DeleteRoleServlet;
 @WebServlet("/DeleteQuestionServlet")
 public class DeleteQuestionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final static Logger logger = LoggerFactory.getLogger(DeleteRoleServlet.class);
+	private final static Logger logger = LoggerFactory.getLogger(DeleteQuestionServlet.class);
        
     /**
      * @see HttpServlet#HttpServlet()
