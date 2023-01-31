@@ -6,13 +6,13 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+import centauri.academy.proxima.cerepro.entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.UserDto;
-import proxima.informatica.academy.seventh.user.service.UserService;
+import proxima.informatica.academy.seventh.service.UserService;
 
 /**
  * Servlet implementation class UpdateUserServlet
@@ -26,17 +26,6 @@ public class UpdateUserServlet extends HttpServlet {
 	 */
 	public UpdateUserServlet() {
 		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -46,8 +35,8 @@ public class UpdateUserServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		UserDto user = new UserDto();
-		user.setId(Integer.parseInt(request.getParameter("id")));
+		User user = new User();
+		user.setId(Long.valueOf(request.getParameter("id")));
 		user.setFirstname(request.getParameter("firstname"));
 		user.setLastname(request.getParameter("lastname"));
 		user.setEmail(request.getParameter("email"));
@@ -69,9 +58,9 @@ public class UpdateUserServlet extends HttpServlet {
 		}
 		
 		if (request.getParameter("enabled") != null)
-			user.setEnabled(true);
+			user.setenabled(1);
 		else
-			user.setEnabled(false);
+			user.setenabled(0);
 		if (UserService.getInstance().updateUser(user)) {
 			request.setAttribute("updateUser", "OK");
 			request.getRequestDispatcher("user.jsp").forward(request, response);

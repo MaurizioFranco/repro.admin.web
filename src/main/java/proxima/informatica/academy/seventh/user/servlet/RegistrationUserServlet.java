@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
-import proxima.informatica.academy.seventh.user.service.UserService;
+import proxima.informatica.academy.seventh.service.UserService;
 
 
 /**
@@ -40,8 +40,6 @@ public class RegistrationUserServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
 		User user = new User();
 		user.setFirstname(request.getParameter("firstname"));
 		user.setLastname(request.getParameter("lastname"));
@@ -58,7 +56,7 @@ public class RegistrationUserServlet extends HttpServlet {
 			part.write(UPLOAD_DIRECTORY + File.separator + fileName);
 		}
 
-		if (UserService.getInstance().create(user)) {
+		if (UserService.getInstance().insert(user)) {
 			request.setAttribute("firstRegistration", "OK");
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 		}else {

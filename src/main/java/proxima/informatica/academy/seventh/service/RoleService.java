@@ -3,6 +3,7 @@ package proxima.informatica.academy.seventh.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.entity.Roles;
 import centauri.academy.proxima.cerepro.repository.RolesRepository;
 
@@ -38,13 +39,9 @@ public class RoleService {
 		return roleRetrived;
 	}
 
-//	public List<Roles> getAllRoles() {
-//		List<Roles> listRoles = new ArrayList<Roles>();
-//
-//		listRoles = roleRepository.findAll();
-//
-//		return listRoles;
-//	}
+	public List<EntityInterface> getAllRoles() {
+		return roleRepository.findAll();
+	}
 
 	public boolean updateRole(Roles role) {
 		return roleRepository.update(role) ;
