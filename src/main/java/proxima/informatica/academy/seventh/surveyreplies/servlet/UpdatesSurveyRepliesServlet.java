@@ -42,15 +42,15 @@ public class UpdatesSurveyRepliesServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("UpdateSurveyServlet-START");
-		String idSelected = request.getParameter("surveyRepliesIdToUpdate");
+		String idSelected = request.getParameter("id");
 		logger.debug("ID Selected : " + idSelected);
 		int id = Integer.parseInt(idSelected);
 		int result = 0;
-		String survey_id = request.getParameter("survey_IdToUpdate");
-		String user_id = request.getParameter("user_IdToUpdate");
-		String answers = request.getParameter("answersToUpdate");
-		String pdfFileName = request.getParameter("pdfFileNameToUpdate");
-		String points = request.getParameter("pointsToUpdate");
+		String survey_id = request.getParameter("survey_id");
+		String user_id = request.getParameter("user_id");
+		String answers = request.getParameter("answers");
+		String pdfFileName = request.getParameter("pdffilename");
+		String points = request.getParameter("points");
 		
 		try {
 			result = updateSurveyReplies(id,survey_id,user_id,answers,pdfFileName,points);

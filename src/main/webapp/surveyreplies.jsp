@@ -73,10 +73,10 @@ if(request.getAttribute("loginMessage") != null){
 		console.log("initializeUpdateForm - START - " + item);
 		console.log(item);
 		document.getElementById("surveyRepliesIdToUpdate").value = item.id;
-		document.getElementById("survey_IdToUpdate").value = item.survey_id;
-		document.getElementById("user_IdToUpdate").value = item.user_id;
-		document.getElementById("answersToUpdate").value = item.answers;
-		document.getElementById("pdfFileNameToUpdate").value = item.pdffilename;
+		document.getElementById("survey_IdToUpdate").value = item.surveyId;
+		document.getElementById("user_IdToUpdate").value = item.userId;
+		document.getElementById("answersToUpdate").value = item.answer;
+		document.getElementById("pdfFileNameToUpdate").value = item.pdfFileName;
 		document.getElementById("pointsToUpdate").value = item.points;
 	}
 	
@@ -89,7 +89,7 @@ if(request.getAttribute("loginMessage") != null){
 			  console.log(surveyReplies);
 			  initializeUpdateForm (surveyReplies);
 		    }
-		  var id= document.querySelector('input[name="selectedSurveyrepliesId"]:checked').value;
+		  var id = document.querySelector('input[name="selectedSurveyrepliesId"]:checked').value;
 		  xhttp.open("GET", "http://localhost:8080/repro.bo.giacomo/GetSurveyRepliesServlet?id=" + id +"", true);
 		  xhttp.send();
 	}
@@ -102,7 +102,6 @@ if(request.getAttribute("loginMessage") != null){
 		var answersToUpdate = $("#answersToUpdate").val();
 		var pdfFileNameToUpdate = $("#pdfFileNameToUpdate").val();
 		var pointsToUpdate = $("#pointsToUpdate").val();
-		console.log(idToUpdate,survey_idToUpdate,user_idToUpdate,answersToUpdate,pdfFileNameToUpdate,pointsToUpdate);
 		
 		var itemToUpdate = {
 		"id":idToUpdate,
