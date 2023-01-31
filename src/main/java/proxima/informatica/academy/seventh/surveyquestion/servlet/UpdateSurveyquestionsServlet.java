@@ -5,13 +5,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.SurveyquestionsDto;
-import proxima.informatica.academy.seventh.surveyquestion.service.SurveyquestionsService;
+import proxima.informatica.academy.seventh.service.SurveyquestionsService;
 
 import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import centauri.academy.proxima.cerepro.entity.SurveysQuestions;
 
 /**
  * Servlet implementation class UploadServlet
@@ -20,7 +21,6 @@ import org.slf4j.LoggerFactory;
 public class UpdateSurveyquestionsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = LoggerFactory.getLogger(UpdateSurveyquestionsServlet.class);
-
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -35,20 +35,15 @@ public class UpdateSurveyquestionsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		SurveyquestionsDto item = new SurveyquestionsDto();
+		logger.debug("UpdateSurveyquestionsServlet - doPost - START");
+		SurveysQuestions item = new SurveysQuestions();
 		String surveyId = request.getParameter("surveyId");
 		String questionId = request.getParameter("questionId");
 		String position = request.getParameter("position");
-		logger.debug("###########################");
-		logger.debug("###########################");
-		logger.debug("###########################");
-		logger.debug(surveyId + " " + questionId + " " + position);
-		logger.debug("###########################");
-		logger.debug("###########################");
-		logger.debug("###########################");
-		item.setSurveyId(Integer.parseInt(request.getParameter("surveyId")));
-		item.setQuestionId(Integer.parseInt(request.getParameter("questionId")));
-		item.setPosition(Integer.parseInt(request.getParameter("position")));
+
+		item.setSurveyId(Long.parseLong(surveyId));
+		item.setQuestionId(Long.parseLong(questionId));
+		item.setPosition(Integer.parseInt(position));
 
 		if (SurveyquestionsService.getInstance().updateSurveyquestions(item)) {
 			response.getWriter().append("OK");
@@ -56,5 +51,5 @@ public class UpdateSurveyquestionsServlet extends HttpServlet {
 			response.getWriter().append("KO");
 		}
 	}
-	
+
 }

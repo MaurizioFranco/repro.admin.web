@@ -5,13 +5,14 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.SurveyquestionsDto;
-import proxima.informatica.academy.seventh.surveyquestion.service.SurveyquestionsService;
+import proxima.informatica.academy.seventh.service.SurveyquestionsService;
 
 import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import centauri.academy.proxima.cerepro.entity.SurveysQuestions;
 
 /**
  * Servlet implementation class InsertSurveyquestionServlet
@@ -36,10 +37,11 @@ public class InsertSurveyquestionsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		SurveyquestionsDto item = new SurveyquestionsDto();
+		logger.debug("InsertSurveyquestionsServlet - doPost - START");
+		SurveysQuestions item = new SurveysQuestions();
 
-		item.setSurveyId(Integer.parseInt(request.getParameter("surveyId")));
-		item.setQuestionId(Integer.parseInt(request.getParameter("questionId")));
+		item.setSurveyId(Long.parseLong(request.getParameter("surveyId")));
+		item.setQuestionId(Long.parseLong(request.getParameter("questionId")));
 		item.setPosition(Integer.parseInt(request.getParameter("position")));
 
 		if (SurveyquestionsService.getInstance().insert(item)) {

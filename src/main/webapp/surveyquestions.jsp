@@ -1,6 +1,6 @@
-<%@page import="proxima.informatica.academy.seventh.surveyquestion.service.SurveyquestionsService"%>
+<%@page import="centauri.academy.proxima.cerepro.entity.SurveysQuestions"%>
+<%@page import="proxima.informatica.academy.seventh.service.SurveyquestionsService"%>
 <%@page import="java.util.List"%>
-<%@page import="proxima.informatica.academy.dto.SurveyquestionsDto"%>
 <%@page import="java.nio.file.attribute.UserPrincipalLookupService"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -8,11 +8,11 @@
 <!DOCTYPE html>
 <html>
 
-<%-- <%@include file="authentication.jsp"%> --%>
+<%@include file="authentication.jsp"%>
 
 
 <head>
-
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
 
 	function abilitaBottone() {
@@ -35,6 +35,63 @@
 		document.getElementById("formSelectSurveyquestions").submit;
 	}
 	
+	
+	function initializeUpdateForm (item) {
+		console.log("initializeUpdateForm - START - " + item);
+		console.log(item);
+		document.getElementById("surveysQuestionsIdToUpdate").value = item.id;
+		document.getElementById("surveysQuestionsSurveyIdToUpdate").value = item.surveyId;
+		document.getElementById("surveysQuestionsQuestionIdToUpdate").value = item.questionId;
+		document.getElementById("surveysQuestionsPositionToUpdate").value = item.position;
+		
+	}
+	
+	function showUpdateSurveysQuestionsModal () {
+		console.log("showUpdateSurveysQuestionsModal!!!");
+		const xhttp = new XMLHttpRequest();
+		  xhttp.onload = function() {
+			  console.log(this.responseText);
+			  var role = JSON.parse(this.responseText) ;
+			  console.log(role);
+			  initializeUpdateForm (role);
+		    }
+		  var id= document.querySelector('input[name="sqId"]:checked').value;
+		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetSurveyquestionsServlet?sqId="+id, true);
+		  xhttp.send();
+	}
+	
+	function update () {
+		console.log("update - START");
+		var idToUpdate = $("#surveysQuestionsIdToUpdate").val(); 
+		var surveyIdToUpdate = $("#surveysQuestionsSurveyIdToUpdate").val(); 
+		var questionIdToUpdate = $("#surveysQuestionsQuestionIdToUpdate").val(); 
+		var positionToUpdate = $("#surveysQuestionsPositionToUpdate").val(); 
+		console.log("idToUpdate: " + idToUpdate + " - surveyIdToUpdate: " + surveyIdToUpdate + " - questionIdToUpdate: " + questionIdToUpdate + " - positionToUpdate: " + positionToUpdate);
+		
+		var itemToUpdate = {
+				"id":idToUpdate,
+				"surveyId":surveyIdToUpdate,
+				"questionId":questionIdToUpdate,
+				"position":positionToUpdate
+				}
+	
+		$.ajax({
+			type:"POST",
+			url: "http://localhost:8080/repro.admin.web/UpdateSurveyquestionsServlet",
+			data:itemToUpdate,
+			success:function(result){
+				console.log(result);
+				if(result == 'OK'){
+		        	$('#updateSurveysQuestionsModal').modal('hide');
+				}else{
+					result = 'KO';
+					$('#errorUpdateMessage').show();
+					$('#errorUpdateMessage').html(result);
+				}
+			},
+			dataType:"text"
+		});
+	}
 </script>
 <meta charset="ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -61,9 +118,9 @@
 				</tr>
 			</thead>	
 			<%
-			List<SurveyquestionsDto> listSurveyquestions = new ArrayList<SurveyquestionsDto>();
+			List<SurveysQuestions> listSurveyquestions = new ArrayList<SurveysQuestions>();
 			listSurveyquestions = SurveyquestionsService.getInstance().getAllSurveyquestions();
-			for (SurveyquestionsDto sq : listSurveyquestions) {
+			for (SurveysQuestions sq : listSurveyquestions) {
 				request.setAttribute("id", sq.getId());
 				
 			%>
@@ -95,9 +152,45 @@
 			%>
 		</table>
 		<input class="btn btn-danger" type="submit" class="button" id="buttonDelete" value="Delete" disabled onclick="javascript:deleteUser();">
-		<input class="btn btn-primary" type="submit" class="button"	id="buttonUpdate" value="Update" disabled onclick="javascript:updateUser();">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveysQuestionsModal" onclick="showUpdateSurveysQuestionsModal(); return false;">
+  MODIFICA
+</button>
 	</form>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="updateSurveysQuestionsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Update Surveys Questions</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="updateSurveysQuestionsForm">
+	      <div class="modal-body">
+			
+			  	<label>ID</label><br>
+		  		<input type="number" name="surveysQuestionsIdToUpdate" id="surveysQuestionsIdToUpdate" value=""><br>
+		  		
+		  		<label>Survey ID</label><br>
+		  		<input type="number" name="surveysQuestionsSurveyIdToUpdate" id="surveysQuestionsSurveyIdToUpdate" value=""><br>
+		  		
+		  		<label>Question ID</label><br>
+		  		<input type="number" name="surveysQuestionsQuestionIdToUpdate" id="surveysQuestionsQuestionIdToUpdate" value=""><br>
+			
+		  		<label>Position</label><br>
+		  		<input type="number" name="surveysQuestionsPositionToUpdate" id="surveysQuestionsPositionToUpdate" value=""><br>		  		
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
+	      </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
