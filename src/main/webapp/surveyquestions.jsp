@@ -21,20 +21,12 @@
  		document.getElementById("buttonUpdate").disabled = false;
 	}
 	
-	function deleteUser() {
+	function deleteSurveyqurestions() {
 		console.log("Delete");
 		document.getElementById("formSelectSurveyquestions").action = "./DeleteSurveyquestionsServlet";
 		document.getElementById("formSelectSurveyquestions").method = "post";
 		document.getElementById("formSelectSurveyquestions").submit;
 	}
-	
-	function updateUser() {
-		console.log("Update");
-		document.getElementById("formSelectSurveyquestions").action = "./updateSurveyquestions.jsp";
-		document.getElementById("formSelectSurveyquestions").method = "post";
-		document.getElementById("formSelectSurveyquestions").submit;
-	}
-	
 	
 	function initializeUpdateForm (item) {
 		console.log("initializeUpdateForm - START - " + item);
@@ -92,6 +84,8 @@
 			dataType:"text"
 		});
 	}
+	
+	
 </script>
 <meta charset="ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -151,13 +145,36 @@
 			}
 			%>
 		</table>
-		<input class="btn btn-danger" type="submit" class="button" id="buttonDelete" value="Delete" disabled onclick="javascript:deleteUser();">
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveysQuestionsModal" onclick="showUpdateSurveysQuestionsModal(); return false;">
-  MODIFICA
-</button>
+		<button type="button" id="buttonDelete" class="btn btn-danger" data-toggle="modal" data-target="#deleteSurveysQuestionsModal" disabled>Delete</button>
+		<button type="button" id="buttonUpdate" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveysQuestionsModal" disabled onclick="showUpdateSurveysQuestionsModal(); return false;">Update</button>
+
+<!--Delete Modal -->
+<div class="modal fade" id="deleteSurveysQuestionsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Surveys Questions</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input class="btn btn-danger" type="submit" value="Confirm" onclick="javascript:deleteSurveyqurestions();">
+      </div>
+    </div>
+  </div>
+</div>
 	</form>
 </div>
-<!-- Modal -->
+
+
+
+
+<!-- Update Modal -->
 <div class="modal fade" id="updateSurveysQuestionsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
