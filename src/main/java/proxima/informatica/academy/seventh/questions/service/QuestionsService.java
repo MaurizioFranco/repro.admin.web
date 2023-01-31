@@ -55,5 +55,16 @@ public class QuestionsService {
 		logger.debug("QuestionsService: INSERT - END");
 		return idReturned;
 	}
+	
+	public boolean updateQuestion(QuestionsDto qs) {
+		logger.debug("QuestionsService: UPDATE - START");
+		QuestionsDto resultObj = null;
+		resultObj = (QuestionsDto) QuestionsManager.update(qs);
+		logger.debug("QuestionsService: UPDATE - END");
+		if(resultObj != null)
+			return true;
+		else
+			return false;
+	}
 
 }

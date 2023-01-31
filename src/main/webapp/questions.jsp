@@ -70,6 +70,29 @@
 				  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id=24", true);
 				  xhttp.send();
 			}
+			
+			function update () {
+				console.log("update - START");
+				var idToUpdate = document.getElementById("questionIdToUpdate").value ; 
+				var roleLabelToUpdate = document.getElementById("questionLabelToUpdate").value ; 
+				var roleDescriptionToUpdate = document.getElementById("questionDescriptionToUpdate").value ;  
+				console.log("idToUpdate: " + idToUpdate + " - questionLabelToUpdate: " + questionLabelToUpdate + " - questionDescriptionToUpdate: " + questionDescriptionToUpdate);
+				
+				var formData = new FormData(); 
+				formData.append("id", idToUpdate);
+				formData.append("label", questionLabelToUpdate);
+				formData.append("description", questionDescriptionToUpdate);
+				
+				const xhttp = new XMLHttpRequest();
+				  xhttp.onload = function() {
+					  console.log(this.responseText);
+//		 			  var role = JSON.parse(this.responseText) ;
+//		 			  console.log(role);
+//		 			  initializeUpdateForm (role);
+				    }
+				  xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateQuestionServlet", true);
+				  xhttp.send(formData);
+			}
 
 
 		</script>
@@ -209,8 +232,7 @@
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary">Save changes</button>
-				        <input class="btn btn-primary" type="submit" id="button" value="Update">
+				        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
 				      </div>
 			      </form> 
 			    </div>

@@ -12,17 +12,19 @@
 
 
 <head>
-<script
-      src="https://code.jquery.com/jquery-3.6.0.min.js"
 
-    ></script>
+<style>
+
+
+
+</style>
 
 <script type="text/javascript">
 
 	function abilitaBottone() {
 		console.log("questa è la console");
- 		document.getElementById("deleteButton").disabled = false;
- 		document.getElementById("updateButton").disabled = false;
+ 		document.getElementById("buttonDelete").disabled = false;
+ 		document.getElementById("buttonUpdate").disabled = false;
 	}
 	
 	function deleteRole() {
@@ -65,63 +67,31 @@
 	
 	function update () {
 		console.log("update - START");
-		var idToUpdate = $("#roleIdToUpdate").val() ; 
-		var roleLabelToUpdate = $("#roleLabelToUpdate").val(); 
-		var roleDescriptionToUpdate = $("#roleDescriptionToUpdate").val(); 
-		var roleLevelToUpdate = $("#roleLevelToUpdate").val(); 
+		var idToUpdate = document.getElementById("roleIdToUpdate").value ; 
+		var roleLabelToUpdate = document.getElementById("roleLabelToUpdate").value ; 
+		var roleDescriptionToUpdate = document.getElementById("roleDescriptionToUpdate").value ; 
+		var roleLevelToUpdate = document.getElementById("roleLevelToUpdate").value ; 
 		console.log("idToUpdate: " + idToUpdate + " - roleLabelToUpdate: " + roleLabelToUpdate + " - roleDescriptionToUpdate: " + roleDescriptionToUpdate + " - roleLevelToUpdate: " + roleLevelToUpdate);
 		
-// 		var formData = new FormData(); 
-// 		formData.append("id", idToUpdate);
-// 		formData.append("label", roleLabelToUpdate);
-// 		formData.append("description", roleDescriptionToUpdate);
-// 		if (roleLevelToUpdate!=null) {		
-// 			formData.append("level", roleLevelToUpdate);
-// 		}
+		var formData = new FormData(); 
+		formData.append("id", idToUpdate);
+		formData.append("label", roleLabelToUpdate);
+		formData.append("description", roleDescriptionToUpdate);
+		if (roleLevelToUpdate!=null) {		
+			formData.append("level", roleLevelToUpdate);
+		}
 		
 	    
 		
-// 		const xhttp = new XMLHttpRequest();
-// 		  xhttp.onload = function() {
-// 			  console.log(this.responseText);
-// // 			  var role = JSON.parse(this.responseText) ;
-// // 			  console.log(role);
-// // 			  initializeUpdateForm (role);
-// 		    }
-        var itemToUpdate = {
-        		    "id":idToUpdate, 
-        		    "label": roleLabelToUpdate,
-        		    "description": roleDescriptionToUpdate,
-        		    "level": roleLevelToUpdate
-        		    }
-        
-        
-// 		  xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateRoleServlet", true);
-// 		  xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
-// 		  for (var key of formData.entries()) {
-// 				console.log(key[0] + ', ' + key[1])
-// 			}
-// 		  xhttp.send(formData);
-		  
-// 		  xhttp.send(data);
-		$.ajax({
-			  type: "POST",
-			  url: "http://localhost:8080/repro.admin.web/UpdateRoleServlet",
-			  data: itemToUpdate,
-			  success: function (responseText) {
-				  console.log(responseText);
-				  if (responseText==='OK') {					 
-					  $('#errorUpdateMessage').show();
-					  $('#errorUpdateMessage').html(responseText);
-				  } else {
-					  $('#updateRoleModal').modal('hide');
-					  
-				  }
-			  },
-			  dataType: "text"
-			});
-        
-		
+		const xhttp = new XMLHttpRequest();
+		  xhttp.onload = function() {
+			  console.log(this.responseText);
+// 			  var role = JSON.parse(this.responseText) ;
+// 			  console.log(role);
+// 			  initializeUpdateForm (role);
+		    }
+		  xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateRoleServlet", true);
+		  xhttp.send(formData);
 	}
 	
 	
@@ -187,15 +157,15 @@
 			}
 			%>
 		</table>
-		
-		<input class="btn btn-danger" type="submit" class="button" id="deleteButton" value="Delete" disabled onclick="javascript:deleteRole();">
+		<input class="btn btn-danger" type="submit" class="button" id="buttonDelete" value="Delete" disabled onclick="javascript:deleteRole();">
 		<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" id="updateButton" data-target="#updateRoleModal" onclick="showUpdateRoleModal(); return false;">
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateRoleModal" onclick="showUpdateRoleModal(); return false;">
   MODIFICA
 </button>
 
 	</form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
@@ -225,7 +195,6 @@
 		  		<input type="number" name="roleLevelToUpdate" id="roleLevelToUpdate" value=""><br>		  		
 	      </div>
 	      <div class="modal-footer">
-	        <label id="errorUpdateMessage" style="display:none;">ERRORE LA MODIFICA NON E' ANDATA A BUON FINE</label>
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
 	      </div>
