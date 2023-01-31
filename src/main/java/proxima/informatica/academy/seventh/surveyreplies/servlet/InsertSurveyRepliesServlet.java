@@ -24,6 +24,7 @@ import proxima.informatica.academy.seventh.surveyreplies.service.SurveyRepliesSe
 
 /**
  * Servlet implementation class LoginServlet
+ * @author Giammarco Lucchetti
  */
 @WebServlet("/InsertSurveyRepliesServlet")
 public class InsertSurveyRepliesServlet extends HttpServlet {
@@ -38,25 +39,12 @@ public class InsertSurveyRepliesServlet extends HttpServlet {
 	}
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		System.out.println("do get start");
-//		System.out.println(request.getParameter("username"));
-//		System.out.println(request.getParameter("password"));
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-//		doPost(request, response);
-	}
-
-	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		logger.debug("InsertSurveyServlet-START");
 		String survey_id = request.getParameter("survey_id_input");
 		String user_id = request.getParameter("user_id_input");
 		String answers = request.getParameter("answers_input");
@@ -66,6 +54,7 @@ public class InsertSurveyRepliesServlet extends HttpServlet {
 		try {
 			//rowsUpdate = insertNewUser(email,password,firstName,lastName,birthDate);
 			value = insertNewSurveyReplies(survey_id,user_id,answers,pdfFileName,points);
+			logger.debug("Insert value  = "+value);
 		} catch (ClassNotFoundException | SQLException | IOException | ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,11 +62,13 @@ public class InsertSurveyRepliesServlet extends HttpServlet {
 		
 		try {
 			if (value > 0) {
-				request.getRequestDispatcher("surveyreplies.jsp").forward(request, response);
+//				request.getRequestDispatcher("surveyreplies.jsp").forward(request, response);
+				response.getWriter().append("OK");
 			} else {
-				request.getRequestDispatcher("insertSurveyreplies.jsp").forward(request, response);
+//				request.getRequestDispatcher("insertSurveyreplies.jsp").forward(request, response);
+				response.getWriter().append("KO");
 			}
-		} catch (IOException | ServletException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
