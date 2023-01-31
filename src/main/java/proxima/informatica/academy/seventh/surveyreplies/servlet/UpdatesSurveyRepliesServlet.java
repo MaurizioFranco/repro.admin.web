@@ -5,11 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.AbstractCommonDto;
-import proxima.informatica.academy.dto.SurveyrepliesDto;
-import proxima.informatica.academy.dto.UserDto;
-import proxima.informatica.academy.hibernate.SurveyrepliesManager;
-import proxima.informatica.academy.seventh.surveyreplies.service.SurveyRepliesService;
+import proxima.informatica.academy.seventh.service.SurveyRepliesService;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -20,6 +16,8 @@ import java.time.LocalDateTime;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import centauri.academy.proxima.cerepro.entity.SurveysReplies;
 
 
 /**
@@ -78,18 +76,14 @@ public class UpdatesSurveyRepliesServlet extends HttpServlet {
 	
 	private int updateSurveyReplies(int id,String survey_id,String user_id,String answers,String pdfFileName,String points) throws ClassNotFoundException, SQLException, IOException {
 		int value = 0;
-		SurveyrepliesDto surveyRepliesToInsert = SurveyRepliesService.getInstance().selectSurveyrepliesById(id);
+		SurveysReplies surveyRepliesToInsert = SurveyRepliesService.getInstance().selectSurveyrepliesById(id);
 		Timestamp SurveyRepliesInsertedTime = Timestamp.valueOf(LocalDateTime.now());
-//		BigInteger surveyid = new BigInteger(survey_id);
-//		BigInteger userid = new BigInteger(user_id);
-//		surveyRepliesToInsert.setSurvey_id(surveyid);
-//		surveyRepliesToInsert.setUser_id(userid);
-		surveyRepliesToInsert.setStarttime(SurveyRepliesInsertedTime);
-		surveyRepliesToInsert.setEndtime(SurveyRepliesInsertedTime);
-		surveyRepliesToInsert.setAnswers(answers);
-		surveyRepliesToInsert.setPdffilename(pdfFileName);
+		surveyRepliesToInsert.setStartTime(SurveyRepliesInsertedTime);
+		surveyRepliesToInsert.setEndTime(SurveyRepliesInsertedTime);
+		surveyRepliesToInsert.setAnswer(answers);
+		surveyRepliesToInsert.setPdfFileName(pdfFileName);
 		surveyRepliesToInsert.setPoints(points);
-		if(SurveyRepliesService.getInstance().updateSurveyReplies(surveyRepliesToInsert)!= null) {
+		if(SurveyRepliesService.getInstance().updateSurveyReplies(surveyRepliesToInsert)) {
 			value = 1;
 		}
 		return value;

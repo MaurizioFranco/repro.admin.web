@@ -5,15 +5,15 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.SurveyrepliesDto;
-import proxima.informatica.academy.hibernate.SurveyrepliesManager;
-import proxima.informatica.academy.seventh.surveyreplies.service.SurveyRepliesService;
+import proxima.informatica.academy.seventh.service.SurveyRepliesService;
 
 import java.io.IOException;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import centauri.academy.proxima.cerepro.entity.SurveysReplies;
 
 
 /**
@@ -70,7 +70,7 @@ public class DeleteSurveyRepliesServlet extends HttpServlet {
 	
 	private boolean deleteRowSurveyReplies(int id) throws ClassNotFoundException, SQLException, IOException {
 		boolean value = false;
-		SurveyrepliesDto survey_replies = SurveyrepliesManager.selectById(id);
+		SurveysReplies survey_replies = SurveyRepliesService.getInstance().selectSurveyrepliesById(id);
 		logger.debug("" + survey_replies);
 		SurveyRepliesService.getInstance().deleteSurveyreplies(survey_replies);
 		if(SurveyRepliesService.getInstance().selectSurveyrepliesById(id) == null) {
