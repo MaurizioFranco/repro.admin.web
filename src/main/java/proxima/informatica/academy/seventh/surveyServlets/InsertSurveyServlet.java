@@ -1,14 +1,15 @@
-package proxima.informatica.academy.seventh.surveyquestion.surveyServlets;
+package proxima.informatica.academy.seventh.surveyServlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.SurveyDto;
-import proxima.informatica.academy.seventh.surveyquestion.service.SurveyService;
+import proxima.informatica.academy.seventh.service.SurveyService;
 
 import java.io.IOException;
+
+import centauri.academy.proxima.cerepro.entity.Surveys;
 
 @WebServlet("/InsertSurveyServlet")
 public class InsertSurveyServlet extends HttpServlet {
@@ -24,13 +25,13 @@ public class InsertSurveyServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SurveyDto survey = new SurveyDto();
+		Surveys survey = new Surveys();
 
 		survey.setLabel(request.getParameter("label"));
-		survey.setTime(Long.valueOf(request.getParameter("time")));
+		survey.setTime(Integer.valueOf(request.getParameter("time")));
 		survey.setDescription(request.getParameter("description"));
 
-		if (SurveyService.getInstance().insertSurvey(survey) != 0) {
+		if (SurveyService.getInstance().insert(survey) == true) {
 			request.setAttribute("insertSurvey", "OK");
 			request.getRequestDispatcher("surveys.jsp").forward(request, response);
 		} else {
