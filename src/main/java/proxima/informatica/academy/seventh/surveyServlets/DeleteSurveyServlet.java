@@ -39,10 +39,10 @@ public class DeleteSurveyServlet extends HttpServlet {
 		SurveyService.getInstance().deleteSurvey(id);
 		
 		if(SurveyService.getInstance().selectById(id) == null) {
-			request.setAttribute("deleteSurvey", "OK");
+			request.setAttribute("deleteStatus", "OK");
 			request.getRequestDispatcher("surveys.jsp").forward(request, response);
 		}else {
-			request.setAttribute("deleteSurvey", "KO");
+			request.setAttribute("deleteStatus", "KO");
 			request.getRequestDispatcher("surveys.jsp").forward(request, response);
 		}
 	}

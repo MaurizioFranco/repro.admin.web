@@ -44,10 +44,10 @@ public class DeleteQuestionServlet extends HttpServlet {
 		logger.debug("DeleteRoleServlet.DEBUG - responseValue: " + risposta);
 		if(SurveyService.getInstance().selectById(idToCancel) == null) {
 			request.setAttribute("deleteStatus", "OK");
-			request.getRequestDispatcher("surveys.jsp").forward(request, response);
+			request.getRequestDispatcher("question.jsp").forward(request, response);
 		}else {
 			request.setAttribute("deleteStatus", "KO");
-			request.getRequestDispatcher("surveys.jsp").forward(request, response);
+			request.getRequestDispatcher("question.jsp").forward(request, response);
 		}
 	}
 
