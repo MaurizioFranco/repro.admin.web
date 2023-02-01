@@ -40,6 +40,14 @@
 		document.getElementById("formSelectCandidates").submit;
 	}
 	
+	function insertCandidates() {
+		console.log("Insert");
+		document.getElementById("formSelectCandidates").action = "./insertCandidates.jsp";
+		document.getElementById("formSelectCandidates").method = "post";
+		document.getElementById("formSelectCandidates").submit;
+	}
+	
+	//INITIALIZE UPDATE FORM
 	function initializeUpdateForm (item) {
 		console.log("initializeUpdateForm - START - " + item);
 		console.log(item);
@@ -53,9 +61,25 @@
 		document.getElementById("candidateRegdateToUpdate").value = item.regdate;
 		document.getElementById("candidateInserted_byToUpdate").value = item.inserted_by;
 		document.getElementById("candidateCandidate_state_codeToUpdate").value = item.candidate_state_code;
-		
 	}
 	
+	//INITIALIZE INSERT FORM
+	function initializeInsertForm (item) {
+		console.log("initializeInsertForm - START - " + item);
+		console.log(item);
+		document.getElementById("candidateIdToInsert").value = item.id;
+		document.getElementById("candidateUser_idToInsert").value = item.user_id;
+		document.getElementById("candidateCourse_codeToInsert").value = item.course_code;
+		document.getElementById("candidateCandidacy_state_timeToInsert").value = item.candacy_state_time;
+		document.getElementById("candidateFirstnameToInsert").value = item.firstname;
+		document.getElementById("candidateLastnameToInsert").value = item.lastname;
+		document.getElementById("candidateEmailToInsert").value = item.email;
+		document.getElementById("candidateRegdateToInsert").value = item.regdate;
+		document.getElementById("candidateInserted_byToInsert").value = item.inserted_by;
+		document.getElementById("candidateCandidate_state_codeToInsert").value = item.candidate_state_code;
+	}
+	
+	//SHOW UPDATE CANDIDATES MODAL
 	function showUpdateCandidatesModal () {
 		console.log("showUpdateCandidatesModal!!!");
 		const xhttp = new XMLHttpRequest();
@@ -69,6 +93,21 @@
 		  xhttp.send();
 	}
 	
+	//SHOW INSERT CANDIDATES MODAL
+	function showInsertCandidatesModal () {
+		console.log("showInsertCandidatesModal!!!");
+		const xhttp = new XMLHttpRequest();
+		  xhttp.onload = function() {
+			  console.log(this.responseText);
+			  var candidate = JSON.parse(this.responseText) ;
+			  console.log(candidate);
+			  initializeUpdateForm (candidate);
+		    }
+		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetCandidatesServlet?id=14", true);
+		  xhttp.send();
+	}
+	
+	//UPDATE
 	function update () {
 		console.log("update - START");
 		var idToUpdate = document.getElementById("candidateIdToUpdate").value ; 
@@ -120,6 +159,58 @@
 		  xhttp.send(formData);
 	}
 	
+	//INSERT
+	function insert () {
+		console.log("update - START");
+		var idToUpdate = document.getElementById("candidateIdToInsert").value ; 
+		var candidateUser_idToInsert = document.getElementById("candidateUser_idToInsert").value ; 
+		var candidateCourse_codeToInsert = document.getElementById("candidateCourse_codeToInsert").value ; 
+		var candidateCandidacy_state_timeToInsert = document.getElementById("candidateCandidacy_state_timeToInsert").value ; 
+		var candidateFirstnameToInsert = document.getElementById("candidateFirstnameToInsert").value ; 
+		var candidateLastnameToInsert = document.getElementById("candidateLastnameToInsert").value ; 
+		var candidateEmailToInsert = document.getElementById("candidateEmailToInsert").value ; 
+		var candidateRegdateToInsert = document.getElementById("candidateRegdateToInsert").value ; 
+		var candidateInserted_byToInsert = document.getElementById("candidateInserted_byToInsert").value ; 
+		var candidateCandidate_state_codeToInsert = document.getElementById("candidateCandidate_state_codeToInsert").value ; 
+		console.log("idToInsert: " + idToInsert + 
+					" - candidateUser_idToInsert: " + candidateUser_idToInsert + 
+					" - candidateCourse_codeToInsert: " + candidateCourse_codeToInsert + 
+					" - candidateCandidacy_state_timeToInsert: " + candidateCandidacy_state_timeToInsert + 
+					" - candidateFirstnameToInsert: " + candidateFirstnameToInsert + 
+					" - candidateLastnameToInsert: " + candidateLastnameToInsert + 
+					" - candidateEmailToInsert: " + candidateEmailToInsert + 
+					" - candidateRegdateToInsert: " + candidateRegdateToInsert + 
+					" - candidateInserted_byToInsert: " + candidateInserted_byToInsert + 
+					" - candidateCandidate_state_codeToInsert: " + candidateCandidate_state_codeToInsert);
+		
+		
+		var formData = new FormData(); 
+		formData.append("id", idToInsert);
+		formData.append("user_id", candidateUser_idToInsert);
+		formData.append("course_code", candidateCourse_codeToInsert);
+		formData.append("candidacy_state_time", candidateCandidacy_state_timeToInsert);
+		formData.append("firstname", candidateFirstnameToInsert);
+		formData.append("lastname", candidateLastnameToInsert);
+		formData.append("email", candidateEmailToInsert);
+		formData.append("regdate", candidateRegdateToInsert);
+		formData.append("inserted_by", candidateInserted_byToInsert);
+		formData.append("candidate_state_code", candidateCandidate_state_codeToInsert);
+		if (candidateLevelToInsert!=null) {		
+			formData.append("level", candidateLevelToInsert);
+		}
+		
+	    
+		const xhttp = new XMLHttpRequest();
+		  xhttp.onload = function() {
+			  console.log(this.responseText);
+/*			  var candidate = JSON.parse(this.responseText) ;
+			  console.log(candidate);
+			  initializeUpdateForm (candidate);*/
+		    }
+		  xhttp.open("POST", "http://localhost:8080/repro.admin.web/InsertCandidatesServlet", true);
+		  xhttp.send(formData);
+	}
+	
 	
 </script>
 <meta charset="ISO-8859-1">
@@ -134,7 +225,10 @@
 <body>
 	<%@include file="header.jsp"%>
 <div class="container-fluid">
-	<h1>Candidates List</h1>
+	<h1 style="text-align: left;">Candidates List</h1>
+	<!-- Button trigger Insert Modal -->
+	<div style="text-align: right;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertCandidatesModal"
+	onclick="showInsertCandidatesModal(); return false;">+</button></div>
 	<form id="formSelectCandidates">
 		<table class="table table-striped table-hover  table-bordered">
 			<thead class="thead-dark">
@@ -217,7 +311,7 @@
 			%>
 		</table>
 		<input class="btn btn-danger" type="submit" class="button" id="buttonDelete" value="Delete" disabled onclick="javascript:deleteCandidates();">
-		<!-- Button trigger modal -->
+		<!-- Button trigger Update Modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateCandidatesModal" onclick="showUpdateCandidatesModal(); return false;">
   MODIFICA
 </button>
@@ -228,12 +322,12 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
-<!-- Modal -->
+<!-- Update Modal -->
 <div class="modal fade" id="updateCandidatesModal" tabindex="-1" candidate="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" candidate="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Update Modal</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -274,6 +368,58 @@
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
+	      </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
+<!-- Insert Modal -->
+<div class="modal fade" id="insertCandidatesModal" tabindex="-1" candidate="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" candidate="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Insert Modal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="insertCandidatesForm">
+	      <div class="modal-body">
+			
+			  	<label>ID</label><br>
+		  		<input type="number" name="candidateIdToInsert" id="candidateIdToInsert" value=""><br>
+		  		
+		  		<label>User ID</label><br>
+		  		<input type="text" name="candidateUser_idToInsert" id="candidateUser_idToInsert" value=""><br>
+		  		
+		  		<label>Course Code</label><br>
+		  		<input type="text" name="candidateCourse_codeToInsert" id="candidateCourse_codeToInsert" value=""><br>
+		  		
+		  		<label>Candidacy State Time</label><br>
+		  		<input type="text" name="candidateCandidacy_state_timeToInsert" id="candidateCandidacy_state_timeToInsert" value=""><br>
+		  		
+		  		<label>First Name</label><br>
+		  		<input type="text" name="candidateFirstnameToInsert" id="candidateFirstnameToInsert" value=""><br>
+		  		
+		  		<label>Last Name</label><br>
+		  		<input type="text" name="candidateLastnameToInsert" id="candidateLastnameToInsert" value=""><br>
+			
+		  		<label>Email</label><br>
+		  		<input type="number" name="candidateEmailToInsert" id="candidateEmailToInsert" value=""><br>	
+		  		
+		  		<label>Regdate</label><br>
+		  		<input type="number" name="candidateRegdateToInsert" id="candidateRegdateToInsert" value=""><br>
+		  		
+		  		<label>Inserted By</label><br>
+		  		<input type="number" name="candidateInserted_byToInsert" id="candidateInserted_byToInsert" value=""><br>
+		  		
+		  		<label>Candidate State Code</label><br>
+		  		<input type="number" name="candidateCandidate_state_codeToInsert" id="candidateCandidate_state_codeToInsert" value=""><br>	  		
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onClick="update();">Save</button>
 	      </div>
       </form> 
     </div>
