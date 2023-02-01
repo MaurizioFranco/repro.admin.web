@@ -1,14 +1,21 @@
 package proxima.informatica.academy.seventh.service;
 
+import java.io.Serializable;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.entity.Roles;
 import centauri.academy.proxima.cerepro.repository.RolesRepository;
 
-public class RoleService {
+@Named
+@ApplicationScoped
+public class RoleService implements Serializable {
+	
+	
 
 	@Inject
 	RolesRepository repository ;
