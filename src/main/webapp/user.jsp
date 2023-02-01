@@ -37,6 +37,13 @@
 		document.getElementById("formSelectUser").submit;
 	}
 	
+	function deleteUser(){
+		console.log("delete");
+		document.getElementById("formSelectUser").method = "POST";
+		document.getElementById("formSelectUser").action = "./DeleteUserServlet";
+		document.getElementById("formSelectUser").submit();
+	}
+	
 </script>
 <meta charset="ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -96,8 +103,29 @@
 			}
 			%>
 		</table>
-		<input class="btn btn-danger" type="submit" class="button" id="buttonDelete" value="Delete" disabled onclick="javascript:deleteUser();">
+		<button type="button" class="btn btn-danger" id=buttonDelete disabled data-toggle="modal" data-target="#deleteModal">Cancella</button>
 		<input class="btn btn-primary" type="submit" class="button"	id="buttonUpdate" value="Update" disabled onclick="javascript:updateUser();">
+	<!-- Modal DELETE-->
+		<div class="modal" id=deleteModal tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Eliminazione User</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p>Sei sicuro di volre rimuovere questo user?</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" onclick="javascript:deleteUser();">SI</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	
 	</form>
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

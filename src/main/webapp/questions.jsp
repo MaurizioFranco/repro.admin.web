@@ -226,7 +226,7 @@
 				%>
 			    <tbody>
 			    	<tr>
-				    	<td><input type="radio" name="selectedUserId" value="<%out.print(item.getId());%>" onclick="javascript:abilitaButton()"></td>
+				    	<td><input type="radio" name="id" value="<%out.print(item.getId());%>" onclick="javascript:abilitaButton()"></td>
 				    	<td><%= item.getId() %></td>
 		 		    	<td><%= item.getLabel() %></td>
 		 		    	<td><%= item.getDescription() %></td>
