@@ -1,7 +1,8 @@
 package proxima.informatica.academy.seventh.service;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.entity.Roles;
@@ -9,10 +10,11 @@ import centauri.academy.proxima.cerepro.repository.RolesRepository;
 
 public class RoleService {
 
-	RolesRepository roleRepository = null ;
+	@Inject
+	RolesRepository repository ;
 	
 	private RoleService() {
-		roleRepository = new RolesRepository () ; 
+//		roleRepository = new RolesRepository () ; 
 	}
 
 	private static RoleService instance;
@@ -27,28 +29,28 @@ public class RoleService {
 	public boolean insert(Roles role) {
 		boolean response = false;
 
-		if (roleRepository.create(role) > 0)
+		if (repository.create(role) > 0)
 			response = true;
 		return response;
 	}
 
 	public Roles selectById(int id) {
 		Roles roleRetrived = new Roles();
-		roleRetrived = (Roles)roleRepository.findById((long)id);
+		roleRetrived = (Roles)repository.findById((long)id);
 
 		return roleRetrived;
 	}
 
 	public List<EntityInterface> getAllRoles() {
-		return roleRepository.findAll();
+		return repository.findAll();
 	}
 
 	public boolean updateRole(Roles role) {
-		return roleRepository.update(role) ;
+		return repository.update(role) ;
 	}
 
 	public boolean deleteById(int id) {
-		return roleRepository.delete(id) ;
+		return repository.delete(id) ;
 	}
 
 }
