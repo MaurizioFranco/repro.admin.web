@@ -3,6 +3,10 @@ package proxima.informatica.academy.seventh.service;
 import centauri.academy.proxima.cerepro.entity.CandidateStates;
 import centauri.academy.proxima.cerepro.repository.CandidateStatesRepository;
 
+/**
+ * @author MarcoFabretti
+ */
+
 public class CandidateStatesService {
 
 	private CandidateStatesRepository candidateStatesRepository;
@@ -31,7 +35,6 @@ public class CandidateStatesService {
 	
 	public boolean insert(CandidateStates candidate) {
 		boolean response = false;
-
 		if (candidateStatesRepository.create(candidate)>1)
 			response = true;
 		return response;

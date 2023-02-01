@@ -16,6 +16,9 @@ import proxima.informatica.academy.seventh.service.CandidatesService;
 /**
  * Servlet implementation class DeleteServlet
  */
+/**
+ * @author MarcoFabretti
+ */
 public class DeleteCandidateStatesServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
