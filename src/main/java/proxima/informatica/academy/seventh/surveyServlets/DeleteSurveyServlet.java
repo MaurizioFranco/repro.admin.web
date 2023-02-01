@@ -1,17 +1,18 @@
-package proxima.informatica.academy.seventh.surveyquestion.surveyServlets;
+package proxima.informatica.academy.seventh.surveyServlets;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.SurveyDto;
-import proxima.informatica.academy.seventh.surveyquestion.service.SurveyService;
+import proxima.informatica.academy.seventh.service.SurveyService;
 
 import java.io.IOException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import centauri.academy.proxima.cerepro.entity.Surveys;
 
 /**
  * 
@@ -33,11 +34,11 @@ public class DeleteSurveyServlet extends HttpServlet {
 		logger.debug("DeleteSurveyServlet.START");
 		int surveyId = Integer.parseInt(request.getParameter("surveyId"));
 		logger.debug("DeleteSurveyServlet DEBUG - Survey ID to delete: "+surveyId);
-		SurveyDto surveyToDelete = SurveyService.getInstance().selectSurveyById(surveyId);
+		Surveys surveyToDelete = SurveyService.getInstance().selectById(surveyId);
 		logger.debug("DeleteSurveyServlet DEBUG - Survey to delete: "+surveyToDelete);
-		SurveyService.getInstance().deleteSurvey(surveyToDelete);
+		SurveyService.getInstance().deleteSurvey(surveyId);
 		
-		if(SurveyService.getInstance().selectSurveyById(surveyId) == null) {
+		if(SurveyService.getInstance().selectById(surveyId) == null) {
 			request.setAttribute("deleteSurvey", "OK");
 			request.getRequestDispatcher("surveys.jsp").forward(request, response);
 		}else {
