@@ -9,7 +9,11 @@ import centauri.academy.proxima.cerepro.entity.Questions;
 import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.repository.QuestionsRepository;
 
-
+/**
+ * 
+ * @author DaimCod
+ *
+ */
 public class QuestionsService {
 	private final static Logger logger = LoggerFactory.getLogger(QuestionsService.class);
 	private QuestionsRepository questionRepository = new QuestionsRepository();

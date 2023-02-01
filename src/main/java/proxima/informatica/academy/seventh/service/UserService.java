@@ -104,8 +104,13 @@ public class UserService {
 		return response;
 	}
 
-	public boolean deleteById(int id) {
-		return userRepository.delete(id) ;
+	public boolean deleteUser(int id) {
+		boolean response = false;
+
+		if (userRepository.delete(id))
+			response = true;
+
+		return response;
 	}
 
 }

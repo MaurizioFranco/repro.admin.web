@@ -47,7 +47,8 @@ public class DeleteSurveyRepliesServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("DeleteSurveyServlet-START");
-		int id = Integer.parseInt(request.getParameter("id"));
+		String idSelected = request.getParameter("selectedSurveyrepliesId");
+		int id = Integer.parseInt(idSelected);
 		boolean result = false;
 		
 		try {

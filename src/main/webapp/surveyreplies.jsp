@@ -225,7 +225,7 @@ if(request.getAttribute("loginMessage") != null){
         <p>Sei sicuro di volre rimuovere questo Survey Replies</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="javascript:deleteSurveyreplies();">SI</button>
+        <button type="button" class="btn btn-primary" onclick="javascript:ma ();">SI</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
       </div>
     </div>
