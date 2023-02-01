@@ -1,6 +1,5 @@
 package proxima.informatica.academy.seventh.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import centauri.academy.proxima.cerepro.entity.EntityInterface;

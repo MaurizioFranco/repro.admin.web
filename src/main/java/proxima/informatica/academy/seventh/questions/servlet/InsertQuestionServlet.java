@@ -37,23 +37,18 @@ public class InsertQuestionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("InsertQuestionServlet.START");
 		
-		String label = request.getParameter("label");
-		String description = request.getParameter("description");
-		
-		logger.debug("InsertQuestionServlet.DEBUG - DEBUG PARAMETRI.......");
-		
 		Questions qs = new Questions();
-		qs.setLabel(label);
-		qs.setDescription(description);
+		qs.setLabel(request.getParameter("label"));
+		qs.setDescription(request.getParameter("description"));
+		boolean responseValue = QuestionsService.getIstance().insert(qs);
+
+		logger.debug("InsertQuestionServlet - END");
+		logger.debug("InsertQuestionServlet.DEBUG - responseValue: " + responseValue);
 		
-		long result = QuestionsService.getIstance().insert(qs);
-		
-		logger.debug("InsertQuestionServlet.DEBUG - responseValue: " + result);
-		if (result > 0) {
+		if (responseValue) {
 			response.getWriter().append("OK");
 		} else {
 			response.getWriter().append("KO");
 		}
 	}
-
 }

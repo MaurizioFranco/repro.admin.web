@@ -11,7 +11,6 @@ import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.entity.User;
 import centauri.academy.proxima.cerepro.repository.UserRepository;
 import proxima.informatica.academy.seventh.user.result.LoginResult;
-import proxima.informatica.academy.seventh.user.servlet.LoginServlet;
 
 public class UserService {
 

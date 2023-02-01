@@ -47,13 +47,16 @@ public class QuestionsService {
 		return deleted;
 	}
 	
-	public long insert(Questions question) {
+	public boolean insert(Questions question) {
 		logger.debug("QuestionsService: INSERT - START");
-		long idReturned = 0;
-		idReturned = questionRepository.create(question);
+		boolean response = false;
+		if (questionRepository.create(question)>1)
+			response = true;
 		logger.debug("QuestionsService: INSERT - END");
-		return idReturned;
+		return response;
 	}
+	
+	
 	
 	public boolean updateQuestion(Questions qs) {
 		logger.debug("QuestionsService: UPDATE - START");
