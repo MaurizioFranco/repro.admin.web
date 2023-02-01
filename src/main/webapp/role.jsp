@@ -42,6 +42,13 @@
 		document.getElementById("formSelectRole").submit;
 	}
 	
+// 	function insertRole() {
+// 		console.log("Insert");
+// 		document.getElementById("formSelectRole").action = "./insertRole.jsp";
+// 		document.getElementById("formSelectRole").method = "post";
+// 		document.getElementById("formSelectRole").submit;
+// 	}
+	
 	function initializeUpdateForm (item) {
 		console.log("initializeUpdateForm - START - " + item);
 		console.log(item);
@@ -49,8 +56,15 @@
 		document.getElementById("roleLabelToUpdate").value = item.label;
 		document.getElementById("roleDescriptionToUpdate").value = item.description;
 		document.getElementById("roleLevelToUpdate").value = item.level;
-		
-		
+	}
+	
+	function initializeInsertForm (item) {
+		console.log("initializeInsertForm - START - " + item);
+		console.log(item);
+		document.getElementById("roleIdToInsert").value = item.id;
+		document.getElementById("roleLabelToInsert").value = item.label;
+		document.getElementById("roleDescriptionToInsert").value = item.description;
+		document.getElementById("roleLevelToInsert").value = item.level;
 	}
 	
 	function showUpdateRoleModal () {
@@ -63,8 +77,22 @@
 			  initializeUpdateForm (role);
 		    }
 		  var id= document.querySelector('input[name="roleRadioId"]:checked').value;
-		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetRoleServlet?id="+id, true);
+		  xhttp.open("GET", "http://localhost:8080/repro.admin.giacomo/GetRoleServlet?id="+id, true);
 		  xhttp.send();
+	}
+	
+	function showInsertRoleModal () {
+		console.log("showInsertRoleModal!!!");
+		const xhttp = new XMLHttpRequest();
+		  xhttp.onload = function() {
+			  console.log(this.responseText);
+			  var role = JSON.parse(this.responseText) ;
+			  console.log(role);
+			  initializeInsertForm (role);
+		    }
+		  //var id= document.querySelector('input[name="roleRadioId"]:checked').value;
+		  //xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetRoleServlet?id="+id, true);
+		  //xhttp.send();
 	}
 	
 	function update () {
@@ -123,7 +151,44 @@
 	}
 	
 	
-	
+	function insert () {
+		console.log("insert - START");
+		
+		/*var idToInsert = document.getElementById("roleIdToInsert").value ; 
+		var roleLabelToInsert = document.getElementById("roleLabelToInsert").value ; 
+		var roleDescriptionToInsert = document.getElementById("roleDescriptionToInsert").value ; 
+		var roleLevelToInsert = document.getElementById("roleLevelToInsert").value ;*/
+		
+		var roleLabelToInsert = $("#roleLabelToInsert").val();
+		var roleDescriptionToInsert = $("#roleDescriptionToInsert").val();
+		var roleLevelToInsert = $("#roleLevelToInsert").val();
+		
+		console.log("roleLabelToInsert: " + roleLabelToInsert + " - roleDescriptionToInsert: " + roleDescriptionToInsert + " - roleLevelToInsert: " + roleLevelToInsert);
+		
+		var itemToInsert = {
+        		"label":roleLabelToInsert,
+        		"description":roleDescriptionToInsert,
+        		"level":roleLevelToInsert
+        }
+        
+        $.ajax({
+			  type: "POST",
+			  url: "http://localhost:8080/repro.admin.web/InsertRoleServlet",
+			  data: itemToInsert,
+			  success: function (responseText) {
+				  console.log(responseText);
+				  if (responseText==='OK') {					 
+					  $('#insertRoleModal').modal('hide');		
+					  location.reload();
+// 					  $('#errorUpdateMessage').show();
+// 					  $('#errorUpdateMessage').html(responseText);
+// 				  } else {
+					  
+				  }
+			  },
+			  dataType: "text"
+			});
+	}
 	
 	
 </script>
@@ -139,7 +204,11 @@
 <body>
 	<%@include file="header.jsp"%>
 <div class="container-fluid">
-	<h1>Role List</h1>
+	<h1 style="text-align: left;">Roles List</h1>
+	<!-- Button trigger Insert Modal -->
+	<div style="text-align: right;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertRoleModal"
+	onclick="showInsertRoleModal(); return false;">+</button></div>
+	<br>
 	<form id="formSelectRole">
 		<table class="table table-striped table-hover  table-bordered">
 			<thead class="thead-dark">
@@ -196,12 +265,12 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
-<!-- Modal -->
+<!-- Update Modal -->
 <div class="modal fade" id="updateRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Update Modal</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -212,18 +281,49 @@
 			  	<label>ID</label><br>
 		  		<input type="number" name="roleIdToUpdate" id="roleIdToUpdate" value=""><br>
 		  		
-		  		<label>First Name</label><br>
+		  		<label>Label</label><br>
 		  		<input type="text" name="roleLabelToUpdate" id="roleLabelToUpdate" value=""><br>
 		  		
-		  		<label>Last Name</label><br>
+		  		<label>Description</label><br>
 		  		<input type="text" name="roleDescriptionToUpdate" id="roleDescriptionToUpdate" value=""><br>
 			
-		  		<label>Email</label><br>
+		  		<label>Level</label><br>
 		  		<input type="number" name="roleLevelToUpdate" id="roleLevelToUpdate" value=""><br>		  		
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
+	      </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
+<!-- Insert Modal -->
+<div class="modal fade" id="insertRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Insert Modal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="insertRoleForm">
+	      <div class="modal-body">
+			
+		  		<label>Label</label><br>
+		  		<input type="text" name="roleLabelToInsert" id="roleLabelToInsert" value=""><br>
+		  		
+		  		<label>Description</label><br>
+		  		<input type="text" name="roleDescriptionToInsert" id="roleDescriptionToInsert" value=""><br>
+			
+		  		<label>Level</label><br>
+		  		<input type="number" name="roleLevelToInsert" id="roleLevelToInsert" value=""><br>		  		
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onClick="insert(); return false;">Save</button>
 	      </div>
       </form> 
     </div>

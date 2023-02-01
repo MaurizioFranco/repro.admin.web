@@ -24,7 +24,7 @@
   		<input type="text" name="course_code"><br>
   		
   		<label>Candidacy Date Time</label><br>
-  		<input type="number" name="candidacy_state_time"><br>
+  		<input type="date" name="candidacy_state_time"><br>
 	
   		<label>First Name</label><br>
   		<input type="text" name="firstname"><br>
@@ -34,9 +34,6 @@
   		
   		<label>Email</label><br>
   		<input type="text" name="email"><br>
-  		
-  		<label>Registration Date</label><br>
-  		<input type="number" name="regdate"><br>
 	
   		<label>Inserted By</label><br>
   		<input type="number" name="inserted_by"><br>
