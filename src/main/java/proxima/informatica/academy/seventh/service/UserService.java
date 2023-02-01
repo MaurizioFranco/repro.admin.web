@@ -104,7 +104,7 @@ public class UserService {
 		return response;
 	}
 
-	public boolean deleteUser(int id) {
+	public boolean deleteById(int id) {
 		boolean response = false;
 
 		if (userRepository.delete(id))
