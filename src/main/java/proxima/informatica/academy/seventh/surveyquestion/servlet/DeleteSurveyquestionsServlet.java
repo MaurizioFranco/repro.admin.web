@@ -38,10 +38,11 @@ public class DeleteSurveyquestionsServlet extends HttpServlet {
 		logger.debug("ID SurveyquestionsDto received" + request.getParameter("sqId"));
 		int id = Integer.parseInt(request.getParameter("sqId"));		
 		if (SurveyquestionsService.getInstance().deleteById(id)) {
+			request.setAttribute("deleteStatus", "OK");
 			request.getRequestDispatcher("surveyquestions.jsp").forward(request, response);
-//			response.getWriter().append("OK");
 		} else {
-			response.getWriter().append("KO");
+			request.setAttribute("deleteStatus", "KO");
+			request.getRequestDispatcher("surveyquestions.jsp").forward(request, response);
 		}
 	}
 

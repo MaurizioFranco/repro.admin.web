@@ -50,13 +50,11 @@ public class DeleteSurveyRepliesServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		if(result == true) {
-			request.setAttribute("deleteSurveyReplies","OK");
+			request.setAttribute("deleteStatus", "OK");
 			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
-//			response.getWriter().append("OK");
 		}else {
-			request.setAttribute("deleteSurveyReplies","KO");
+			request.setAttribute("deleteStatus", "KO");
 			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
-//			response.getWriter().append("KO");
 		}
 	}
 	
