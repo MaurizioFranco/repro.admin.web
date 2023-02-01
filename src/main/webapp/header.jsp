@@ -21,51 +21,26 @@ background-color: grey
 
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
 <ul class="navbar-nav mr-auto">
-	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="user.jsp">User List</a>
- 	</li> 
-  	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="registration.html">Insert User</a>
-   	</li> 
-	<li class="nav-item square rounded p-1 hover">
- 		<a class="nav-link text-white" href="role.jsp">Role List</a>
-  	</li> 
-  	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="insertRole.jsp">Insert Role</a>
-   	</li> 
-   	  	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="surveyquestions.jsp">Survey Questions</a>
-   	</li> 
-   	  	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="insertSurveyquestion.jsp">Insert Survey Questions</a>
-   	</li>  
-   	  	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="surveyreplies.jsp">Survey Replies</a>
-   	</li>
- 	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="insertSurveyreplies.jsp">Insert Survey Replies</a>
-   	</li>
-   	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="surveys.jsp">Surveys</a>
-   	</li>
-   		<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="candidates.jsp">Candidates</a>
-   	</li> 
-   	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="insertCandidatestates.jsp">Insert Candidate States</a>
-   	</li> 
-   	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="candidatestates.jsp">Candidate States</a>
-   	</li>
-   	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="insertSurvey.jsp">Insert Survey</a>
-  	</li>
-   	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="insertCandidates.jsp">Insert Candidates</a>
-   	</li>  
-   	<li class="nav-item square rounded p-1 hover">
-  		<a class="nav-link text-white" href="questions.jsp">Questions</a>
-   	</li>
+	<li class="nav-item hover">
+		<a class="navbar-brand text-white">Repro.admin.web</a>
+	</li>
+	<li class="nav-item dropdown">
+		 <a class="nav-link dropdown-toggle text-white" role="button" data-toggle="dropdown" aria-expanded="false">Admin</a>
+		 <div class="dropdown-menu">
+          <a class="dropdown-item" href="role.jsp">Roles</a>
+          <a class="dropdown-item" href="user.jsp">Users</a>
+          <a class="dropdown-item" href="candidates.jsp">Candidates</a>
+		 </div>
+	</li>
+	<li class="nav-item dropdown">
+		 <a class="nav-link dropdown-toggle text-white" role="button" data-toggle="dropdown" aria-expanded="false">Survey</a>
+		 <div class="dropdown-menu">
+          <a class="dropdown-item" href="surveys.jsp">Surveys</a>
+          <a class="dropdown-item" href="surveyreplies.jsp">Survey Replies</a>
+          <a class="dropdown-item" href="surveyquestions.jsp">Survey Questions</a>
+          <a class="dropdown-item" href="questions.jsp">Questions</a>
+		 </div>
+	</li>
    	</ul>
    	<ul class="navbar-nav">
   	<li class="nav-item square rounded p-1">
