@@ -36,8 +36,8 @@ public class DeleteCandidateStatesServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("id"));
-		boolean responseValue = CandidateStatesService.getInstance().deleteById(id) ;
+		int itemId = Integer.parseInt(request.getParameter("id"));
+		boolean responseValue = CandidateStatesService.getInstance().deleteById(itemId) ;
         logger.debug(this.getClass().getSimpleName() + ".DEBUG - responseValue: " + responseValue);
 		if (responseValue) {
 			response.getWriter().append("OK");

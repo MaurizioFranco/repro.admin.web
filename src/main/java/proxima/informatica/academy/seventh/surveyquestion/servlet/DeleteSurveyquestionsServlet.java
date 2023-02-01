@@ -37,7 +37,7 @@ public class DeleteSurveyquestionsServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		logger.debug("ID SurveyquestionsDto received" + request.getParameter("sqId"));
 		int id = Integer.parseInt(request.getParameter("sqId"));		
-		if (SurveyquestionsService.getInstance().deleteById(id)) {
+		if (SurveyquestionsService.getInstance().deleteSurveyquestionById(id)) {
 			request.getRequestDispatcher("surveyquestions.jsp").forward(request, response);
 //			response.getWriter().append("OK");
 		} else {

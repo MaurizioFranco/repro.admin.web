@@ -34,9 +34,9 @@ public class DeleteRoleServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("DeleteRoleServlet.START");
-		int id = Integer.parseInt(request.getParameter("id"));
+		int roleId = Integer.parseInt(request.getParameter("roleId"));
 		
-		boolean responseValue = RoleService.getInstance().deleteById(id) ;
+		boolean responseValue = RoleService.getInstance().deleteById(roleId) ;
         logger.debug("DeleteRoleServlet.DEBUG - responseValue: " + responseValue);
 		if (responseValue) {
 			response.getWriter().append("OK");
