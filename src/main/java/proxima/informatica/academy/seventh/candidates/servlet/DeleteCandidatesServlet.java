@@ -5,9 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import proxima.informatica.academy.dto.CandidatesDto;
-import proxima.informatica.academy.hibernate.CandidatesManager;
-import proxima.informatica.academy.seventh.candidates.service.CandidatesService;
+import proxima.informatica.academy.seventh.service.CandidatesService;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -15,66 +13,36 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import centauri.academy.proxima.cerepro.entity.Candidates;
+import centauri.academy.proxima.cerepro.repository.CandidatesRepository;
 
 /**
- * Servlet implementation class DeleteUserService
+ * @author AntoIannaccone
  */
-@WebServlet("/DeleteCandidatesServlet")
+
+@WebServlet("/DeleteCandidates")
 public class DeleteCandidatesServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = LoggerFactory.getLogger(DeleteCandidatesServlet.class);
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public DeleteCandidatesServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
 		doPost(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String idSelected = request.getParameter("selectedSurveyrepliesId");
-		int id = Integer.parseInt(idSelected);
-		boolean result = false;
-		logger.debug("sto eliminando");
+		int candidatesId = Integer.parseInt(request.getParameter("candidatesId"));
 		
-		try {
-			result = deleteRowCandidates(id);
-			logger.debug("result = "+result);
-		} catch (ClassNotFoundException | SQLException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		boolean responseValue = CandidatesService.getInstance().deleteCandidates(candidatesId) ;
+        logger.debug("DeleteCandidatesServlet.DEBUG - responseValue: " + responseValue);
+		if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
-		if(result == true) {
-			request.setAttribute("deleteCandidates","OK");
-			request.getRequestDispatcher("candidates.jsp").forward(request,response);
-		}else {
-			request.setAttribute("deleteCandidates","KO");
-			request.getRequestDispatcher("candidates.jsp").forward(request,response);
-		}
-	}
-	
-	private boolean deleteRowCandidates(int id) throws ClassNotFoundException, SQLException, IOException {
-		boolean value = false;
-		CandidatesDto candidates = CandidatesManager.selectById(id);
-		logger.debug("" + candidates);
-		CandidatesService.getInstance().deleteCandidates(candidates);
-		if(CandidatesService.getInstance().selectCandidatesById(id) == null) {
-			value = true;
-		}
-		return value; 
 	}
 
 }
