@@ -42,8 +42,7 @@ public class InsertQuestionServlet extends HttpServlet {
 		qs.setLabel(request.getParameter("label"));
 		qs.setDescription(request.getParameter("description"));
 		boolean responseValue = QuestionsService.getIstance().insert(qs);
-
-		logger.debug("InsertQuestionServlet - END");
+		
 		logger.debug("InsertQuestionServlet.DEBUG - responseValue: " + responseValue);
 		
 		if (responseValue) {
