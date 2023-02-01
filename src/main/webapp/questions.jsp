@@ -102,6 +102,7 @@
 			document.getElementById("selectionForm").method = "POST";
 			document.getElementById("selectionForm").action = "./DeleteQuestionServlet";
 			document.getElementById("selectionForm").submit();
+// 			location.reload()
 		}
 		
 // 		function showDeleteModal(){

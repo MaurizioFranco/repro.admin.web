@@ -42,6 +42,7 @@
 		document.getElementById("formSelectUser").method = "POST";
 		document.getElementById("formSelectUser").action = "./DeleteUserServlet";
 		document.getElementById("formSelectUser").submit();
+// 		location.reload()
 	}
 	
 </script>
