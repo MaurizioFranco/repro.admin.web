@@ -56,8 +56,8 @@ public class SurveyquestionsService {
 		return surveyQuestionsRepo.delete(SurveysQuestions.class, sq.getId());
 	}
 
-	public boolean deleteSurveyquestionById(int id) {
-		return surveyQuestionsRepo.delete(id);
+	public boolean deleteById(int id) {
+		return surveyQuestionsRepo.delete(id) ;
 	}
 
 	public boolean updateSurveyquestions(SurveysQuestions sq) {

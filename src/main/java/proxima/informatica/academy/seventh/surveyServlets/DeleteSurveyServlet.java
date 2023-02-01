@@ -32,13 +32,13 @@ public class DeleteSurveyServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("DeleteSurveyServlet.START");
-		int surveyId = Integer.parseInt(request.getParameter("surveyId"));
-		logger.debug("DeleteSurveyServlet DEBUG - Survey ID to delete: "+surveyId);
-		Surveys surveyToDelete = SurveyService.getInstance().selectById(surveyId);
+		int id = Integer.parseInt(request.getParameter("id"));
+		logger.debug("DeleteSurveyServlet DEBUG - Survey ID to delete: "+id);
+		Surveys surveyToDelete = SurveyService.getInstance().selectById(id);
 		logger.debug("DeleteSurveyServlet DEBUG - Survey to delete: "+surveyToDelete);
-		SurveyService.getInstance().deleteSurvey(surveyId);
+		SurveyService.getInstance().deleteSurvey(id);
 		
-		if(SurveyService.getInstance().selectById(surveyId) == null) {
+		if(SurveyService.getInstance().selectById(id) == null) {
 			request.setAttribute("deleteSurvey", "OK");
 			request.getRequestDispatcher("surveys.jsp").forward(request, response);
 		}else {

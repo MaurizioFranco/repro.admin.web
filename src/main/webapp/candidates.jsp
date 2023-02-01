@@ -120,6 +120,13 @@
 		  xhttp.send(formData);
 	}
 	
+	function deleteCandidate(){
+		console.log("delete");
+		document.getElementById("selectionForm").method = "POST";
+		document.getElementById("selectionForm").action = "./DeleteCandidates";
+		document.getElementById("selectionForm").submit();
+	}
+	
 	
 </script>
 <meta charset="ISO-8859-1">
@@ -128,7 +135,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-<link rel="stylesheet" href="list.css">
+<link rel="stylesheet" href="style.css">
 
 </head>
 <body>
@@ -216,12 +223,31 @@
 			}
 			%>
 		</table>
-		<input class="btn btn-danger" type="submit" class="button" id="buttonDelete" value="Delete" disabled onclick="javascript:deleteCandidates();">
+		<input class="btn btn-danger" type="submit" class="button" id="buttonDelete" value="Delete" disabled data-toggle="modal" data-target="#deleteModal" onclick="javascript:deleteCandidates();">
 		<!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateCandidatesModal" onclick="showUpdateCandidatesModal(); return false;">
   MODIFICA
 </button>
-
+	<!-- Modal DELETE-->
+		<div class="modal" id=deleteModal tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Eliminazione candidate</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p>Sei sicuro di volre rimuovere questo candidato?</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" onclick="javascript:deleteCandidate();">SI</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 	</form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

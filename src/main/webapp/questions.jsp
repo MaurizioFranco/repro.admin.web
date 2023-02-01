@@ -32,71 +32,39 @@
 // 			alert("sono qui");
 			
 			
-			function abilitaButton(){
-				console.log("Questa è la funzione");
-				document.getElementById("deleteButton").disabled=false;
-				document.getElementById("modifyButton").disabled=false;
-				
-			}
+		function abilitaButton(){
+			console.log("Questa è la funzione");
+			document.getElementById("deleteButton").disabled=false;
+			document.getElementById("modifyButton").disabled=false;
 			
-			function deleteQuestion(){
-				console.log("delete");
-				document.getElementById("selectionForm").action="./DeleteQuestionServlet";
-				document.getElementById("selectionForm").method="POST";
-				document.getElementById("selectionForm").submit();
-			}
+		}
+		
+		function modifyQuestion(){
+			console.log("modifica");
+			showUpdateQuestionModal();
+		}
 			
-			function modifyQuestion(){
-				console.log("modifica");
-				showUpdateQuestionModal();
-// 				document.getElementById("selectionForm").action="updateUser.jsp";
-// 				document.getElementById("selectionForm").submit();
-			}
+		function initializeUpdateForm (item) {
+			console.log("initializeUpdateForm - START - " + item);
+			console.log(item);
+			document.getElementById("questionIdToUpdate").value = item.id;
+			document.getElementById("questionLabelToUpdate").value = item.label;
+			document.getElementById("questionDescriptionToUpdate").value = item.description;
 			
+		}
 			
-			function initializeUpdateForm (item) {
-				console.log("initializeUpdateForm - START - " + item);
-				console.log(item);
-				document.getElementById("questionIdToUpdate").value = item.id;
-				document.getElementById("questionLabelToUpdate").value = item.label;
-				document.getElementById("questionDescriptionToUpdate").value = item.description;
-				
-			}
-			
-			function showUpdateQuestionModal () {
-				console.log("showUpdateQuestionModal!!!");
-				const xhttp = new XMLHttpRequest();
-				  xhttp.onload = function() {
-					  var role = JSON.parse(this.responseText) ;
-					  console.log(role);
-					  initializeUpdateForm (role);
-				    }
-				  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id=46", true);
-				  xhttp.send();
-			}
-			
-// 			function update () {
-// 				console.log("update - START");
-// 				var idToUpdate = document.getElementById("questionIdToUpdate").value ; 
-// 				var roleLabelToUpdate = document.getElementById("questionLabelToUpdate").value ; 
-// 				var roleDescriptionToUpdate = document.getElementById("questionDescriptionToUpdate").value ;  
-// 				console.log("idToUpdate: " + idToUpdate + " - questionLabelToUpdate: " + questionLabelToUpdate + " - questionDescriptionToUpdate: " + questionDescriptionToUpdate);
-				
-// 				var formData = new FormData(); 
-// 				formData.append("id", idToUpdate);
-// 				formData.append("label", questionLabelToUpdate);
-// 				formData.append("description", questionDescriptionToUpdate);
-				
-// 				const xhttp = new XMLHttpRequest();
-// 				  xhttp.onload = function() {
-// 					  console.log(this.responseText);
-// //		 			  var role = JSON.parse(this.responseText) ;
-// //		 			  console.log(role);
-// //		 			  initializeUpdateForm (role);
-// 				    }
-// 				  xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateQuestionServlet", true);
-// 				  xhttp.send(formData);
-// 			}
+		function showUpdateQuestionModal () {
+			console.log("showUpdateQuestionModal!!!");
+			const xhttp = new XMLHttpRequest();
+			  xhttp.onload = function() {
+				  var item = JSON.parse(this.responseText) ;
+				  console.log(item);
+				  initializeUpdateForm (item);
+			    }
+			  var id= document.querySelector('input[name="selectedUserId"]:checked').value;
+			  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id="+id, true);
+			  xhttp.send();
+		}
 
 		function update(){
 			console.log("update - START");
@@ -126,7 +94,65 @@
 				dataType:"text"
 			});
 		}
+		
 
+		
+		function deleteQuestion(){
+			console.log("delete");
+			document.getElementById("selectionForm").method = "POST";
+			document.getElementById("selectionForm").action = "./DeleteQuestionServlet";
+			document.getElementById("selectionForm").submit();
+		}
+		
+// 		function showDeleteModal(){
+// 			console.log("showDeleteModal!!!");
+// 			const xhttp = new XMLHttpRequest();
+// 			  xhttp.onload = function() {
+// 				  var item = JSON.parse(this.responseText) ;
+// 				  console.log(item);
+// 				  initializeDeleteForm (item);
+// 			    }
+// 			  var id= document.querySelector('input[name="selectedUserId"]:checked').value;
+// 			  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id="+id, true);
+// 			  xhttp.send();
+// 		}
+		
+// 		function initializeDeleteForm (item) {
+// 			console.log("initializeDeleteForm - START - " + item);
+// 			console.log(item);
+// 			document.getElementById("idToCancel").value = item.id;
+// 			document.getElementById("labelToCancel").value = item.label;
+// 		}
+
+// 		function deleteItem(){
+// 			console.log("DELETE - START");
+// 			var id = $("#idToCancel").val();
+// 			var label = $("#labelToCancel").val();
+// 			console.log(id, label);
+			
+// 			var itemToCancel = {
+// 					"id":id,
+// 					"label":label,
+// 			}
+			
+// 			$.ajax({
+// 				type:"POST",
+// 				url: "http://localhost:8080/repro.admin.web/DeleteQuestionServlet",
+// 				data:itemToCancel,
+// 				success:function(result){
+// 					console.log(result);
+// 					if(result == 'OK'){
+// 			        	$('#deleteModal').modal('hide');
+// 			        	location.reload();
+// 					}else{
+						
+// 					}
+// 				},
+// 				dataType:"text"
+// 			});
+// 		}
+		
+		
 		</script>
 </head>
 <body>
@@ -200,7 +226,7 @@
 				%>
 			    <tbody>
 			    	<tr>
-				    	<td><input type="radio" name="selectedUserId" value="<%out.print(item.getId());%>" onclick="javascript:abilitaButton()"></td>
+				    	<td><input type="radio" name="id" value="<%out.print(item.getId());%>" onclick="javascript:abilitaButton()"></td>
 				    	<td><%= item.getId() %></td>
 		 		    	<td><%= item.getLabel() %></td>
 		 		    	<td><%= item.getDescription() %></td>
@@ -231,48 +257,67 @@
 			</table>
 			
 <!-- 			<input type="submit" value="Cancella" id="deleteButton" disabled onclick="javascript:deleteUser()"/> -->
-			<button type="button" class="btn btn-danger" id="deleteButton" disabled onclick="javascript:deleteQuestion()">Cancella</button>
+			<button type="button" class="btn btn-danger" id="deleteButton" disabled data-toggle="modal" data-target="#deleteModal">Cancella</button>
 			<button type="button" class="btn btn-primary" id="modifyButton" disabled data-toggle="modal" data-target="#updateQuestionModal" onclick="showUpdateQuestionModal(); return false;">
 			  MODIFICA
 			</button>
-			
+			<!-- Modal DELETE-->
+		<div class="modal" id=deleteModal tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Eliminazione question</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p>Sei sicuro di volre rimuovere questa Question?</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" onclick="javascript:deleteQuestion();">SI</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	
 			</form>
 		<a href="insertQuestion.jsp">
 			<button type="button" class="btn btn-info" id="insertButton" >Inserisci question</button>
 		</a>
 			
-			<!-- Modal -->
-			<div class="modal fade" id="updateQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
+		<!-- Modal UPDATE-->
+		<div class="modal fade" id="updateQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form action="./UpdateQuestionServlet" method="post">
+			      <div class="modal-body">
+					
+					  	<label>ID</label><br>
+				  		<input type="number" name="questionIdToUpdate" id="questionIdToUpdate" value=""><br>
+				  		
+				  		<label>Label</label><br>
+				  		<input type="text" name="questionLabelToUpdate" id="questionLabelToUpdate" value=""><br>
+				  		
+				  		<label>Description</label><br>
+				  		<input type="text" name="questionDescriptionToUpdate" id="questionDescriptionToUpdate" value=""><br>
+					
 			      </div>
-			      <form action="./UpdateRoleServlet" method="post">
-				      <div class="modal-body">
-						
-						  	<label>ID</label><br>
-					  		<input type="number" name="questionIdToUpdate" id="questionIdToUpdate" value=""><br>
-					  		
-					  		<label>Label</label><br>
-					  		<input type="text" name="questionLabelToUpdate" id="questionLabelToUpdate" value=""><br>
-					  		
-					  		<label>Description</label><br>
-					  		<input type="text" name="questionDescriptionToUpdate" id="questionDescriptionToUpdate" value=""><br>
-						
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
-				      </div>
-			      </form> 
-			    </div>
-			  </div>
-			</div>
-	
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
+			      </div>
+		      </form> 
+		    </div>
+		  </div>
+		</div>
 	
 	
 	
