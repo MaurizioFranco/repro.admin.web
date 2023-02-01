@@ -50,11 +50,7 @@ public class CandidatesService {
 		return candidateRepository.update(candidate) ;
 	}
 
-	public boolean deleteCandidates(int id) {
-		boolean response = false;
-
-		if (candidateRepository.delete(id))
-			response = true;
-		return response;
+	public boolean deleteById(int id) {
+		return candidateRepository.delete(id) ;
 	}
 }

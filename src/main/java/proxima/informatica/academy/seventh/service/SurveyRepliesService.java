@@ -21,6 +21,9 @@ import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.entity.SurveysReplies;
 import centauri.academy.proxima.cerepro.repository.SurveyRepliesRepository;
 
+/**
+ * @author Giammarco Lucchetti
+ */
 public class SurveyRepliesService {
 
 	private static SurveyRepliesService instance;
@@ -73,5 +76,9 @@ public class SurveyRepliesService {
 	
 	public boolean updateSurveyReplies(SurveysReplies item) {
 		return surveyRepliesRepository.update(item);
+	}
+	
+	public boolean deleteById(int id) {
+		return surveyRepliesRepository.delete(id) ;
 	}
 }

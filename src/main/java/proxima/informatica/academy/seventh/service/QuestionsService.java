@@ -40,11 +40,7 @@ public class QuestionsService {
 	}
 	
 	public boolean deleteById(int id) {
-		boolean deleted = false;
-		logger.debug("QuestionsService: Delete by ID - START");
-		deleted = questionRepository.delete(id);
-		logger.debug("QuestionsService: Delete by ID - END");
-		return deleted;
+		return questionRepository.delete(id) ;
 	}
 	
 	public long insert(Questions question) {
