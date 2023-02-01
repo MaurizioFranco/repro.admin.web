@@ -49,7 +49,6 @@
 
 <title>List Users</title>
 
-<<<<<<< HEAD
 <link rel="icon" type="image/ico" href="./img/Logo-Centauri-Academy-2018.ico">
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
