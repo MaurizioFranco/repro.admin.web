@@ -9,6 +9,7 @@
 
 
 <title>Insert question</title>
+<link rel="icon" type="image/ico" href="./img/Logo-Centauri-Academy-2018.ico">
 </head>
 <body>
 

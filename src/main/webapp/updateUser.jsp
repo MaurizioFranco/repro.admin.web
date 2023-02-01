@@ -14,6 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <title>Update User</title>
+<link rel="icon" type="image/ico" href="./img/Logo-Centauri-Academy-2018.ico">
 </head>
 <body>
 <%@include file="header.jsp" %>

@@ -14,6 +14,10 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
 <ul class="navbar-nav mr-auto">
+	<li class="nav-item">
+		<img src="./img/Logo-Centauri-Academy-2018.jpg" alt="Logo"  style="width:40px;">
+	</li>
+	<li>&nbsp;</li>
 	<li class="nav-item hover">
 		<a class="navbar-brand text-white">Repro.admin.web</a>
 	</li>
