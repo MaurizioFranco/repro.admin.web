@@ -123,6 +123,7 @@
 		document.getElementById("formSelectRole").method = "POST";
 		document.getElementById("formSelectRole").action = "./DeleteRoleServlet";
 		document.getElementById("formSelectRole").submit();
+// 		location.reload()
 	}
 	
 </script>

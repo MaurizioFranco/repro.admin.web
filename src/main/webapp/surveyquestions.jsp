@@ -26,6 +26,7 @@
 		document.getElementById("formSelectSurveyquestions").action = "./DeleteSurveyquestionsServlet";
 		document.getElementById("formSelectSurveyquestions").method = "post";
 		document.getElementById("formSelectSurveyquestions").submit;
+// 		location.reload()
 	}
 	
 	function initializeUpdateForm (item) {
