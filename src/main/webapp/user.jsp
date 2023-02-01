@@ -43,7 +43,7 @@
 
 <title>List Users</title>
 
-<link rel="stylesheet" href="list.css">
+<link rel="stylesheet" href="style.css">
 
 </head>
 <body>
