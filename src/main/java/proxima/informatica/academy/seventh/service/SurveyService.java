@@ -54,4 +54,8 @@ public class SurveyService {
 	public boolean updateSurvey(Surveys survey) {
 		return surveyRepository.update(survey);
 	}
+	
+	public boolean deleteById(int id) {
+		return surveyRepository.delete(id) ;
+	}
 }
