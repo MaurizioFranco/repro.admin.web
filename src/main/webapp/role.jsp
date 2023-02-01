@@ -97,9 +97,9 @@
 
         var itemToUpdate = {
         		"id":idToUpdate,
-        		"label":labelToUpdate,
-        		"description":descriptionToUpdate,
-        		"level":levelToUpdate
+        		"label":roleLabelToUpdate,
+        		"description":roleDescriptionToUpdate,
+        		"level":roleLevelToUpdate
         }
         
         $.ajax({
@@ -109,7 +109,8 @@
 			  success: function (responseText) {
 				  console.log(responseText);
 				  if (responseText==='OK') {					 
-					  $('#updateSurveyModal').modal('hide');
+					  $('#updateRoleModal').modal('hide');		
+					  location.reload();
 // 					  $('#errorUpdateMessage').show();
 // 					  $('#errorUpdateMessage').html(responseText);
 // 				  } else {
