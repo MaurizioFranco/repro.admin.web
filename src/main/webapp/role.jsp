@@ -31,20 +31,6 @@
  		document.getElementById("buttonUpdate").disabled = false;
 	}
 	
-	function deleteRole() {
-		console.log("Delete");
-		document.getElementById("formSelectRole").action = "./DeleteRoleServlet";
-		document.getElementById("formSelectRole").method = "post";
-		document.getElementById("formSelectRole").submit;
-	}
-	
-	function updateRole() {
-		console.log("Update");
-		document.getElementById("formSelectRole").action = "./updateRole.jsp";
-		document.getElementById("formSelectRole").method = "post";
-		document.getElementById("formSelectRole").submit;
-	}
-	
 	function initializeUpdateForm (item) {
 		console.log("initializeUpdateForm - START - " + item);
 		console.log(item);

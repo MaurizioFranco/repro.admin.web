@@ -23,6 +23,7 @@
           <a class="dropdown-item" href="role.jsp">Roles</a>
           <a class="dropdown-item" href="user.jsp">Users</a>
           <a class="dropdown-item" href="candidates.jsp">Candidates</a>
+		 <a class="dropdown-item" href="candidatestates.jsp">CandidateStates</a>
 		 </div>
 	</li>
 	<li class="nav-item dropdown">

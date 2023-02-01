@@ -53,20 +53,11 @@ if(request.getAttribute("loginMessage") != null){
     ></script>
 
 <script type="text/javascript">
+
 	function abilitaBottone() {
 		console.log("questa è una stampa di console");
 		document.getElementById("deleteButton").disabled=false;
 		document.getElementById("modificaButton").disabled=false;
-	}
-	function updateSurveyreplies(){
-		console.log("modifica");
-		document.getElementById("formSelezioneSurveyreplies").action = "./updateSurveyreplies.jsp";
-		document.getElementById("formSelezioneSurveyreplies").submit();
-	}
-	function deleteSurveyreplies(){
-		console.log("delete");
-		document.getElementById("formSelezioneSurveyreplies").action = "./DeleteSurveyRepliesServlet";
-		document.getElementById("formSelezioneSurveyreplies").submit();
 	}
 	
 	function initializeUpdateForm (item) {
