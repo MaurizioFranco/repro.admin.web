@@ -183,6 +183,7 @@
 				<%
 				if(lista.size() > 0){
 				%>
+				<h1>Questions List</h1>
 	<form id="selectionForm">
 			<table class="table table-striped">
 				<thead>
