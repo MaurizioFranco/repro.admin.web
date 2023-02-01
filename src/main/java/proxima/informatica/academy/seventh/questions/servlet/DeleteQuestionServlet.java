@@ -37,8 +37,8 @@ public class DeleteQuestionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("DeleteQuestionServlet.START");
-		int idToCancel = Integer.parseInt(request.getParameter("selectedUserId"));
-		boolean risposta = QuestionsService.getIstance().deleteById(idToCancel);
+		int id = Integer.parseInt(request.getParameter("id"));
+		boolean risposta = QuestionsService.getIstance().deleteById(id);
 		
 		logger.debug("DeleteRoleServlet.DEBUG - responseValue: " + risposta);
 		if (risposta) {
