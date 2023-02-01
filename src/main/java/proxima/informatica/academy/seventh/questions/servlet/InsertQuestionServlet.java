@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import proxima.informatica.academy.seventh.service.QuestionsService;
 
 /**
+ * @author DaimCod
  * Servlet implementation class InsertQuestionServlet
  */
 @WebServlet("/InsertQuestionServlet")
