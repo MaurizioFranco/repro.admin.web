@@ -65,5 +65,8 @@ public class CandidateStatesService {
 //		List<CandidateStates> candidates= candidateStatesRepository.findAll();
 //			return candidates;
 //	}
+	public boolean deleteById(int id) {
+		return candidateStatesRepository.delete(id) ;
+	}
 
 }

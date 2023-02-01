@@ -22,22 +22,21 @@ import centauri.academy.proxima.cerepro.repository.CandidatesRepository;
 
 @WebServlet("/DeleteCandidates")
 public class DeleteCandidatesServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	
 	private final static Logger logger = LoggerFactory.getLogger(DeleteCandidatesServlet.class);
        
     public DeleteCandidatesServlet() {
         super();
     }
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doPost(request, response);
-	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int candidatesId = Integer.parseInt(request.getParameter("candidatesId"));
+		logger.debug(this.getClass().getSimpleName() + ".START");
+		int itemId = Integer.parseInt(request.getParameter("id"));
 		
-		boolean responseValue = CandidatesService.getInstance().deleteCandidates(candidatesId) ;
-        logger.debug("DeleteCandidatesServlet.DEBUG - responseValue: " + responseValue);
+		boolean responseValue = CandidatesService.getInstance().deleteCandidates(itemId) ;
+        logger.debug(this.getClass().getSimpleName() + ".DEBUG - responseValue: " + responseValue);
 		if (responseValue) {
 			response.getWriter().append("OK");
 		} else {

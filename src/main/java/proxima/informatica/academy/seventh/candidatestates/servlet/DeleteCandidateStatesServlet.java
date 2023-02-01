@@ -11,12 +11,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import proxima.informatica.academy.seventh.service.CandidateStatesService;
+import proxima.informatica.academy.seventh.service.CandidatesService;
 
 /**
  * Servlet implementation class DeleteServlet
  */
 public class DeleteCandidateStatesServlet extends HttpServlet {
+	
 	private static final long serialVersionUID = 1L;
+	
 	private final static Logger logger = LoggerFactory.getLogger(DeleteCandidateStatesServlet.class);
 
 	/**
@@ -25,17 +28,7 @@ public class DeleteCandidateStatesServlet extends HttpServlet {
 	
 	public DeleteCandidateStatesServlet() {
 		super();
-		}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-
-	}
+		}	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -43,22 +36,13 @@ public class DeleteCandidateStatesServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		int candidateStatesId = Integer.parseInt(request.getParameter("candidateStatesId"));
-		logger.debug("CandidateStates ID to delete: " + candidateStatesId);
-		CandidateStates delCan = new CandidateStates();
-		delCan.setId((long) candidateStatesId);
-		try {
-			if (CandidateStatesService.getInstance().delete(delCan)) {
-				request.setAttribute("deleteCandidateStates", "OK");
-				request.getRequestDispatcher("CandidateStates.jsp").forward(request, response);
-			} else {
-				request.setAttribute("deleteCandidateStates", "KO");
-				request.getRequestDispatcher("role.jsp").forward(request, response);
-			}
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		int itemId = Integer.parseInt(request.getParameter("id"));
+		boolean responseValue = CandidateStatesService.getInstance().deleteById(itemId) ;
+        logger.debug(this.getClass().getSimpleName() + ".DEBUG - responseValue: " + responseValue);
+		if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 
