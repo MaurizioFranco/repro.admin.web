@@ -1,19 +1,8 @@
 package proxima.informatica.academy.seventh.service;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.proxima.common.mail.MailUtility;
 //import org.proxima.common.mail.MailUtility;
 import org.slf4j.LoggerFactory;
 

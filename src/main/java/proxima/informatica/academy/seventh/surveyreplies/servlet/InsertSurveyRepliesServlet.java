@@ -22,6 +22,7 @@ import proxima.informatica.academy.seventh.service.SurveyRepliesService;
 
 /**
  * Servlet implementation class LoginServlet
+ * 
  * @author Giammarco Lucchetti
  */
 @WebServlet("/InsertSurveyRepliesServlet")
@@ -42,44 +43,40 @@ public class InsertSurveyRepliesServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		logger.debug("InsertSurveyServlet-START");
+
+		logger.debug("InsertSurveyRepliesServlet - START");
+		
 		String survey_id = request.getParameter("survey_id_input");
 		String user_id = request.getParameter("user_id_input");
 		String answers = request.getParameter("answers_input");
 		String pdfFileName = request.getParameter("pdffilename_input");
 		String points = request.getParameter("points_input");
-		boolean finalResult = false;
+		boolean resultValue = false;
+
 		try {
-			//rowsUpdate = insertNewUser(email,password,firstName,lastName,birthDate);
-			finalResult = insertNewSurveyReplies(survey_id,user_id,answers,pdfFileName,points);
-			logger.debug("Insert value  = "+finalResult);
+			resultValue = insertNewSurveyReplies(survey_id, user_id, answers, pdfFileName, points);
 		} catch (ClassNotFoundException | SQLException | IOException | ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
+		logger.debug("InsertSurveyRepliesServlet - END");
+		logger.debug("InsertSurveyRepliesServlet - responseValue: " + resultValue);
 		
-		try {
-			if (finalResult == true) {
-				response.getWriter().append("OK");
-			} else {
-//				request.getRequestDispatcher("insertSurveyreplies.jsp").forward(request, response);
-				response.getWriter().append("KO");
-			}
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (resultValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 
 	private boolean insertNewSurveyReplies(String survey_id, String user_id, String answers, String pdfFileName,
-			String points)
-					throws ClassNotFoundException, SQLException, IOException, ParseException {
+			String points) throws ClassNotFoundException, SQLException, IOException, ParseException {
 		boolean result = false;
 		SurveysReplies surveyRepliesToInsert = new SurveysReplies();
 		Timestamp SurveyRepliesInsertedTime = Timestamp.valueOf(LocalDateTime.now());
 		Long surveyid = Long.parseLong(survey_id);
 		Long userid = Long.parseLong(user_id);
-		
+
 		surveyRepliesToInsert.setSurveyId(surveyid);
 		surveyRepliesToInsert.setUserId(userid);
 		surveyRepliesToInsert.setStartTime(SurveyRepliesInsertedTime);
@@ -87,9 +84,9 @@ public class InsertSurveyRepliesServlet extends HttpServlet {
 		surveyRepliesToInsert.setAnswer(answers);
 		surveyRepliesToInsert.setPdfFileName(pdfFileName);
 		surveyRepliesToInsert.setPoints(points);
-		
+
 		result = SurveyRepliesService.getInstance().insertSurveyreplies(surveyRepliesToInsert);
-		
+
 		return result;
 	}
 }
