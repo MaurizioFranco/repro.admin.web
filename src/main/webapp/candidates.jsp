@@ -54,12 +54,7 @@
 		document.getElementById("candidateIdToUpdate").value = item.id;
 		document.getElementById("candidateUser_idToUpdate").value = item.user_id;
 		document.getElementById("candidateCourse_codeToUpdate").value = item.course_code;
-		document.getElementById("candidateCandidacy_state_timeToUpdate").value = item.candacy_state_time;
-		document.getElementById("candidateFirstnameToUpdate").value = item.firstname;
-		document.getElementById("candidateLastnameToUpdate").value = item.lastname;
-		document.getElementById("candidateEmailToUpdate").value = item.email;
-		document.getElementById("candidateInserted_byToUpdate").value = item.inserted_by;
-		document.getElementById("candidateCandidate_state_codeToUpdate").value = item.candidate_state_code;
+		document.getElementById("candidateCandidacy_date_timeToUpdate").value = item.candacy_state_time;
 	}
 	
 	//INITIALIZE INSERT FORM
@@ -69,15 +64,10 @@
 		document.getElementById("candidateIdToInsert").value = item.id;
 		document.getElementById("candidateUser_idToInsert").value = item.user_id;
 		document.getElementById("candidateCourse_codeToInsert").value = item.course_code;
-		document.getElementById("candidateCandidacy_state_timeToInsert").value = item.candacy_state_time;
-		document.getElementById("candidateFirstnameToInsert").value = item.firstname;
-		document.getElementById("candidateLastnameToInsert").value = item.lastname;
-		document.getElementById("candidateEmailToInsert").value = item.email;
-		document.getElementById("candidateInserted_byToInsert").value = item.inserted_by;
-		document.getElementById("candidateCandidate_state_codeToInsert").value = item.candidate_state_code;
+		document.getElementById("candidateCandidacy_date_timeToInsert").value = item.candacy_state_time;
 	}
 	
-	//SHOW UPDATE CANDIDATES MODAL
+	//SHOW UPDATE MODAL
 	function showUpdateCandidatesModal () {
 		console.log("showUpdateCandidatesModal!!!");
 		const xhttp = new XMLHttpRequest();
@@ -91,7 +81,7 @@
 		  xhttp.send();
 	}
 	
-	//SHOW INSERT CANDIDATES MODAL
+	//SHOW INSERT MODAL
 	function showInsertCandidatesModal () {
 		console.log("showInsertCandidatesModal!!!");
 		const xhttp = new XMLHttpRequest();
@@ -111,37 +101,18 @@
 		var idToUpdate = document.getElementById("candidateIdToUpdate").value ; 
 		var candidateUser_idToUpdate = document.getElementById("candidateUser_idToUpdate").value ; 
 		var candidateCourse_codeToUpdate = document.getElementById("candidateCourse_codeToUpdate").value ; 
-		var candidateCandidacy_state_timeToUpdate = document.getElementById("candidateCandidacy_state_timeToUpdate").value ; 
-		var candidateFirstnameToUpdate = document.getElementById("candidateFirstnameToUpdate").value ; 
-		var candidateLastnameToUpdate = document.getElementById("candidateLastnameToUpdate").value ; 
-		var candidateEmailToUpdate = document.getElementById("candidateEmailToUpdate").value ; 
-		var candidateInserted_byToUpdate = document.getElementById("candidateInserted_byToUpdate").value ; 
-		var candidateCandidate_state_codeToUpdate = document.getElementById("candidateCandidate_state_codeToUpdate").value ; 
+		var candidateCandidacy_date_timeToUpdate = document.getElementById("candidateCandidacy_date_timeToUpdate").value ; 
 		console.log("idToUpdate: " + idToUpdate + 
 					" - candidateUser_idToUpdate: " + candidateUser_idToUpdate + 
 					" - candidateCourse_codeToUpdate: " + candidateCourse_codeToUpdate + 
-					" - candidateCandidacy_state_timeToUpdate: " + candidateCandidacy_state_timeToUpdate + 
-					" - candidateFirstnameToUpdate: " + candidateFirstnameToUpdate + 
-					" - candidateLastnameToUpdate: " + candidateLastnameToUpdate + 
-					" - candidateEmailToUpdate: " + candidateEmailToUpdate + 
-					" - candidateInserted_byToUpdate: " + candidateInserted_byToUpdate + 
-					" - candidateCandidate_state_codeToUpdate: " + candidateCandidate_state_codeToUpdate);
+					" - candidateCandidacy_date_timeToUpdate: " + candidateCandidacy_date_timeToUpdate);
 		
 		
 		var formData = new FormData(); 
 		formData.append("id", idToUpdate);
 		formData.append("user_id", candidateUser_idToUpdate);
 		formData.append("course_code", candidateCourse_codeToUpdate);
-		formData.append("candidacy_state_time", candidateCandidacy_state_timeToUpdate);
-		formData.append("firstname", candidateFirstnameToUpdate);
-		formData.append("lastname", candidateLastnameToUpdate);
-		formData.append("email", candidateEmailToUpdate);
-		formData.append("inserted_by", candidateInserted_byToUpdate);
-		formData.append("candidate_state_code", candidateCandidate_state_codeToUpdate);
-		if (candidateLevelToUpdate!=null) {		
-			formData.append("level", candidateLevelToUpdate);
-		}
-		
+		formData.append("candidacy_date_time", candidateCandidacy_date_timeToUpdate);
 	    
 		const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
@@ -158,28 +129,15 @@
 	function insert () {
 		console.log("update - START");
 		var candidateCourse_codeToInsert = $("#candidateCourse_codeToInsert").val();
-		var candidateCandidacy_state_timeToInsert = $("#candidateCandidacy_state_timeToInsert").val();
-		var candidateFirstnameToInsert = $("#candidateFirstnameToInsert").val(); 
-		var candidateLastnameToInsert = $("#candidateLastnameToInsert").val(); 
-		var candidateEmailToInsert = $("#candidateEmailToInsert").val(); 
-		var candidateInserted_byToInsert = $("#candidateInserted_byToInsert").val(); 
-		var candidateCandidate_state_codeToInsert = $("#candidateCandidate_state_codeToInsert").val(); 
+		var candidateCandidacy_state_timeToInsert = $("#candidateCandidacy_date_timeToInsert").val();
 		console.log("candidateCourse_codeToInsert: " + candidateCourse_codeToInsert + 
-					" - candidateCandidacy_state_timeToInsert: " + candidateCandidacy_state_timeToInsert + 
-					" - candidateFirstnameToInsert: " + candidateFirstnameToInsert + 
-					" - candidateLastnameToInsert: " + candidateLastnameToInsert + 
-					" - candidateEmailToInsert: " + candidateEmailToInsert + 
-					" - candidateInserted_byToInsert: " + candidateInserted_byToInsert + 
-					" - candidateCandidate_state_codeToInsert: " + candidateCandidate_state_codeToInsert);
-		
+					" - candidateCandidacy_date_timeToInsert: " + candidateCandidacy_date_timeToInsert);
 		
 		var itemToInsert = {
         		"candidateCourse_codeToInsert":candidateCourse_codeToInsert,
-        		"candidateCandidacy_state_timeToInsert":roleDescriptionToInsert,
-        		"level":roleLevelToInsert
+        		"candidateCandidacy_date_timeToInsert":roleDescriptionToInsert
         }
 		
-	    
 		const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
 			  console.log(this.responseText);
@@ -219,12 +177,6 @@
 					<th scope="col">User_id</th>
 					<th scope="col">Course_code</th>
 					<th scope="col">Candidacy_date_time</th>
-					<th scope="col">Firstname</th>
-					<th scope="col">Lastname</th>
-					<th scope="col">Email</th>
-					<th scope="col">Regdate</th>
-					<th scope="col">Inserted_by</th>
-					<th scope="col">Candidate_state_code</th>
 				</tr>
 			</thead>	
 			<%
@@ -256,38 +208,13 @@
 					out.print(candidate.getCandidacy_date_time().toString());
 					%>
 				</td>
-				<td>
-					<%
-					out.print(candidate.getFirstname().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(candidate.getLastname().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(candidate.getEmail().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(candidate.getInserted_by().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(candidate.getCandidate_state_code().toString());
-					%>
-				</td>
 			</tr>
 			<%
 			}
 			%>
 		</table>
-		<input class="btn btn-danger" type="submit" class="button" id="buttonDelete" value="Delete" disabled onclick="javascript:deleteCandidates();">
-		<!-- Button trigger Update Modal -->
+<input class="btn btn-danger" type="submit" class="button" id="buttonDelete" value="Delete" disabled onclick="javascript:deleteCandidates();">
+<!-- Button trigger Update Modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateCandidatesModal" onclick="showUpdateCandidatesModal(); return false;">
   MODIFICA
 </button>
@@ -320,23 +247,8 @@
 		  		<label>Course Code</label><br>
 		  		<input type="text" name="candidateCourse_codeToUpdate" id="candidateCourse_codeToUpdate" value=""><br>
 		  		
-		  		<label>Candidacy State Time</label><br>
-		  		<input type="date" name="candidateCandidacy_state_timeToUpdate" id="candidateCandidacy_state_timeToUpdate" value=""><br>
-		  		
-		  		<label>First Name</label><br>
-		  		<input type="text" name="candidateFirstnameToUpdate" id="candidateFirstnameToUpdate" value=""><br>
-		  		
-		  		<label>Last Name</label><br>
-		  		<input type="text" name="candidateLastnameToUpdate" id="candidateLastnameToUpdate" value=""><br>
-			
-		  		<label>Email</label><br>
-		  		<input type="text" name="candidateEmailToUpdate" id="candidateEmailToUpdate" value=""><br>	
-		  		
-		  		<label>Inserted By</label><br>
-		  		<input type="number" name="candidateInserted_byToUpdate" id="candidateInserted_byToUpdate" value=""><br>
-		  		
-		  		<label>Candidate State Code</label><br>
-		  		<input type="number" name="candidateCandidate_state_codeToUpdate" id="candidateCandidate_state_codeToUpdate" value=""><br>	  		
+		  		<label>Candidacy Date Time</label><br>
+		  		<input type="date" name="candidateCandidacy_date_timeToUpdate" id="candidateCandidacy_date_timeToUpdate" value=""><br>  		
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -363,23 +275,8 @@
 		  		<label>Course Code</label><br>
 		  		<input type="text" name="candidateCourse_codeToInsert" id="candidateCourse_codeToInsert" value=""><br>
 		  		
-		  		<label>Candidacy State Time</label><br>
-		  		<input type="date" name="candidateCandidacy_state_timeToInsert" id="candidateCandidacy_state_timeToInsert" value=""><br>
-		  		
-		  		<label>First Name</label><br>
-		  		<input type="text" name="candidateFirstnameToInsert" id="candidateFirstnameToInsert" value=""><br>
-		  		
-		  		<label>Last Name</label><br>
-		  		<input type="text" name="candidateLastnameToInsert" id="candidateLastnameToInsert" value=""><br>
-			
-		  		<label>Email</label><br>
-		  		<input type="text" name="candidateEmailToInsert" id="candidateEmailToInsert" value=""><br>
-		  		
-		  		<label>Inserted By</label><br>
-		  		<input type="number" name="candidateInserted_byToInsert" id="candidateInserted_byToInsert" value=""><br>
-		  		
-		  		<label>Candidate State Code</label><br>
-		  		<input type="number" name="candidateCandidate_state_codeToInsert" id="candidateCandidate_state_codeToInsert" value=""><br>	  		
+		  		<label>Candidacy Date Time</label><br>
+		  		<input type="date" name="candidateCandidacy_date_timeToInsert" id="candidateCandidacy_date_timeToInsert" value=""><br>  		
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

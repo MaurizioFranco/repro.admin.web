@@ -154,11 +154,6 @@
 	function insert () {
 		console.log("insert - START");
 		
-		/*var idToInsert = document.getElementById("roleIdToInsert").value ; 
-		var roleLabelToInsert = document.getElementById("roleLabelToInsert").value ; 
-		var roleDescriptionToInsert = document.getElementById("roleDescriptionToInsert").value ; 
-		var roleLevelToInsert = document.getElementById("roleLevelToInsert").value ;*/
-		
 		var roleLabelToInsert = $("#roleLabelToInsert").val();
 		var roleDescriptionToInsert = $("#roleDescriptionToInsert").val();
 		var roleLevelToInsert = $("#roleLevelToInsert").val();
