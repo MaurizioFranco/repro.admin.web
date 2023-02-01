@@ -125,6 +125,7 @@
 		document.getElementById("selectionForm").method = "POST";
 		document.getElementById("selectionForm").action = "./DeleteCandidates";
 		document.getElementById("selectionForm").submit();
+		location.reload()
 	}
 	
 	
