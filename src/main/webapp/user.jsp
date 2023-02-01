@@ -50,7 +50,7 @@
 
 <title>List Users</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
@@ -77,7 +77,7 @@
 				
 			%>
 			<tr>
-				<th scope="row"><input type="radio" name="userId" onclick="javascript:abilitaBottone();" value="<%out.print(user.getId());%>" /></th>
+				<th scope="row"><input type="radio" name="id" onclick="javascript:abilitaBottone();" value="<%out.print(user.getId());%>" /></th>
 				<td>
 					<%
 					out.print(user.getId().toString());
