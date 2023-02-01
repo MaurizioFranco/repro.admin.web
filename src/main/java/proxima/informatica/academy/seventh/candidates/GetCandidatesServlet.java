@@ -1,3 +1,5 @@
+package proxima.informatica.academy.seventh.candidates;
+
 import java.io.IOException;
 
 import org.codehaus.jackson.map.ObjectMapper;
@@ -5,6 +7,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import centauri.academy.proxima.cerepro.entity.Candidates;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import proxima.informatica.academy.seventh.service.CandidatesService;
 
 /**
  * @author AntoIannaccone
