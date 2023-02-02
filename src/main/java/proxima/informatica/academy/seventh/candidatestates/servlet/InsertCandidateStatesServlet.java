@@ -64,10 +64,10 @@ public class InsertCandidateStatesServlet extends HttpServlet {
 		logger.debug("InsertCandidateStatesServlet.DEBUG - responseValue: " + responseValue);
 		
 		if (responseValue) {
-				response.getWriter().append("OK");
-			} else {
-				response.getWriter().append("KO");
-			}
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
+		}
 	}
 	
 }

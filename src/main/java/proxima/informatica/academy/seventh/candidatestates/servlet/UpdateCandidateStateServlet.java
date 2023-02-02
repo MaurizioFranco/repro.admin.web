@@ -48,13 +48,12 @@ public class UpdateCandidateStateServlet extends HttpServlet {
 		candidate.setStatus_description(request.getParameter("status_description"));
 		candidate.setStatus_label(request.getParameter("status_label"));
 		candidate.setStatus_color(request.getParameter("status_color"));
-
-		if(CandidateStatesService.getInstance().update(candidate)) {
-			request.setAttribute("updateRole", "OK");
-			request.getRequestDispatcher("role.jsp").forward(request, response); 
-		}else {
-			request.setAttribute("updateRole", "KO");
-			request.getRequestDispatcher("role.jsp").forward(request, response); 
+		
+		boolean responseValue = CandidateStatesService.getInstance().update(candidate);
+		if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 

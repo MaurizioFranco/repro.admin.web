@@ -40,21 +40,20 @@ public class DeleteSurveyRepliesServlet extends HttpServlet {
 		logger.debug("DeleteSurveyServlet-START");
 		String idSelected = request.getParameter("selectedSurveyrepliesId");
 		int id = Integer.parseInt(idSelected);
-		boolean result = false;
+		boolean responseValue = false;
 		
 		try {
-			result = deleteRowSurveyReplies(id);
-			logger.debug("Delete result = "+result);
+			responseValue = deleteRowSurveyReplies(id);
+			logger.debug("Delete result = "+responseValue);
 		} catch (ClassNotFoundException | SQLException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(result == true) {
-			request.setAttribute("deleteStatus", "OK");
-			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
-		}else {
-			request.setAttribute("deleteStatus", "KO");
-			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
+		
+		if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 	

@@ -37,12 +37,10 @@ public class DeleteCandidatesServlet extends HttpServlet {
 		
 		boolean responseValue = CandidatesService.getInstance().deleteById(id) ;
         logger.debug(this.getClass().getSimpleName() + ".DEBUG - responseValue: " + responseValue);
-		if (responseValue) {
-			request.setAttribute("deleteStatus", "OK");
-			request.getRequestDispatcher("candidates.jsp").forward(request, response);
-		}else {
-			request.setAttribute("deleteStatus", "KO");
-			request.getRequestDispatcher("candidates.jsp").forward(request, response);
+        if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 

@@ -261,12 +261,18 @@
 			</table>
 			
 <!-- 			<input type="submit" value="Cancella" id="deleteButton" disabled onclick="javascript:deleteUser()"/> -->
-			<button type="button" class="btn btn-danger" id="deleteButton" disabled data-toggle="modal" data-target="#deleteModal">Cancella</button>
+			<button type="button" class="btn btn-danger" id="deleteButton" disabled data-toggle="modal" data-target="#deleteQuestionModal">Cancella</button>
 			<button type="button" class="btn btn-primary" id="modifyButton" disabled data-toggle="modal" data-target="#updateQuestionModal" onclick="showUpdateQuestionModal(); return false;">
 			  MODIFICA
 			</button>
-			<!-- Modal DELETE-->
-		<div class="modal" id=deleteModal tabindex="-1" role="dialog">
+	
+			</form>
+		<a href="insertQuestion.jsp">
+			<button type="button" class="btn btn-info" id="insertButton" >Inserisci question</button>
+		</a>
+			
+		<!-- Modal DELETE-->
+		<div class="modal fade" id="deleteQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -285,12 +291,6 @@
 		    </div>
 		  </div>
 		</div>
-	
-			</form>
-		<a href="insertQuestion.jsp">
-			<button type="button" class="btn btn-info" id="insertButton" >Inserisci question</button>
-		</a>
-			
 		<!-- Modal UPDATE-->
 		<div class="modal fade" id="updateQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		  <div class="modal-dialog" role="document">

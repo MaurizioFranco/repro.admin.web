@@ -39,15 +39,14 @@ public class DeleteQuestionServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("DeleteQuestionServlet.START");
 		int idToCancel = Integer.parseInt(request.getParameter("id"));
-		boolean risposta = QuestionsService.getIstance().deleteById(idToCancel);
+		boolean responseValue = QuestionsService.getIstance().deleteById(idToCancel);
 		
-		logger.debug("DeleteRoleServlet.DEBUG - responseValue: " + risposta);
-		if(SurveyService.getInstance().selectById(idToCancel) == null) {
-			request.setAttribute("deleteStatus", "OK");
-			request.getRequestDispatcher("question.jsp").forward(request, response);
-		}else {
-			request.setAttribute("deleteStatus", "KO");
-			request.getRequestDispatcher("question.jsp").forward(request, response);
+		logger.debug("DeleteRoleServlet.DEBUG - responseValue: " + responseValue);
+		
+		if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 
