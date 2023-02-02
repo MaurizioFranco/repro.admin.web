@@ -61,8 +61,6 @@
 	function initializeInsertForm (item) {
 		console.log("initializeInsertForm - START - " + item);
 		console.log(item);
-		document.getElementById("candidateIdToInsert").value = item.id;
-		document.getElementById("candidateUser_idToInsert").value = item.user_id;
 		document.getElementById("candidateCourse_codeToInsert").value = item.course_code;
 		document.getElementById("candidateCandidacy_date_timeToInsert").value = item.candacy_state_time;
 	}

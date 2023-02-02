@@ -43,12 +43,6 @@ public class UpdateCandidatesServlet extends HttpServlet {
 		candidate.setUser_id(Long.parseLong(request.getParameter("user_id")));
 		candidate.setCourse_code(request.getParameter("course_code"));
 		candidate.setCandidacy_date_time(Candidacy_date_time);
-		candidate.setFirstname(request.getParameter("firstname"));
-		candidate.setLastname(request.getParameter("lastname"));
-		candidate.setEmail(request.getParameter("email"));
-		candidate.setRegdate(Regdate);
-		candidate.setEmail(request.getParameter("inserted_by"));
-		candidate.setCandidate_state_code(Long.parseLong(request.getParameter("candidate_state_code")));
 
 		boolean responseValue = CandidatesService.getInstance().updateCandidates(candidate) ;
         logger.debug("InsertCandidatesServlet.DEBUG - responseValue: " + responseValue);
@@ -69,12 +63,6 @@ public class UpdateCandidatesServlet extends HttpServlet {
 		candidate.setUser_id(Long.parseLong(request.getParameter("user_id")));
 		candidate.setCourse_code(request.getParameter("course_code"));
 		candidate.setCandidacy_date_time(Candidacy_date_time);
-		candidate.setFirstname(request.getParameter("firstname"));
-		candidate.setLastname(request.getParameter("lastname"));
-		candidate.setEmail(request.getParameter("email"));
-		candidate.setRegdate(Regdate);
-		candidate.setEmail(request.getParameter("inserted_by"));
-		candidate.setCandidate_state_code(Long.parseLong(request.getParameter("candidate_state_code")));
 
 		boolean responseValue = CandidatesService.getInstance().updateCandidates(candidate) ;
         logger.debug("InsertCandidatesServlet.DEBUG - responseValue: " + responseValue);

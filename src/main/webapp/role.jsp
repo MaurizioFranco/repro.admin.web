@@ -42,13 +42,7 @@
 		document.getElementById("formSelectRole").submit;
 	}
 	
-// 	function insertRole() {
-// 		console.log("Insert");
-// 		document.getElementById("formSelectRole").action = "./insertRole.jsp";
-// 		document.getElementById("formSelectRole").method = "post";
-// 		document.getElementById("formSelectRole").submit;
-// 	}
-	
+	//INITIALIZE UPDATE FORM
 	function initializeUpdateForm (item) {
 		console.log("initializeUpdateForm - START - " + item);
 		console.log(item);
@@ -58,6 +52,7 @@
 		document.getElementById("roleLevelToUpdate").value = item.level;
 	}
 	
+	//INITIALIZE INSERT FORM
 	function initializeInsertForm (item) {
 		console.log("initializeInsertForm - START - " + item);
 		console.log(item);
@@ -67,6 +62,7 @@
 		document.getElementById("roleLevelToInsert").value = item.level;
 	}
 	
+	//SHOW UPDATE MODAL
 	function showUpdateRoleModal () {
 		console.log("showUpdateRoleModal!!!");
 		const xhttp = new XMLHttpRequest();
@@ -81,6 +77,7 @@
 		  xhttp.send();
 	}
 	
+	//SHOW INSERT MODAL
 	function showInsertRoleModal () {
 		console.log("showInsertRoleModal!!!");
 		const xhttp = new XMLHttpRequest();
@@ -90,11 +87,9 @@
 			  console.log(role);
 			  initializeInsertForm (role);
 		    }
-		  //var id= document.querySelector('input[name="roleRadioId"]:checked').value;
-		  //xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetRoleServlet?id="+id, true);
-		  //xhttp.send();
 	}
 	
+	//UPDATE FUNCTION
 	function update () {
 		console.log("update - START");
 		var idToUpdate = document.getElementById("roleIdToUpdate").value ; 
@@ -102,26 +97,6 @@
 		var roleDescriptionToUpdate = document.getElementById("roleDescriptionToUpdate").value ; 
 		var roleLevelToUpdate = document.getElementById("roleLevelToUpdate").value ; 
 		console.log("idToUpdate: " + idToUpdate + " - roleLabelToUpdate: " + roleLabelToUpdate + " - roleDescriptionToUpdate: " + roleDescriptionToUpdate + " - roleLevelToUpdate: " + roleLevelToUpdate);
-		
-// 		var formData = new FormData(); 
-// 		formData.append("id", idToUpdate);
-// 		formData.append("label", roleLabelToUpdate);
-// 		formData.append("description", roleDescriptionToUpdate);
-// 		if (roleLevelToUpdate!=null) {		
-// 			formData.append("level", roleLevelToUpdate);
-// 		}
-		
-	    
-		
-// 		const xhttp = new XMLHttpRequest();
-// 		  xhttp.onload = function() {
-// 			  console.log(this.responseText);
-// // 			  var role = JSON.parse(this.responseText) ;
-// // 			  console.log(role);
-// // 			  initializeUpdateForm (role);
-// 		    }
-// 		  xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateRoleServlet", true);
-// 		  xhttp.send(formData);
 
         var itemToUpdate = {
         		"id":idToUpdate,
@@ -150,7 +125,7 @@
 
 	}
 	
-	
+	//INSERT FUNCTION
 	function insert () {
 		console.log("insert - START");
 		
