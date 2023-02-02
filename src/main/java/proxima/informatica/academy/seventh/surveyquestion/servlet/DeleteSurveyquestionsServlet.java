@@ -36,11 +36,18 @@ public class DeleteSurveyquestionsServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		logger.debug("ID SurveyquestionsDto received" + request.getParameter("sqId"));
+<<<<<<< HEAD
 		int id = Integer.parseInt(request.getParameter("sqId"));	
 		boolean responseValue = SurveyquestionsService.getInstance().deleteById(id);
 		
 		if (responseValue) {
 			response.getWriter().append("OK");
+=======
+		int id = Integer.parseInt(request.getParameter("sqId"));		
+		if (SurveyquestionsService.getInstance().deleteById(id)) {
+			request.getRequestDispatcher("surveyquestions.jsp").forward(request, response);
+//			response.getWriter().append("OK");
+>>>>>>> branch 'master' of https://github.com/MaurizioFranco/repro.admin.web.git
 		} else {
 			response.getWriter().append("KO");
 		}
