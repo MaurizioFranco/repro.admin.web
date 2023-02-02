@@ -54,8 +54,13 @@
 		</dependency>
 		<dependency>
 			<groupId>centauri.academy</groupId>
+			<artifactId>repro.admin.service</artifactId>
+			<version>0.1</version>
+		</dependency>
+				<dependency>
+			<groupId>centauri.academy</groupId>
 			<artifactId>repro.persistence.hibernate</artifactId>
-			<version>0.6.5</version>
+			<version>0.6.4</version>
 		</dependency>
 		<dependency>
 			<groupId>centauri.academy</groupId>
