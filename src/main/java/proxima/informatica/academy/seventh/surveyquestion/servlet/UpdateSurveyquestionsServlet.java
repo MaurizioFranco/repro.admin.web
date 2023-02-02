@@ -15,6 +15,12 @@ import org.slf4j.LoggerFactory;
 import centauri.academy.proxima.cerepro.entity.SurveysQuestions;
 
 /**
+ * 
+ * @author Giacomo Della Luna
+ *
+ */
+
+/**
  * Servlet implementation class UploadServlet
  */
 @WebServlet("/UpdateSurveyquestionsServlet")
@@ -48,8 +54,9 @@ public class UpdateSurveyquestionsServlet extends HttpServlet {
 		item.setPosition(Integer.parseInt(position));
 
 		logger.debug("UpdateSurveyquestionsServlet - item - " + item.toString());
-
-		if (SurveyquestionsService.getInstance().updateSurveyquestions(item)) {
+		boolean responseValue = SurveyquestionsService.getInstance().updateSurveyquestions(item);
+		
+		if (responseValue) {
 			response.getWriter().append("OK");
 		} else {
 			response.getWriter().append("KO");

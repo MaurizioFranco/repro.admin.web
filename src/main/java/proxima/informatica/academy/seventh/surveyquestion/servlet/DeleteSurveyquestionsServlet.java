@@ -13,8 +13,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 
+ * @author Giacomo Della Luna
+ *
+ */
+
+/**
  * Servlet implementation class DeleteSurveyquestionsServlet
  */
+
 @WebServlet("/DeleteSurveyquestionsServlet")
 public class DeleteSurveyquestionsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,7 +34,6 @@ public class DeleteSurveyquestionsServlet extends HttpServlet {
 		super();
 	}
 
-
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -36,13 +42,19 @@ public class DeleteSurveyquestionsServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		logger.debug("ID SurveyquestionsDto received" + request.getParameter("sqId"));
-		int id = Integer.parseInt(request.getParameter("sqId"));		
-		if (SurveyquestionsService.getInstance().deleteById(id)) {
-			request.getRequestDispatcher("surveyquestions.jsp").forward(request, response);
+
+		int id = Integer.parseInt(request.getParameter("sqId"));
+		boolean responseValue = SurveyquestionsService.getInstance().deleteById(id);
+
+		if (responseValue) {
+			response.getWriter().append("OK");
+
+			if (SurveyquestionsService.getInstance().deleteById(id)) {
+				request.getRequestDispatcher("surveyquestions.jsp").forward(request, response);
 //			response.getWriter().append("OK");
-		} else {
-			response.getWriter().append("KO");
+			} else {
+				response.getWriter().append("KO");
+			}
 		}
 	}
-
 }

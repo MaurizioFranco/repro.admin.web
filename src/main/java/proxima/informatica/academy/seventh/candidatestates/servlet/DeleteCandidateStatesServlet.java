@@ -42,11 +42,12 @@ public class DeleteCandidateStatesServlet extends HttpServlet {
 		int itemId = Integer.parseInt(request.getParameter("id"));
 		boolean responseValue = CandidateStatesService.getInstance().deleteById(itemId) ;
         logger.debug(this.getClass().getSimpleName() + ".DEBUG - responseValue: " + responseValue);
-		if (responseValue) {
+        
+        if (responseValue) {
 			response.getWriter().append("OK");
 		} else {
 			response.getWriter().append("KO");
 		}
-	}
 
+	}
 }

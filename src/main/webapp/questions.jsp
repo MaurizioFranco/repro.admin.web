@@ -104,6 +104,7 @@
 			document.getElementById("selectionForm").method = "POST";
 			document.getElementById("selectionForm").action = "./DeleteQuestionServlet";
 			document.getElementById("selectionForm").submit();
+// 			location.reload()
 		}
 		
 // 		function showDeleteModal(){
@@ -184,6 +185,7 @@
 				<%
 				if(lista.size() > 0){
 				%>
+				<h1>Questions List</h1>
 	<form id="selectionForm">
 			<table class="table table-striped">
 				<thead>
@@ -259,12 +261,18 @@
 			</table>
 			
 <!-- 			<input type="submit" value="Cancella" id="deleteButton" disabled onclick="javascript:deleteUser()"/> -->
-			<button type="button" class="btn btn-danger" id="deleteButton" disabled data-toggle="modal" data-target="#deleteModal">Cancella</button>
+			<button type="button" class="btn btn-danger" id="deleteButton" disabled data-toggle="modal" data-target="#deleteQuestionModal">Cancella</button>
 			<button type="button" class="btn btn-primary" id="modifyButton" disabled data-toggle="modal" data-target="#updateQuestionModal" onclick="showUpdateQuestionModal(); return false;">
 			  MODIFICA
 			</button>
-			<!-- Modal DELETE-->
-		<div class="modal" id=deleteModal tabindex="-1" role="dialog">
+	
+			</form>
+		<a href="insertQuestion.jsp">
+			<button type="button" class="btn btn-info" id="insertButton" >Inserisci question</button>
+		</a>
+			
+		<!-- Modal DELETE-->
+		<div class="modal fade" id="deleteQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
@@ -283,12 +291,6 @@
 		    </div>
 		  </div>
 		</div>
-	
-			</form>
-		<a href="insertQuestion.jsp">
-			<button type="button" class="btn btn-info" id="insertButton" >Inserisci question</button>
-		</a>
-			
 		<!-- Modal UPDATE-->
 		<div class="modal fade" id="updateQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		  <div class="modal-dialog" role="document">

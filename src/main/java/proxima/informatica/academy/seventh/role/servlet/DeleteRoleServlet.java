@@ -38,7 +38,8 @@ public class DeleteRoleServlet extends HttpServlet {
 		
 		boolean responseValue = RoleService.getInstance().deleteById(roleId) ;
         logger.debug("DeleteRoleServlet.DEBUG - responseValue: " + responseValue);
-		if (responseValue) {
+        
+        if (responseValue) {
 			response.getWriter().append("OK");
 		} else {
 			response.getWriter().append("KO");

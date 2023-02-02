@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
+import proxima.informatica.academy.seventh.common.PropertiesManagerSingleton;
 import proxima.informatica.academy.seventh.service.UserService;
 
 
@@ -40,6 +41,12 @@ public class RegistrationUserServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String directory = null;
+		try {
+			directory = PropertiesManagerSingleton.getInstance().getProperty("properties.directory");		
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		User user = new User();
 		user.setFirstname(request.getParameter("firstname"));
 		user.setLastname(request.getParameter("lastname"));
@@ -47,21 +54,40 @@ public class RegistrationUserServlet extends HttpServlet {
 		user.setDateofbirth(Date.valueOf(request.getParameter("dateofbirth")));
 		user.setRegdate(Timestamp.valueOf(LocalDateTime.now()));
 		user.setRole(10);
-		user.setImgpath(request.getParameter("imgpath"));
 		user.setNote(request.getParameter("note"));
 		user.setenabled(0);
-		String UPLOAD_DIRECTORY = "C:\\logs\\uploads";
+		
+		String fileName = null;
+		String UPLOAD_DIRECTORY = directory;
 		for (Part part : request.getParts()) {
-			String fileName = getFileName(part);
-			part.write(UPLOAD_DIRECTORY + File.separator + fileName);
+			if (!getFileName(part).isEmpty()) {
+				fileName = getFileName(part);
+				user.setImgpath(directory + fileName);
+				part.write(UPLOAD_DIRECTORY + File.separator + fileName);
+			}else {
+				user.setImgpath(null);
+			}
 		}
+<<<<<<< HEAD
 
-		if (UserService.getInstance().insert(user)) {
-			request.setAttribute("firstRegistration", "OK");
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-		}else {
+		boolean responseValue = UserService.getInstance().insert(user);
+		if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
+=======
+		if (user.getImgpath() != null) {
+			if (UserService.getInstance().insert(user)) {
+				request.setAttribute("firstRegistration", "OK");
+				request.getRequestDispatcher("login.jsp").forward(request, response);
+			} else {
+				request.getRequestDispatcher("registration.html").forward(request, response);
+			}
+		} else {
 			request.getRequestDispatcher("registration.html").forward(request, response);
+>>>>>>> branch 'master' of https://github.com/MaurizioFranco/repro.admin.web.git
 		}
+		
 	}
 	
 	private String getFileName(Part part) {

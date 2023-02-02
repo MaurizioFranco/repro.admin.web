@@ -16,6 +16,13 @@ import org.slf4j.LoggerFactory;
 import centauri.academy.proxima.cerepro.entity.SurveysQuestions;
 
 /**
+ * 
+ * @author Giacomo Della Luna
+ *
+ */
+
+
+/**
  * Servlet implementation class GetSurveyquestionsServlet
  */
 @WebServlet("/GetSurveyquestionsServlet")

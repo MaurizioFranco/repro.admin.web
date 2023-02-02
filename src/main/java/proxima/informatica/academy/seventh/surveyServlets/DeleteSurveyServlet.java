@@ -36,14 +36,12 @@ public class DeleteSurveyServlet extends HttpServlet {
 		logger.debug("DeleteSurveyServlet DEBUG - Survey ID to delete: "+id);
 		Surveys surveyToDelete = SurveyService.getInstance().selectById(id);
 		logger.debug("DeleteSurveyServlet DEBUG - Survey to delete: "+surveyToDelete);
-		SurveyService.getInstance().deleteSurvey(id);
+		boolean responseValue = SurveyService.getInstance().deleteSurvey(id);
 		
-		if(SurveyService.getInstance().selectById(id) == null) {
-			request.setAttribute("deleteSurvey", "OK");
-			request.getRequestDispatcher("surveys.jsp").forward(request, response);
-		}else {
-			request.setAttribute("deleteSurvey", "KO");
-			request.getRequestDispatcher("surveys.jsp").forward(request, response);
+		if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 

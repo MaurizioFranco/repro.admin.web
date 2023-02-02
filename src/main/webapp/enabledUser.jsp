@@ -1,6 +1,5 @@
-<%@page import="proxima.informatica.academy.seventh.user.service.UserService"%>
-<%@page import="proxima.informatica.academy.dto.UserDto"%>
-<%@page import="proxima.informatica.academy.DatabaseManagerSingleton"%>
+<%@page import="centauri.academy.proxima.cerepro.entity.User"%>
+<%@page import="proxima.informatica.academy.seventh.service.UserService"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
@@ -14,11 +13,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <title>Update User</title>
-<link rel="icon" type="image/ico" href="./img/Logo-Centauri-Academy-2018.ico">
 </head>
 <body>
 <%@include file="header.jsp" %>
-<% UserDto user = UserService.getInstance().selectById(Integer.parseInt(request.getParameter("userId"))); %>
+<% User user = UserService.getInstance().selectById(Integer.parseInt(request.getParameter("userId"))); %>
 	<form action="./UpdateUserServlet" method="post">
 		
   		<input type="hidden" name="id" value="<%= user.getId() %>">
@@ -49,7 +47,7 @@
   		<input type="text" name="note" value="<%= user.getNote() %>"><br>
   		
   		<label>Enabled</label><br>
-  		<input type="checkbox" name="enabled" <% if(user.getEnabled()) out.print("checked"); %>><br>
+  		<input type="checkbox" name="enabled" <% if(user.getenabled()>0) out.print("checked"); %>><br>
   		<br>
   		
   		<input class="btn btn-primary" type="submit" id="button" value="Update">

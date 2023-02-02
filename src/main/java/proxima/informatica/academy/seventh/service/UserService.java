@@ -1,5 +1,6 @@
 package proxima.informatica.academy.seventh.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,13 +11,14 @@ import org.slf4j.LoggerFactory;
 import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.entity.User;
 import centauri.academy.proxima.cerepro.repository.UserRepository;
+import proxima.informatica.academy.seventh.common.PropertiesManagerSingleton;
 import proxima.informatica.academy.seventh.user.result.LoginResult;
 
 public class UserService {
 
 	private final static Logger logger = LoggerFactory.getLogger(UserService.class);
 	
-	private final String USER_EMAIL = "dllgiacomo@gmail.com";
+//	private final String USER_EMAIL = "dllgiacomo@gmail.com";
 
 	UserRepository userRepository = null ;
 	
@@ -59,12 +61,23 @@ public class UserService {
 
 	public boolean insert(User user) {
 		boolean response = false;
-
+		String host = null;
+		String port = null;
+		String home = null;
+		try {
+			host = PropertiesManagerSingleton.getInstance().getProperty("properties.host");
+			port = PropertiesManagerSingleton.getInstance().getProperty("properties.port");
+			home = PropertiesManagerSingleton.getInstance().getProperty("properties.home");		
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
 		try {
 			if (userRepository.create(user) > 0) {
 				User userForId = (User)userRepository.findByEmail(user.getEmail());
-				MailUtility.sendSimpleMail(USER_EMAIL, "Create a new password",
-						"Click <a href='http://localhost:8080/repro.admin.web/completeRegistration.jsp?id="
+				String email = userForId.getEmail();
+				MailUtility.sendSimpleMail(email, "Create a new password",
+						"Click <a href='http://"+host+":"+port+"/"+home+"/completeRegistration.jsp?id="
 								+ userForId.getId() + "'>here</a> to complete your registration");
 
 				response = true;

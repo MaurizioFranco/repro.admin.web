@@ -33,20 +33,20 @@ public class UpdateSurveyServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("UpdateSurveyServlet.START");
 		Surveys survey = new Surveys();
-		boolean surveyToCheck = false;
+		boolean responseValue = false;
 		try {
 		survey.setId(Long.parseLong(request.getParameter("surveyIdToUpdate")));
 		survey.setLabel(request.getParameter("surveyLabelToUpdate"));
 		survey.setTime(Integer.valueOf(request.getParameter("surveyTimeToUpdate")));
 		survey.setDescription(request.getParameter("surveyDescriptionToUpdate"));
 		logger.debug("UpdateSurveyServlet.DEBUG - update: " + survey);
-		surveyToCheck = SurveyService.getInstance().updateSurvey(survey);
-		logger.debug("UpdateSurveyServlet.DEBUG - updatedItem: " + surveyToCheck);
+		responseValue = SurveyService.getInstance().updateSurvey(survey);
+		logger.debug("UpdateSurveyServlet.DEBUG - updatedItem: " + responseValue);
 		} catch (Exception e) {
 			logger.error(e.getMessage());
 		}
 
-		if(surveyToCheck == true) {
+		if(responseValue) {
 //			request.setAttribute("updateSurvey", "OK");
 //			request.getRequestDispatcher("surveys.jsp").forward(request, response); 
 			response.getWriter().append("OK");

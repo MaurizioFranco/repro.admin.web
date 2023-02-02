@@ -21,25 +21,12 @@
  		document.getElementById("buttonUpdate").disabled = false;
 	}
 	
-	function deleteUser() {
-		console.log("Delete");
-		document.getElementById("formSelectUser").action = "./DeleteUserServlet";
-		document.getElementById("formSelectUser").method = "post";
-		document.getElementById("formSelectUser").submit;
-	}
-	
-	function updateUser() {
-		console.log("Update");
-		document.getElementById("formSelectUser").action = "./updateUser.jsp";
-		document.getElementById("formSelectUser").method = "post";
-		document.getElementById("formSelectUser").submit;
-	}
-	
 	function deleteUser(){
 		console.log("delete");
 		document.getElementById("formSelectUser").method = "POST";
 		document.getElementById("formSelectUser").action = "./DeleteUserServlet";
 		document.getElementById("formSelectUser").submit();
+// 		location.reload()
 	}
 	
 </script>
@@ -52,7 +39,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
@@ -105,10 +92,10 @@
 			}
 			%>
 		</table>
-		<button type="button" class="btn btn-danger" id=buttonDelete disabled data-toggle="modal" data-target="#deleteModal">Cancella</button>
+		<button type="button" class="btn btn-danger" id=buttonDelete disabled data-toggle="modal" data-target="#deleteUserModal">Cancella</button>
 		<input class="btn btn-primary" type="submit" class="button"	id="buttonUpdate" value="Update" disabled onclick="javascript:updateUser();">
 	<!-- Modal DELETE-->
-		<div class="modal" id=deleteModal tabindex="-1" role="dialog">
+		<div class="modal fade" id="deleteUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">

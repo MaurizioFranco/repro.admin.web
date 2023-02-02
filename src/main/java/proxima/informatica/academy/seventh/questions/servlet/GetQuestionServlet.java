@@ -27,31 +27,25 @@ public class GetQuestionServlet extends HttpServlet {
      */
     public GetQuestionServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	logger.debug("GetQuestionServlet.START");
+    	logger.debug(this.getClass().getSimpleName() + ".doGet - START");
 		Questions item = null ;
 		try {
 			String itemId = request.getParameter("id") ;
-			logger.debug("GetQuestionServlet.DEBUG - roleId: " + itemId);
+			logger.debug(this.getClass().getSimpleName() + ".doGet - DEBUG - itemId: " + itemId);
 			int itemIdInt = Integer.parseInt(itemId);
 			item = QuestionsService.getIstance().selectById(itemIdInt);
-			logger.debug("GetQuestionServlet.DEBUG - retrieving item: " + item);
+			logger.debug(this.getClass().getSimpleName() + ".doGet - DEBUG - retrieving item: " + item);
 		} catch (Exception e) {
+			logger.error(this.getClass().getSimpleName() + ".doGet - ERROR" + e.getMessage());
 			logger.error(e.getMessage(), e);
 		}
 		ObjectMapper mapper = new ObjectMapper();
 		String itemToJson = mapper.writeValueAsString(item);
-		logger.debug("GetQuestionServlet.DEBUG - returning itemToJson: " + itemToJson);
+		logger.debug(this.getClass().getSimpleName() + ".doGet - DEBUG - returning itemToJson: " + itemToJson);
 		response.getWriter().append(itemToJson);
     }
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
 
 }

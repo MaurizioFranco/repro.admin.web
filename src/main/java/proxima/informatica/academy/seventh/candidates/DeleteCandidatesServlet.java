@@ -37,7 +37,7 @@ public class DeleteCandidatesServlet extends HttpServlet {
 		
 		boolean responseValue = CandidatesService.getInstance().deleteById(id) ;
         logger.debug(this.getClass().getSimpleName() + ".DEBUG - responseValue: " + responseValue);
-		if (responseValue) {
+        if (responseValue) {
 			response.getWriter().append("OK");
 		} else {
 			response.getWriter().append("KO");

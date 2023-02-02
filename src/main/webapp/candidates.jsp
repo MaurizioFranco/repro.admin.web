@@ -26,20 +26,6 @@
  		document.getElementById("buttonUpdate").disabled = false;
 	}
 	
-	function deleteCandidates() {
-		console.log("Delete");
-		document.getElementById("formSelectCandidates").action = "./DeleteCandidatesServlet";
-		document.getElementById("formSelectCandidates").method = "post";
-		document.getElementById("formSelectCandidates").submit;
-	}
-	
-	function updateCandidates() {
-		console.log("Update");
-		document.getElementById("formSelectCandidates").action = "./updateCandidates.jsp";
-		document.getElementById("formSelectCandidates").method = "post";
-		document.getElementById("formSelectCandidates").submit;
-	}
-	
 	function initializeUpdateForm (item) {
 		console.log("initializeUpdateForm - START - " + item);
 		console.log(item);
@@ -125,6 +111,7 @@
 		document.getElementById("selectionForm").method = "POST";
 		document.getElementById("selectionForm").action = "./DeleteCandidates";
 		document.getElementById("selectionForm").submit();
+		location.reload()
 	}
 	
 	
@@ -139,7 +126,7 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
