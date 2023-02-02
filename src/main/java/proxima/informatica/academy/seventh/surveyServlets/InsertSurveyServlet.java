@@ -45,10 +45,9 @@ public class InsertSurveyServlet extends HttpServlet {
 		logger.debug("InsertSurveyServlet - responseValue: " + responseValue);
 		
 		if (responseValue) {
-			request.setAttribute("insertSurvey", "OK");
-
+			response.getWriter().append("OK");
 		} else {
-			request.setAttribute("insertSurvey", "KO");
+			response.getWriter().append("KO");
 		}
 	}
 

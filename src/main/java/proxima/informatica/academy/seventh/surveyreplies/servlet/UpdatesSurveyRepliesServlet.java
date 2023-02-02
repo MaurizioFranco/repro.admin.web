@@ -59,7 +59,9 @@ public class UpdatesSurveyRepliesServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		if(result > 0) {	
+		boolean responseValue = result > 0 ? true : false;
+		
+		if(responseValue) {	
 //			request.setAttribute("updateSurevyreplies","OK");
 //			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
 			response.getWriter().append("OK");

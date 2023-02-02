@@ -56,11 +56,11 @@ public class RegistrationUserServlet extends HttpServlet {
 			part.write(UPLOAD_DIRECTORY + File.separator + fileName);
 		}
 
-		if (UserService.getInstance().insert(user)) {
-			request.setAttribute("firstRegistration", "OK");
-			request.getRequestDispatcher("login.jsp").forward(request, response);
-		}else {
-			request.getRequestDispatcher("registration.html").forward(request, response);
+		boolean responseValue = UserService.getInstance().insert(user);
+		if (responseValue) {
+			response.getWriter().append("OK");
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 	

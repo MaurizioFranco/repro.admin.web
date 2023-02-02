@@ -36,13 +36,13 @@ public class DeleteSurveyquestionsServlet extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		logger.debug("ID SurveyquestionsDto received" + request.getParameter("sqId"));
-		int id = Integer.parseInt(request.getParameter("sqId"));		
-		if (SurveyquestionsService.getInstance().deleteById(id)) {
-			request.setAttribute("deleteStatus", "OK");
-			request.getRequestDispatcher("surveyquestions.jsp").forward(request, response);
+		int id = Integer.parseInt(request.getParameter("sqId"));	
+		boolean responseValue = SurveyquestionsService.getInstance().deleteById(id);
+		
+		if (responseValue) {
+			response.getWriter().append("OK");
 		} else {
-			request.setAttribute("deleteStatus", "KO");
-			request.getRequestDispatcher("surveyquestions.jsp").forward(request, response);
+			response.getWriter().append("KO");
 		}
 	}
 

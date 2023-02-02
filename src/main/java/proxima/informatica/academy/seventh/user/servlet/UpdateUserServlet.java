@@ -61,12 +61,13 @@ public class UpdateUserServlet extends HttpServlet {
 			user.setenabled(1);
 		else
 			user.setenabled(0);
-		if (UserService.getInstance().updateUser(user)) {
-			request.setAttribute("updateUser", "OK");
-			request.getRequestDispatcher("user.jsp").forward(request, response);
+		
+		boolean responseValue = UserService.getInstance().updateUser(user);
+		
+		if (responseValue) {
+			response.getWriter().append("OK");
 		} else {
-			request.setAttribute("updateUser", "KO");
-			request.getRequestDispatcher("user.jsp").forward(request, response);
+			response.getWriter().append("KO");
 		}
 	}
 
