@@ -49,12 +49,8 @@ public class DeleteSurveyquestionsServlet extends HttpServlet {
 		if (responseValue) {
 			response.getWriter().append("OK");
 
-			if (SurveyquestionsService.getInstance().deleteById(id)) {
-				request.getRequestDispatcher("surveyquestions.jsp").forward(request, response);
-//			response.getWriter().append("OK");
-			} else {
-				response.getWriter().append("KO");
-			}
+		} else {
+			response.getWriter().append("KO");
 		}
 	}
 }
