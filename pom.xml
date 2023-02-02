@@ -68,7 +68,6 @@
 			<artifactId>jakarta.xml.bind-api</artifactId>
 			<version>2.3.2</version>
 		</dependency>
-
 		<!-- Runtime, com.sun.xml.bind module -->
 		<dependency>
 			<groupId>org.glassfish.jaxb</groupId>
@@ -87,7 +86,11 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-
+        <dependency>
+            <groupId>proxima.informatica.academy.seventh</groupId>
+			<artifactId>repro.admin.service</artifactId>
+			<version>0.1</version>
+        </dependency>
 	</dependencies>
 
 
