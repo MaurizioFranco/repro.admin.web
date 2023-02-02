@@ -15,27 +15,13 @@
 
 
 <head>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 
 	function abilitaBottone() {
 		console.log("questa è la console");
  		document.getElementById("buttonDelete").disabled = false;
  		document.getElementById("buttonUpdate").disabled = false;
-	}
-	
-	function deleteSurvey() {
-		console.log("Delete");
-		document.getElementById("formSelectSurvey").action = "./DeleteSurveyServlet";
-		document.getElementById("formSelectSurvey").method = "post";
-		document.getElementById("formSelectSurvey").submit;
-	}
-	
-	function updateSurvey() {
-		console.log("Update");
-		document.getElementById("formSelectSurvey").action = "./updateSurvey.jsp";
-		document.getElementById("formSelectSurvey").method = "post";
-		document.getElementById("formSelectSurvey").submit;
 	}
 	
 	//INITIALIZE UPDATE FORM
@@ -140,14 +126,23 @@
 			});
 	}
 	
+	function deleteSurvey(){
+		console.log("delete");
+		document.getElementById("formSelectSurvey").method = "POST";
+		document.getElementById("formSelectSurvey").action = "./DeleteSurveyServlet";
+		document.getElementById("formSelectSurvey").submit();
+// 		location.reload()
+	}
 </script>
 <meta charset="ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>List Surveys</title>
 
+<link rel="icon" type="image/ico" href="./img/Logo-Centauri-Academy-2018.ico">
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-<link rel="stylesheet" href="list.css">
+<link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
@@ -177,7 +172,7 @@
 				
 			%>
 			<tr>
-				<th scope="row"><input type="radio" name="surveyId" onclick="javascript:abilitaBottone();" value="<%out.print(survey.getId());%>" /></th>
+				<th scope="row"><input type="radio" name="id" onclick="javascript:abilitaBottone();" value="<%out.print(survey.getId());%>" /></th>
 				<td>
 					<%
 					out.print(survey.getId().toString());
@@ -203,11 +198,30 @@
 			}
 			%>
 		</table>
-		<input class="btn btn-danger" type="submit" class="button" id="buttonDelete" value="Delete" disabled onclick="javascript:deleteSurvey();">
-		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveyModal" onclick="showUpdateSurveyModal(); return false;">MODIFICA</button>
+		<button type="button" class="btn btn-danger" id="buttonDelete" disabled data-toggle="modal" data-target="#deleteSurveyModal">Cancella</button>
+		<button type="button" class="btn btn-primary" id="buttonUpdate" data-toggle="modal" data-target="#updateSurveyModal" onclick="showUpdateSurveyModal(); return false;">MODIFICA</button>
+	<!-- Modal DELETE-->
+		<div class="modal fade" id="deleteSurveyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title">Eliminazione survey</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p>Sei sicuro di volre rimuovere questa survey?</p>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-primary" onclick="javascript:deleteSurvey();">SI</button>
+			        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+			      </div>
+			    </div>
+		  	</div>
+		</div>
 	</form>
 </div>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 

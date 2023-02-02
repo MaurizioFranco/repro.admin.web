@@ -28,6 +28,8 @@
 	 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
 <title>Questions</title>
+<link rel="icon" type="image/ico" href="./img/Logo-Centauri-Academy-2018.ico">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
 // 			alert("sono qui");
 			
@@ -37,28 +39,12 @@
 				document.getElementById("deleteButton").disabled=false;
 				document.getElementById("modifyButton").disabled=false;
 				
-			}
-			
-			function deleteQuestion(){
-				console.log("delete");
-				document.getElementById("selectionForm").action="./DeleteQuestionServlet";
-				document.getElementById("selectionForm").method="POST";
-				document.getElementById("selectionForm").submit();
-			}
+			}			
 			
 			function modifyQuestion(){
 				console.log("modifica");
 				showUpdateQuestionModal();
-// 				document.getElementById("selectionForm").action="updateUser.jsp";
-// 				document.getElementById("selectionForm").submit();
-			}
-			
-//		 	function insertRole() {
-//	 		console.log("Insert");
-//	 		document.getElementById("formSelectRole").action = "./insertRole.jsp";
-//	 		document.getElementById("formSelectRole").method = "post";
-//	 		document.getElementById("formSelectRole").submit;
-//	 		}
+			}		
 
 			function initializeUpdateForm (item) {
 				console.log("initializeUpdateForm - START - " + item);
@@ -79,16 +65,17 @@
 			
 			//SHOW UPDATE MODAL
 			function showUpdateQuestionModal () {
-				console.log("showUpdateQuestionModal!!!");
-				const xhttp = new XMLHttpRequest();
-				  xhttp.onload = function() {
-					  var question = JSON.parse(this.responseText) ;
-					  console.log(question);
-					  initializeUpdateForm (question);
-				    }
-				  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id=46", true);
-				  xhttp.send();
-			}
+			console.log("showUpdateQuestionModal!!!");
+			const xhttp = new XMLHttpRequest();
+			  xhttp.onload = function() {
+				  var item = JSON.parse(this.responseText) ;
+				  console.log(item);
+				  initializeUpdateForm (item);
+			    }
+			  var id= document.querySelector('input[name="selectedUserId"]:checked').value;
+			  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id="+id, true);
+			  xhttp.send();
+		}
 			
 			//SHOW INSERT MODAL
 			function showInsertQuestionModal () {
@@ -111,7 +98,7 @@
 			console.log(idToUpdate,questionLabelToUpdate,questionDescriptionToUpdate);
 			
 			var itemToUpdate = {
-			"id":questionIdToUpdate,
+			"id":idToUpdate,
 			"label":questionLabelToUpdate,
 			"description":questionDescriptionToUpdate
 			}
@@ -130,6 +117,14 @@
 				},
 				dataType:"text"
 			});
+		}
+		
+		function deleteQuestion(){
+			console.log("delete");
+			document.getElementById("selectionForm").method = "POST";
+			document.getElementById("selectionForm").action = "./DeleteQuestionServlet";
+			document.getElementById("selectionForm").submit();
+// 			location.reload()
 		}
 		
 		//INSERT FUNCTION
@@ -241,7 +236,7 @@
 				%>
 			    <tbody>
 			    	<tr>
-				    	<td><input type="radio" name="selectedUserId" value="<%out.print(item.getId());%>" onclick="javascript:abilitaButton()"></td>
+				    	<td><input type="radio" name="id" value="<%out.print(item.getId());%>" onclick="javascript:abilitaButton()"></td>
 				    	<td><%= item.getId() %></td>
 		 		    	<td><%= item.getLabel() %></td>
 		 		    	<td><%= item.getDescription() %></td>
@@ -275,41 +270,61 @@
 			<button type="button" class="btn btn-primary" id="modifyButton" disabled data-toggle="modal" data-target="#updateQuestionModal" onclick="showUpdateQuestionModal(); return false;">
 			  MODIFICA
 			</button>
-			
+			<!-- Modal DELETE-->
+		<div class="modal" id=deleteModal tabindex="-1" role="dialog">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Eliminazione question</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p>Sei sicuro di volre rimuovere questa Question?</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" onclick="javascript:deleteQuestion();">SI</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	
 	</form>
 	</div>
 			
-	<!-- Update Modal -->
-	<div class="modal fade" id="updateQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-			    	<h5 class="modal-title" id="exampleModalLongTitle">Update Modal</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			        <span aria-hidden="true">&times;</span>
-			        </button>
+	<!-- Modal UPDATE-->
+		<div class="modal fade" id="updateQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <form action="./UpdateQuestionServlet" method="post">
+			      <div class="modal-body">
+					
+					  	<label>ID</label><br>
+				  		<input type="number" name="questionIdToUpdate" id="questionIdToUpdate" value=""><br>
+				  		
+				  		<label>Label</label><br>
+				  		<input type="text" name="questionLabelToUpdate" id="questionLabelToUpdate" value=""><br>
+				  		
+				  		<label>Description</label><br>
+				  		<input type="text" name="questionDescriptionToUpdate" id="questionDescriptionToUpdate" value=""><br>
+					
 			      </div>
-			      <form action="./UpdateRoleServlet" method="post">
-				      <div class="modal-body">
-						
-						  	<label>ID</label><br>
-					  		<input type="number" name="questionIdToUpdate" id="questionIdToUpdate" value=""><br>
-					  		
-					  		<label>Label</label><br>
-					  		<input type="text" name="questionLabelToUpdate" id="questionLabelToUpdate" value=""><br>
-					  		
-					  		<label>Description</label><br>
-					  		<input type="text" name="questionDescriptionToUpdate" id="questionDescriptionToUpdate" value=""><br>
-						
-				      </div>
-				      <div class="modal-footer">
-				        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
-				      </div>
-				</form> 
-			</div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
+			      </div>
+		      </form> 
+		    </div>
+		  </div>
 		</div>
-	</div>
 	
 	<!-- Insert Modal -->
 	<div class="modal fade" id="insertRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -342,7 +357,6 @@
  		</div>
 	</div>
 	
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 

@@ -34,15 +34,6 @@ public class DeleteSurveyRepliesServlet extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-//		response.getWriter().append("Served at: ").append(request.getContextPath());
-		doPost(request, response);
-	}
-
-	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -59,13 +50,11 @@ public class DeleteSurveyRepliesServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		if(result == true) {
-			request.setAttribute("deleteSurveyReplies","OK");
+			request.setAttribute("deleteStatus", "OK");
 			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
-//			response.getWriter().append("OK");
 		}else {
-			request.setAttribute("deleteSurveyReplies","KO");
+			request.setAttribute("deleteStatus", "KO");
 			request.getRequestDispatcher("surveyreplies.jsp").forward(request,response);
-//			response.getWriter().append("KO");
 		}
 	}
 	

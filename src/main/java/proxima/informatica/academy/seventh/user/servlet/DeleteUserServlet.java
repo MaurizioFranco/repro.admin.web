@@ -24,11 +24,11 @@ public class DeleteUserServlet extends HttpServlet {
     }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int userId = Integer.parseInt(request.getParameter("userId"));
-		if(UserService.getInstance().deleteUser(userId)) {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		if(UserService.getInstance().deleteById(id)) {
 			request.setAttribute("deleteUser", "OK");
 			request.getRequestDispatcher("user.jsp").forward(request, response);
 		}else {

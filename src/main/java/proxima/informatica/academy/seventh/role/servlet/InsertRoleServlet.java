@@ -33,15 +33,18 @@ public class InsertRoleServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		logger.debug("InsertRoleServlet.START");
+		logger.debug("InsertRoleServlet - START");
 		Roles role = new Roles();
 
 		role.setLabel(request.getParameter("label"));
 		role.setDescription(request.getParameter("description"));
 		role.setLevel(Integer.parseInt(request.getParameter("level")));
         boolean responseValue = RoleService.getInstance().insert(role) ;
-        logger.debug("InsertRoleServlet.DEBUG - responseValue: " + responseValue);
-		if (responseValue) {
+        
+        logger.debug("InsertSurveyServlet - END");
+        logger.debug("InsertSurveyServlet.DEBUG - responseValue: " + responseValue);
+		
+        if (responseValue) {
 			response.getWriter().append("OK");
 		} else {
 			response.getWriter().append("KO");

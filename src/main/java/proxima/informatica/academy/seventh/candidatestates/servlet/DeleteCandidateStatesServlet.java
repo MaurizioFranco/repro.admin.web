@@ -16,6 +16,9 @@ import proxima.informatica.academy.seventh.service.CandidatesService;
 /**
  * Servlet implementation class DeleteServlet
  */
+/**
+ * @author MarcoFabretti
+ */
 public class DeleteCandidateStatesServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -40,10 +43,11 @@ public class DeleteCandidateStatesServlet extends HttpServlet {
 		boolean responseValue = CandidateStatesService.getInstance().deleteById(itemId) ;
         logger.debug(this.getClass().getSimpleName() + ".DEBUG - responseValue: " + responseValue);
 		if (responseValue) {
-			response.getWriter().append("OK");
-		} else {
-			response.getWriter().append("KO");
+			request.setAttribute("deleteStatus", "OK");
+			request.getRequestDispatcher("candidatestates.jsp").forward(request, response);
+		}else {
+			request.setAttribute("deleteStatus", "KO");
+			request.getRequestDispatcher("candidatestates.jsp").forward(request, response);
 		}
-	}
 
 }

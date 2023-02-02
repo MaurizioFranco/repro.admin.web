@@ -33,14 +33,16 @@ public class DeleteCandidatesServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug(this.getClass().getSimpleName() + ".START");
-		int itemId = Integer.parseInt(request.getParameter("id"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		
-		boolean responseValue = CandidatesService.getInstance().deleteCandidates(itemId) ;
+		boolean responseValue = CandidatesService.getInstance().deleteById(id) ;
         logger.debug(this.getClass().getSimpleName() + ".DEBUG - responseValue: " + responseValue);
 		if (responseValue) {
-			response.getWriter().append("OK");
-		} else {
-			response.getWriter().append("KO");
+			request.setAttribute("deleteStatus", "OK");
+			request.getRequestDispatcher("candidates.jsp").forward(request, response);
+		}else {
+			request.setAttribute("deleteStatus", "KO");
+			request.getRequestDispatcher("candidates.jsp").forward(request, response);
 		}
 	}
 

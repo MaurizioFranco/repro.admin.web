@@ -12,6 +12,11 @@ import proxima.informatica.academy.seventh.service.CandidateStatesService;
 /**
  * Servlet implementation class UpdateRoleServlet
  */
+
+/**
+ * @author MarcoFabretti
+ */
+
 public class UpdateCandidateStateServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

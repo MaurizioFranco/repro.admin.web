@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import proxima.informatica.academy.seventh.service.QuestionsService;
+import proxima.informatica.academy.seventh.service.SurveyService;
 
 
 
@@ -37,14 +38,16 @@ public class DeleteQuestionServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug("DeleteQuestionServlet.START");
-		int idToCancel = Integer.parseInt(request.getParameter("selectedUserId"));
+		int idToCancel = Integer.parseInt(request.getParameter("id"));
 		boolean risposta = QuestionsService.getIstance().deleteById(idToCancel);
 		
 		logger.debug("DeleteRoleServlet.DEBUG - responseValue: " + risposta);
-		if (risposta) {
-			response.getWriter().append("OK");
-		} else {
-			response.getWriter().append("KO");
+		if(SurveyService.getInstance().selectById(idToCancel) == null) {
+			request.setAttribute("deleteStatus", "OK");
+			request.getRequestDispatcher("question.jsp").forward(request, response);
+		}else {
+			request.setAttribute("deleteStatus", "KO");
+			request.getRequestDispatcher("question.jsp").forward(request, response);
 		}
 	}
 

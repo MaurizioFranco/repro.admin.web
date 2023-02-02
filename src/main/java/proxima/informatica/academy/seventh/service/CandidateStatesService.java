@@ -1,10 +1,22 @@
 package proxima.informatica.academy.seventh.service;
 
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import centauri.academy.proxima.cerepro.entity.CandidateStates;
+import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.repository.CandidateStatesRepository;
+import proxima.informatica.academy.seventh.role.servlet.GetRoleServlet;
+
+/**
+ * @author MarcoFabretti
+ */
 
 public class CandidateStatesService {
 
+	private final static Logger logger = LoggerFactory.getLogger(GetRoleServlet.class);
 	private CandidateStatesRepository candidateStatesRepository;
 	
 	private CandidateStatesService() {
@@ -31,7 +43,6 @@ public class CandidateStatesService {
 	
 	public boolean insert(CandidateStates candidate) {
 		boolean response = false;
-
 		if (candidateStatesRepository.create(candidate)>1)
 			response = true;
 		return response;
@@ -61,10 +72,11 @@ public class CandidateStatesService {
 		return response;
 	}
 	
-//	public List<CandidateStates> selectAll() throws ClassNotFoundException {
-//		List<CandidateStates> candidates= candidateStatesRepository.findAll();
-//			return candidates;
-//	}
+	public List<EntityInterface> selectAll(){	
+		logger.debug("QuestionsService: selectAll - START");
+		return candidateStatesRepository.findAll();
+	}
+	
 	public boolean deleteById(int id) {
 		return candidateStatesRepository.delete(id) ;
 	}

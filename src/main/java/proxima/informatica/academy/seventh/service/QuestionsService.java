@@ -9,7 +9,11 @@ import centauri.academy.proxima.cerepro.entity.Questions;
 import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.repository.QuestionsRepository;
 
-
+/**
+ * 
+ * @author DaimCod
+ *
+ */
 public class QuestionsService {
 	private final static Logger logger = LoggerFactory.getLogger(QuestionsService.class);
 	private QuestionsRepository questionRepository = new QuestionsRepository();
@@ -40,20 +44,19 @@ public class QuestionsService {
 	}
 	
 	public boolean deleteById(int id) {
-		boolean deleted = false;
-		logger.debug("QuestionsService: Delete by ID - START");
-		deleted = questionRepository.delete(id);
-		logger.debug("QuestionsService: Delete by ID - END");
-		return deleted;
+		return questionRepository.delete(id) ;
 	}
 	
-	public long insert(Questions question) {
+	public boolean insert(Questions question) {
 		logger.debug("QuestionsService: INSERT - START");
-		long idReturned = 0;
-		idReturned = questionRepository.create(question);
+		boolean response = false;
+		if (questionRepository.create(question)>1)
+			response = true;
 		logger.debug("QuestionsService: INSERT - END");
-		return idReturned;
+		return response;
 	}
+	
+	
 	
 	public boolean updateQuestion(Questions qs) {
 		logger.debug("QuestionsService: UPDATE - START");

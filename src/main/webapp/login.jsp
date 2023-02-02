@@ -5,6 +5,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Login</title>
+<link rel="icon" type="image/ico" href="./img/Logo-Centauri-Academy-2018.ico">
 
 <!--  <link rel="stylesheet" href="styles.css"> -->
 <link rel="stylesheet"

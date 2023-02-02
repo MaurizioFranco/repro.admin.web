@@ -37,14 +37,21 @@ public class InsertSurveyquestionsServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		logger.debug("InsertSurveyquestionsServlet - doPost - START");
+		
+		logger.debug("InsertSurveyquestionsServlet - START");
+		
 		SurveysQuestions item = new SurveysQuestions();
 
 		item.setSurveyId(Long.parseLong(request.getParameter("surveyId")));
 		item.setQuestionId(Long.parseLong(request.getParameter("questionId")));
 		item.setPosition(Integer.parseInt(request.getParameter("position")));
-
-		if (SurveyquestionsService.getInstance().insert(item)) {
+		boolean responseValue = SurveyquestionsService.getInstance().insert(item);
+		
+		logger.debug("InsertSurveyServlet - END");
+		logger.debug("InsertSurveyServlet.DEBUG - responseValue: " + responseValue);
+			
+		
+		if (responseValue) {
 			response.getWriter().append("OK");
 		} else {
 			response.getWriter().append("KO");

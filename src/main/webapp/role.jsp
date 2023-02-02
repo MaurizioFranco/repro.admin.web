@@ -13,6 +13,9 @@
 
 
 <head>
+
+<link rel="icon" href="./img/Logo-Centauri-Academy-2018.ico">
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <style>
 
@@ -26,20 +29,6 @@
 		console.log("questa è la console");
  		document.getElementById("buttonDelete").disabled = false;
  		document.getElementById("buttonUpdate").disabled = false;
-	}
-	
-	function deleteRole() {
-		console.log("Delete");
-		document.getElementById("formSelectRole").action = "./DeleteRoleServlet";
-		document.getElementById("formSelectRole").method = "post";
-		document.getElementById("formSelectRole").submit;
-	}
-	
-	function updateRole() {
-		console.log("Update");
-		document.getElementById("formSelectRole").action = "./updateRole.jsp";
-		document.getElementById("formSelectRole").method = "post";
-		document.getElementById("formSelectRole").submit;
 	}
 	
 	//INITIALIZE UPDATE FORM
@@ -73,7 +62,7 @@
 			  initializeUpdateForm (role);
 		    }
 		  var id= document.querySelector('input[name="roleRadioId"]:checked').value;
-		  xhttp.open("GET", "http://localhost:8080/repro.admin.giacomo/GetRoleServlet?id="+id, true);
+		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetRoleServlet?id="+id, true);
 		  xhttp.send();
 	}
 	

@@ -44,6 +44,7 @@ if(request.getAttribute("loginMessage") != null){
 <head>
 <meta charset="ISO-8859-1">
 <title>SurveyReplies</title>
+<link rel="icon" type="image/ico" href="./img/Logo-Centauri-Academy-2018.ico">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
@@ -53,8 +54,9 @@ if(request.getAttribute("loginMessage") != null){
     ></script>
 
 <script type="text/javascript">
+
 	function abilitaBottone() {
-		console.log("questa è una stampa di console");
+		console.log("questa ï¿½ una stampa di console");
 		document.getElementById("deleteButton").disabled=false;
 		document.getElementById("modificaButton").disabled=false;
 	}
@@ -65,6 +67,7 @@ if(request.getAttribute("loginMessage") != null){
 	}
 	function deleteSurveyreplies(){
 		console.log("delete");
+		document.getElementById("formSelezioneSurveyreplies").method="POST";
 		document.getElementById("formSelezioneSurveyreplies").action = "./DeleteSurveyRepliesServlet";
 		document.getElementById("formSelezioneSurveyreplies").submit();
 	}
@@ -339,7 +342,7 @@ if(request.getAttribute("loginMessage") != null){
 		  		
 	      </div>
 	      <div class="modal-footer">
-	      	<label id="errorUpdateMessage" style="display:none;">ERRORE LA MODIFICA NON è ANDATA A BUON FINE</label>
+	      	<label id="errorUpdateMessage" style="display:none;">ERRORE LA MODIFICA NON ï¿½ ANDATA A BUON FINE</label>
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
 	      </div>
