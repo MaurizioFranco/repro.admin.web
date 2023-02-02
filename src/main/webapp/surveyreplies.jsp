@@ -72,6 +72,7 @@ if(request.getAttribute("loginMessage") != null){
 		document.getElementById("formSelezioneSurveyreplies").submit();
 	}
 	
+	//INITIALIZE UPDATE FORM
 	function initializeUpdateForm (item) {
 		console.log("initializeUpdateForm - START - " + item);
 		console.log(item);
@@ -83,6 +84,18 @@ if(request.getAttribute("loginMessage") != null){
 		document.getElementById("pointsToUpdate").value = item.points;
 	}
 	
+	//INITIALIZE INSERT FORM
+	function initializeInsertForm (item) {
+		console.log("initializeInsertForm - START - " + item);
+		console.log(item);
+		document.getElementById("survey_IdToInsert").value = item.surveyId;
+		document.getElementById("user_IdToInsert").value = item.userId;
+		document.getElementById("answersToInsert").value = item.answer;
+		document.getElementById("pdfFileNameToInsert").value = item.pdfFileName;
+		document.getElementById("pointsToInsert").value = item.points;
+	}
+	
+	//SHOW UPDATE MODAL
 	function showUpdateSurveyRepliesModal(){
 		console.log("showUpdateSurveyRepliesModal!!!");
 		const xhttp = new XMLHttpRequest();
@@ -97,6 +110,19 @@ if(request.getAttribute("loginMessage") != null){
 		  xhttp.send();
 	}
 	
+	//SHOW INSERT MODAL
+	function showInsertRoleModal () {
+		console.log("showInsertSurveryRepliesModal!!!");
+		const xhttp = new XMLHttpRequest();
+		  xhttp.onload = function() {
+			  console.log(this.responseText);
+			  var surveyReplies = JSON.parse(this.responseText) ;
+			  console.log(surveyReplies);
+			  initializeInsertForm (role);
+		    }
+	}
+	
+	//UPDATE FUNCTION
 	function update(){
 		console.log("update - START");
 		var idToUpdate = $("#surveyRepliesIdToUpdate").val();
@@ -133,13 +159,56 @@ if(request.getAttribute("loginMessage") != null){
 		});
 
 	}
+	
+	//INSERT FUNCTION
+	function insert () {
+		console.log("insert - START");
+		
+		var survey_IdToUpdate = $("#survey_IdToInsert").val();
+		var user_IdToUpdate = $("#user_IdToInsert").val();
+		var answersToUpdate = $("#answersToInsert").val();
+		var pdfFileNameToUpdate = $("#pdfFileNameToInsert").val();
+		var pointsToUpdate = $("#pointsToInsert").val();
+		
+		console.log("survey_IdToInsert: " + survey_IdToInsert + " - user_IdToInsert: " + user_IdToInsert + " - answersToInsert: " + answersToInsert);
+		
+		var itemToInsert = {
+				"survey_id":survey_IdToInsert,
+				"user_id":user_IdToInsert,
+				"answers":answersToInsert,
+				"pdffilename":pdfFileNameToInsert,
+				"points":pointsToInsert
+        }
+        
+        $.ajax({
+			  type: "POST",
+			  url: "http://localhost:8080/repro.admin.web/InsertSurveyRepliesServlet",
+			  data: itemToInsert,
+			  success: function (responseText) {
+				  console.log(responseText);
+				  if (responseText==='OK') {					 
+					  $('#insertSurveyRepliesModal').modal('hide');		
+					  location.reload();
+// 					  $('#errorUpdateMessage').show();
+// 					  $('#errorUpdateMessage').html(responseText);
+// 				  } else {
+					  
+				  }
+			  },
+			  dataType: "text"
+			});
+	}
 </script>
 
 </head>
 	<%@include file="./header.jsp"%>
 <body>
 <div class="container-fluid">
-	<h1>Survey Replies List</h1>
+	<h1 style="text-align: left;">Survey Replies List</h1>
+	<!-- Button trigger Insert Modal -->
+	<div style="text-align: right;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertSurveyRepliesModal"
+	onclick="showInsertSurveyRepliesModal(); return false;">+</button></div>
+	<br>
 	<h3 style="text-align:center;"><%= surveyRepliesEliminato%></h3>
 	<h3 style="text-align:center;"><%= surveyRepliesModificato%></h3>
 	<h3 style="text-align:center;"><%= loginMessage%></h3>
@@ -240,12 +309,12 @@ if(request.getAttribute("loginMessage") != null){
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
-<!-- Modal -->
+<!-- Update Modal -->
 <div class="modal fade" id="updateSurveyRepliesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Update Modal</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -276,6 +345,43 @@ if(request.getAttribute("loginMessage") != null){
 	      	<label id="errorUpdateMessage" style="display:none;">ERRORE LA MODIFICA NON � ANDATA A BUON FINE</label>
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
+	      </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
+<!-- Insert Modal -->
+<div class="modal fade" id="insertSurveyRepliesModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Insert Modal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="insertSurveyRepliesForm">
+	      <div class="modal-body">
+			
+		  		<label>Survey ID</label><br>
+		  		<input type="text" name="survey_IdToInsert" id="survey_IdToInsert" value=""><br>
+		  		
+		  		<label>User ID</label><br>
+		  		<input type="text" name="user_IdToInsert" id="user_IdToInsert" value=""><br>
+			
+		  		<label>Answers</label><br>
+		  		<input type="text" name="answersToInsert" id="answersToInsert" value=""><br>
+		  		
+		  		<label>PDF File Name</label><br>
+		  		<input type="text" name="pdfFileNameToInsert" id="pdfFileNameToInsert" value=""><br>
+		  		
+		  		<label>Points</label><br>
+		  		<input type="text" name="pointsToInsert" id="pointsToInsert" value=""><br>	  		
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onClick="insert(); return false;">Save</button>
 	      </div>
       </form> 
     </div>

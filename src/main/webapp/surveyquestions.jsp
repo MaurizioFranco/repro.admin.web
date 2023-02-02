@@ -21,7 +21,7 @@
  		document.getElementById("buttonUpdate").disabled = false;
 	}
 	
-	function deleteSurveyqurestions() {
+	function deleteSurveyquestions() {
 		console.log("Delete");
 		document.getElementById("formSelectSurveyquestions").action = "./DeleteSurveyquestionsServlet";
 		document.getElementById("formSelectSurveyquestions").method = "post";
@@ -29,6 +29,7 @@
 // 		location.reload()
 	}
 	
+	//INITIALIZE UPDATE FORM
 	function initializeUpdateForm (item) {
 		console.log("initializeUpdateForm - START - " + item);
 		console.log(item);
@@ -39,20 +40,43 @@
 		
 	}
 	
+	//INITIALIZE INSERT FORM
+	function initializeInsertForm (item) {
+		console.log("initializeInsertForm - START - " + item);
+		console.log(item);
+		document.getElementById("surveysQuestionsSurveyIdToInsert").value = item.surveyId;
+		document.getElementById("surveysQuestionsQuestionIdToInsert").value = item.questionId;
+		document.getElementById("surveysQuestionsPositionToInsert").value = item.position;
+	}
+	
+	//SHOW UPDATE MODAL
 	function showUpdateSurveysQuestionsModal () {
 		console.log("showUpdateSurveysQuestionsModal!!!");
 		const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
 			  console.log(this.responseText);
-			  var role = JSON.parse(this.responseText) ;
-			  console.log(role);
-			  initializeUpdateForm (role);
+			  var surveyQuestions = JSON.parse(this.responseText) ;
+			  console.log(surveyQuestions);
+			  initializeUpdateForm (surveyQuestions);
 		    }
 		  var id= document.querySelector('input[name="sqId"]:checked').value;
 		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetSurveyquestionsServlet?sqId="+id, true);
 		  xhttp.send();
 	}
 	
+	//SHOW INSERT MODAL
+	function showInsertSurveysQuestionsModal () {
+		console.log("showInsertSurveysQuestionsModal!!!");
+		const xhttp = new XMLHttpRequest();
+		  xhttp.onload = function() {
+			  console.log(this.responseText);
+			  var surveyQuestions = JSON.parse(this.responseText) ;
+			  console.log(surveyQuestions);
+			  initializeInsertForm (surveyQuestions);
+		    }
+	}
+	
+	//UPDATE FUNCTION
 	function update () {
 		console.log("update - START");
 		var idToUpdate = $("#surveysQuestionsIdToUpdate").val(); 
@@ -86,6 +110,39 @@
 		});
 	}
 	
+	//INSERT FUNCTION
+	function insert () {
+		console.log("insert - START");
+		var surveyIdToUpdate = $("#surveysQuestionsSurveyIdToInsert").val(); 
+		var questionIdToUpdate = $("#surveysQuestionsQuestionIdToInsert").val(); 
+		var positionToUpdate = $("#surveysQuestionsPositionToInsert").val(); 
+		console.log("surveyIdToInsert: " + surveyIdToInsert + " - questionIdToInsert: " + questionIdToInsert + " - positionToInsert: " + positionToInsert);
+		
+		var itemToUpdate = {
+				"surveyId":surveyIdToInsert,
+				"questionId":questionIdToInsert,
+				"position":positionToInsert
+				}
+        
+        $.ajax({
+			  type: "POST",
+			  url: "http://localhost:8080/repro.admin.web/InsertSurveyQuestionsServlet",
+			  data: itemToInsert,
+			  success: function (responseText) {
+				  console.log(responseText);
+				  if (responseText==='OK') {					 
+					  $('#insertSurveyQuestionsModal').modal('hide');		
+					  location.reload();
+// 					  $('#errorUpdateMessage').show();
+// 					  $('#errorUpdateMessage').html(responseText);
+// 				  } else {
+					  
+				  }
+			  },
+			  dataType: "text"
+			});
+	}
+	
 	
 </script>
 <meta charset="ISO-8859-1">
@@ -101,7 +158,11 @@
 <body>
 	<%@include file="header.jsp"%>
 <div class="container-fluid">
-<h1>Survey Question List</h1>
+	<h1>Survey Question List</h1>
+	<!-- Button trigger Insert Modal -->
+	<div style="text-align: right;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertSurveyQuestionsModal"
+	onclick="showInsertSurveyQuestionsModal(); return false;">+</button></div>
+	<br>
 	<form id="formSelectSurveyquestions">
 		<table class="table table-striped table-hover  table-bordered">
 			<thead class="thead-dark">
@@ -161,7 +222,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>Do you really want to delete</p>
+        <p>Do you really want to delete?</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -174,14 +235,12 @@
 </div>
 
 
-
-
 <!-- Update Modal -->
 <div class="modal fade" id="updateSurveysQuestionsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Update Surveys Questions</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Update Survey Questions</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -204,6 +263,37 @@
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
+	      </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
+<!-- Insert Modal -->
+<div class="modal fade" id="insertSurveyQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Insert Modal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="insertSurveyQuestionForm">
+	      <div class="modal-body">
+			
+		  		<label>Survey ID</label><br>
+		  		<input type="text" name="surveyIdToInsert" id="surveyIdToInsert" value=""><br>
+		  		
+		  		<label>Question ID</label><br>
+		  		<input type="text" name="questionIdToInsert" id="questionIdToInsert" value=""><br>
+			
+		  		<label>Position</label><br>
+		  		<input type="number" name="positionToInsert" id="positionToInsert" value=""><br>		  		
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onClick="insert(); return false;">Save</button>
 	      </div>
       </form> 
     </div>

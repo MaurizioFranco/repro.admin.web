@@ -34,28 +34,37 @@
 // 			alert("sono qui");
 			
 			
-		function abilitaButton(){
-			console.log("Questa è la funzione");
-			document.getElementById("deleteButton").disabled=false;
-			document.getElementById("modifyButton").disabled=false;
+			function abilitaButton(){
+				console.log("Questa è la funzione");
+				document.getElementById("deleteButton").disabled=false;
+				document.getElementById("modifyButton").disabled=false;
+				
+			}			
 			
-		}
-		
-		function modifyQuestion(){
-			console.log("modifica");
-			showUpdateQuestionModal();
-		}
+			function modifyQuestion(){
+				console.log("modifica");
+				showUpdateQuestionModal();
+			}		
+
+			function initializeUpdateForm (item) {
+				console.log("initializeUpdateForm - START - " + item);
+				console.log(item);
+				document.getElementById("questionIdToUpdate").value = item.id;
+				document.getElementById("questionLabelToUpdate").value = item.label;
+				document.getElementById("questionDescriptionToUpdate").value = item.description;
+			}
 			
-		function initializeUpdateForm (item) {
-			console.log("initializeUpdateForm - START - " + item);
-			console.log(item);
-			document.getElementById("questionIdToUpdate").value = item.id;
-			document.getElementById("questionLabelToUpdate").value = item.label;
-			document.getElementById("questionDescriptionToUpdate").value = item.description;
+			//INITIALIZE INSERT FORM
+			function initializeInsertForm (item) {
+				console.log("initializeInsertForm - START - " + item);
+				console.log(item);
+				document.getElementById("questionIdToUpdate").value = item.id;
+				document.getElementById("questionLabelToUpdate").value = item.label;
+				document.getElementById("questionDescriptionToUpdate").value = item.description;
+			}
 			
-		}
-			
-		function showUpdateQuestionModal () {
+			//SHOW UPDATE MODAL
+			function showUpdateQuestionModal () {
 			console.log("showUpdateQuestionModal!!!");
 			const xhttp = new XMLHttpRequest();
 			  xhttp.onload = function() {
@@ -67,8 +76,21 @@
 			  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id="+id, true);
 			  xhttp.send();
 		}
+			
+			//SHOW INSERT MODAL
+			function showInsertQuestionModal () {
+			console.log("showInsertQuestionModal!!!");
+			const xhttp = new XMLHttpRequest();
+			xhttp.onload = function() {
+			console.log(this.responseText);
+			var question = JSON.parse(this.responseText) ;
+			console.log(question);
+			initializeInsertForm (question);
+		    }
+		}
 
-		function update(){
+		//UPDATE FUNCTION
+		function update() {
 			console.log("update - START");
 			var idToUpdate = $("#questionIdToUpdate").val();
 			var questionLabelToUpdate = $("#questionLabelToUpdate").val();
@@ -78,7 +100,7 @@
 			var itemToUpdate = {
 			"id":idToUpdate,
 			"label":questionLabelToUpdate,
-			"description":questionDescriptionToUpdate,
+			"description":questionDescriptionToUpdate
 			}
 			
 			$.ajax({
@@ -97,8 +119,6 @@
 			});
 		}
 		
-
-		
 		function deleteQuestion(){
 			console.log("delete");
 			document.getElementById("selectionForm").method = "POST";
@@ -107,55 +127,36 @@
 // 			location.reload()
 		}
 		
-// 		function showDeleteModal(){
-// 			console.log("showDeleteModal!!!");
-// 			const xhttp = new XMLHttpRequest();
-// 			  xhttp.onload = function() {
-// 				  var item = JSON.parse(this.responseText) ;
-// 				  console.log(item);
-// 				  initializeDeleteForm (item);
-// 			    }
-// 			  var id= document.querySelector('input[name="selectedUserId"]:checked').value;
-// 			  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id="+id, true);
-// 			  xhttp.send();
-// 		}
-		
-// 		function initializeDeleteForm (item) {
-// 			console.log("initializeDeleteForm - START - " + item);
-// 			console.log(item);
-// 			document.getElementById("idToCancel").value = item.id;
-// 			document.getElementById("labelToCancel").value = item.label;
-// 		}
+		//INSERT FUNCTION
+		function insert() {
+			console.log("insert - START");
+			var questionIdToInsert = $("#questionIdToInsert").val();
+			var questionLabelToInsert = $("#questionLabelToInsert").val();
+			var questionDescriptionToInsert = $("#questionDescriptionToInsert").val();
+			
+			console.log("questionIdToInsert: " + questionIdToInsert + " - questionLabelToInsert: " + questionLabelToInsert + " - questionDescriptionToInsert: " + questionDescriptionToInsert);
+			
+			var itemToInsert = {
+					"id":questionIdToUpdate,
+					"label":questionLabelToUpdate,
+					"description":questionDescriptionToUpdate
+	        }
+	        
+	        $.ajax({
+				  type: "POST",
+				  url: "http://localhost:8080/repro.admin.web/InsertRoleServlet",
+				  data: itemToInsert,
+				  success: function (responseText) {
+					  console.log(responseText);
+					  if (responseText==='OK') {					 
+						  $('#insertQuestionModal').modal('hide');		
+						  location.reload();
+					  }
+				  },
+				  dataType: "text"
+				});
+		}
 
-// 		function deleteItem(){
-// 			console.log("DELETE - START");
-// 			var id = $("#idToCancel").val();
-// 			var label = $("#labelToCancel").val();
-// 			console.log(id, label);
-			
-// 			var itemToCancel = {
-// 					"id":id,
-// 					"label":label,
-// 			}
-			
-// 			$.ajax({
-// 				type:"POST",
-// 				url: "http://localhost:8080/repro.admin.web/DeleteQuestionServlet",
-// 				data:itemToCancel,
-// 				success:function(result){
-// 					console.log(result);
-// 					if(result == 'OK'){
-// 			        	$('#deleteModal').modal('hide');
-// 			        	location.reload();
-// 					}else{
-						
-// 					}
-// 				},
-// 				dataType:"text"
-// 			});
-// 		}
-		
-		
 		</script>
 </head>
 <body>
@@ -185,7 +186,12 @@
 				<%
 				if(lista.size() > 0){
 				%>
-				<h1>Questions List</h1>
+	<div class="container-fluid">
+	<h1 style="text-align: left;">Questions List</h1>
+	<!-- Button trigger Insert Modal -->
+	<div style="text-align: right;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertQuestionModal"
+	onclick="showInsertQuestionModal(); return false;">+</button></div>
+	<br>
 	<form id="selectionForm">
 			<table class="table table-striped">
 				<thead>
@@ -260,7 +266,7 @@
 				%>
 			</table>
 			
-<!-- 			<input type="submit" value="Cancella" id="deleteButton" disabled onclick="javascript:deleteUser()"/> -->
+
 			<button type="button" class="btn btn-danger" id="deleteButton" disabled data-toggle="modal" data-target="#deleteQuestionModal">Cancella</button>
 			<button type="button" class="btn btn-primary" id="modifyButton" disabled data-toggle="modal" data-target="#updateQuestionModal" onclick="showUpdateQuestionModal(); return false;">
 			  MODIFICA
@@ -291,7 +297,11 @@
 		    </div>
 		  </div>
 		</div>
-		<!-- Modal UPDATE-->
+	
+	</form>
+	</div>
+			
+	<!-- Modal UPDATE-->
 		<div class="modal fade" id="updateQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 		  <div class="modal-dialog" role="document">
 		    <div class="modal-content">
@@ -323,13 +333,39 @@
 		  </div>
 		</div>
 	
+	<!-- Insert Modal -->
+	<div class="modal fade" id="insertRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  		<div class="modal-dialog" role="document">
+   			<div class="modal-content">
+      			<div class="modal-header">
+        			<h5 class="modal-title" id="exampleModalLongTitle">Insert Modal</h5>
+        			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+         			<span aria-hidden="true">&times;</span>
+        			</button>
+      			</div>
+     			<form id="insertRoleForm">
+	      		<div class="modal-body">
+			
+		  		<label>Label</label><br>
+		  		<input type="text" name="roleLabelToInsert" id="roleLabelToInsert" value=""><br>
+		  		
+		  		<label>Description</label><br>
+		  		<input type="text" name="roleDescriptionToInsert" id="roleDescriptionToInsert" value=""><br>
+			
+		  		<label>Level</label><br>
+		  		<input type="number" name="roleLevelToInsert" id="roleLevelToInsert" value=""><br>		  		
+	      		</div>
+	      		<div class="modal-footer">
+	        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        		<button type="button" class="btn btn-primary" onClick="insert(); return false;">Save</button>
+	     		</div>
+     			</form> 
+   			</div>
+ 		</div>
+	</div>
 	
-	
-	
-	
-		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
-	
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
 </body>
 </html>

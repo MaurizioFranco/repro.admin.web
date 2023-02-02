@@ -24,6 +24,7 @@
  		document.getElementById("buttonUpdate").disabled = false;
 	}
 	
+	//INITIALIZE UPDATE FORM
 	function initializeUpdateForm (item) {
 		console.log("initializeUpdateForm - START - " + item);
 		console.log(item);
@@ -33,6 +34,16 @@
 		document.getElementById("surveyDescriptionToUpdate").value = item.description;
 	}
 	
+	//INITIALIZE INSERT FORM
+	function initializeInsertForm (item) {
+		console.log("initializeInsertForm - START - " + item);
+		console.log(item);
+		document.getElementById("surveyLabelToInsert").value = item.label;
+		document.getElementById("surveyTimeToInsert").value = item.time;
+		document.getElementById("surveyDescriptionToInsert").value = item.description;
+	}
+	
+	//SHOW UPDATE MODAL
 	function showUpdateSurveyModal () {
 		console.log("showUpdateSurveyModal!!!");
 		const xhttp = new XMLHttpRequest();
@@ -45,6 +56,19 @@
 		  xhttp.send();
 	}
 	
+	//SHOW INSERT MODAL
+	function showInsertSurveyModal () {
+		console.log("showInsertSurveyModal!!!");
+		const xhttp = new XMLHttpRequest();
+		  xhttp.onload = function() {
+			  console.log(this.responseText);
+			  var survey = JSON.parse(this.responseText) ;
+			  console.log(survey);
+			  initializeInsertForm (survey);
+		    }
+	}
+	
+	//UPDATE FUNCTION
 	function update() {
 		console.log("update - START");
 		var idToUpdate = document.getElementById("surveyIdToUpdate").value;
@@ -67,6 +91,41 @@
 		xhttp.send(formData);
 	}
 	
+	//INSERT FUNCTION
+	function insert () {
+		console.log("insert - START");
+		
+		var surveyLabelToInsert = $("#surveyLabelToInsert").val();
+		var surveyTimeToInsert = $("#surveyTimeToInsert").val();
+		var surveyDescriptionToInsert = $("#surveyDescriptionToInsert").val();
+		
+		console.log("surveyLabelToInsert: " + surveyLabelToInsert + " - surveyTimeToInsert: " + surveyTimeToInsert + " - surveyDescriptionToInsert: " + surveyDescriptionToInsert);
+		
+		var itemToInsert = {
+        		"label":surveyLabelToInsert,
+        		"time":surveyTimeToInsert,
+        		"description":surveyDescriptionToInsert
+        }
+        
+        $.ajax({
+			  type: "POST",
+			  url: "http://localhost:8080/repro.admin.web/InsertSurveyServlet",
+			  data: itemToInsert,
+			  success: function (responseText) {
+				  console.log(responseText);
+				  if (responseText==='OK') {					 
+					  $('#insertSurveyModal').modal('hide');		
+					  location.reload();
+// 					  $('#errorUpdateMessage').show();
+// 					  $('#errorUpdateMessage').html(responseText);
+// 				  } else {
+					  
+				  }
+			  },
+			  dataType: "text"
+			});
+	}
+	
 	function deleteSurvey(){
 		console.log("delete");
 		document.getElementById("formSelectSurvey").method = "POST";
@@ -74,15 +133,12 @@
 		document.getElementById("formSelectSurvey").submit();
 // 		location.reload()
 	}
-	
 </script>
 <meta charset="ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>List Surveys</title>
 
 <link rel="icon" type="image/ico" href="./img/Logo-Centauri-Academy-2018.ico">
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
@@ -92,7 +148,11 @@
 <body>
 	<%@include file="header.jsp"%>
 <div class="container-fluid">
-	<h1>Survey List</h1>
+	<h1 style="text-align: left;">Survey List</h1>
+	<!-- Button trigger Insert Modal -->
+	<div style="text-align: right;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertSurveyModal"
+	onclick="showInsertSurveyModal(); return false;">+</button></div>
+	<br>
 	<form id="formSelectSurvey">
 		<table class="table table-striped table-hover  table-bordered">
 			<thead class="thead-dark">
@@ -165,15 +225,12 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 
-
-	
-
-<!-- Modal -->
+<!-- Update Modal -->
 <div class="modal fade" id="updateSurveyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Update Survey</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Update Modal</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -197,6 +254,37 @@
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary" onclick="update();">Save changes</button>
+	      </div>
+      </form> 
+    </div>
+  </div>
+</div>
+
+<!-- Insert Modal -->
+<div class="modal fade" id="insertSurveyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Insert Modal</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="insertSurveyForm">
+	      <div class="modal-body">
+			
+		  		<label>Label</label><br>
+		  		<input type="text" name="surveyLabelToInsert" id="surveyLabelToInsert" value=""><br>
+		  		
+		  		<label>Time</label><br>
+		  		<input type="text" name="surveyTimeToInsert" id="surveyTimeToInsert" value=""><br>
+			
+		  		<label>Description</label><br>
+		  		<input type="number" name="roleDescriptionToInsert" id="surveyDescriptionToInsert" value=""><br>		  		
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary" onClick="insert(); return false;">Save</button>
 	      </div>
       </form> 
     </div>
