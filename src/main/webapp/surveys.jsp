@@ -76,9 +76,9 @@
 		const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
 			  console.log(this.responseText);
-			  var role = JSON.parse(this.responseText) ;
-			  console.log(role);
-			  initializeInsertForm (role);
+			  var survey = JSON.parse(this.responseText) ;
+			  console.log(survey);
+			  initializeInsertForm (survey);
 		    }
 	}
 	

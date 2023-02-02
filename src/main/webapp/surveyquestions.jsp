@@ -54,9 +54,9 @@
 		const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
 			  console.log(this.responseText);
-			  var role = JSON.parse(this.responseText) ;
-			  console.log(role);
-			  initializeUpdateForm (role);
+			  var surveyQuestions = JSON.parse(this.responseText) ;
+			  console.log(surveyQuestions);
+			  initializeUpdateForm (surveyQuestions);
 		    }
 		  var id= document.querySelector('input[name="sqId"]:checked').value;
 		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetSurveyquestionsServlet?sqId="+id, true);
@@ -69,9 +69,9 @@
 		const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
 			  console.log(this.responseText);
-			  var role = JSON.parse(this.responseText) ;
-			  console.log(role);
-			  initializeInsertForm (role);
+			  var surveyQuestions = JSON.parse(this.responseText) ;
+			  console.log(surveyQuestions);
+			  initializeInsertForm (surveyQuestions);
 		    }
 	}
 	

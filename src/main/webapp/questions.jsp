@@ -82,9 +82,9 @@
 				console.log("showUpdateQuestionModal!!!");
 				const xhttp = new XMLHttpRequest();
 				  xhttp.onload = function() {
-					  var role = JSON.parse(this.responseText) ;
-					  console.log(role);
-					  initializeUpdateForm (role);
+					  var question = JSON.parse(this.responseText) ;
+					  console.log(question);
+					  initializeUpdateForm (question);
 				    }
 				  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id=46", true);
 				  xhttp.send();
@@ -96,9 +96,9 @@
 			const xhttp = new XMLHttpRequest();
 			xhttp.onload = function() {
 			console.log(this.responseText);
-			var role = JSON.parse(this.responseText) ;
-			console.log(role);
-			initializeInsertForm (role);
+			var question = JSON.parse(this.responseText) ;
+			console.log(question);
+			initializeInsertForm (question);
 		    }
 		}
 

@@ -40,13 +40,6 @@
 		document.getElementById("formSelectCandidates").submit;
 	}
 	
-	function insertCandidates() {
-		console.log("Insert");
-		document.getElementById("formSelectCandidates").action = "./insertCandidates.jsp";
-		document.getElementById("formSelectCandidates").method = "post";
-		document.getElementById("formSelectCandidates").submit;
-	}
-	
 	//INITIALIZE UPDATE FORM
 	function initializeUpdateForm (item) {
 		console.log("initializeUpdateForm - START - " + item);
