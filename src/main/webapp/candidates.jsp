@@ -26,20 +26,6 @@
  		document.getElementById("buttonUpdate").disabled = false;
 	}
 	
-	function deleteCandidates() {
-		console.log("Delete");
-		document.getElementById("formSelectCandidates").action = "./DeleteCandidatesServlet";
-		document.getElementById("formSelectCandidates").method = "post";
-		document.getElementById("formSelectCandidates").submit;
-	}
-	
-	function updateCandidates() {
-		console.log("Update");
-		document.getElementById("formSelectCandidates").action = "./updateCandidates.jsp";
-		document.getElementById("formSelectCandidates").method = "post";
-		document.getElementById("formSelectCandidates").submit;
-	}
-	
 	function initializeUpdateForm (item) {
 		console.log("initializeUpdateForm - START - " + item);
 		console.log(item);

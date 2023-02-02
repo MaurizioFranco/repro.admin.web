@@ -54,8 +54,9 @@ if(request.getAttribute("loginMessage") != null){
     ></script>
 
 <script type="text/javascript">
+
 	function abilitaBottone() {
-		console.log("questa è una stampa di console");
+		console.log("questa ï¿½ una stampa di console");
 		document.getElementById("deleteButton").disabled=false;
 		document.getElementById("modificaButton").disabled=false;
 	}
@@ -272,7 +273,7 @@ if(request.getAttribute("loginMessage") != null){
 		  		
 	      </div>
 	      <div class="modal-footer">
-	      	<label id="errorUpdateMessage" style="display:none;">ERRORE LA MODIFICA NON è ANDATA A BUON FINE</label>
+	      	<label id="errorUpdateMessage" style="display:none;">ERRORE LA MODIFICA NON ï¿½ ANDATA A BUON FINE</label>
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
 	      </div>

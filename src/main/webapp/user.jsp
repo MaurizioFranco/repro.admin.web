@@ -21,20 +21,6 @@
  		document.getElementById("buttonUpdate").disabled = false;
 	}
 	
-	function deleteUser() {
-		console.log("Delete");
-		document.getElementById("formSelectUser").action = "./DeleteUserServlet";
-		document.getElementById("formSelectUser").method = "post";
-		document.getElementById("formSelectUser").submit;
-	}
-	
-	function updateUser() {
-		console.log("Update");
-		document.getElementById("formSelectUser").action = "./updateUser.jsp";
-		document.getElementById("formSelectUser").method = "post";
-		document.getElementById("formSelectUser").submit;
-	}
-	
 	function deleteUser(){
 		console.log("delete");
 		document.getElementById("formSelectUser").method = "POST";
