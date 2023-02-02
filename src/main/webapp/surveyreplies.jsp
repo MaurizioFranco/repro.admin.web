@@ -1,6 +1,6 @@
-
 <%@page import="proxima.informatica.academy.seventh.service.SurveyRepliesService"%>
 <%@page import="centauri.academy.proxima.cerepro.entity.SurveysReplies"%>
+<%@page import="centauri.academy.proxima.cerepro.entity.EntityInterface"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -228,50 +228,53 @@ if(request.getAttribute("loginMessage") != null){
 				<th scope="col">POINTS</th>
 			</tr>
 			<%
-			List<SurveysReplies> surveyreplies = SurveyRepliesService.getInstance().getAllSurveyReplies();
-			for (SurveysReplies tableSurveyReplies : surveyreplies) {
+			List<EntityInterface> items = SurveyRepliesService.getInstance().getAllSurveyReplies();
+			for (EntityInterface item : items) {
+				SurveysReplies surveyReplies = (SurveysReplies)item;
+				request.setAttribute("id", surveyReplies.getId());
+				
 			%>
 			<tr>
 				<td><input type="radio" name="selectedSurveyrepliesId"
-					value="<%out.print(tableSurveyReplies.getId());%>"onclick="javascript:abilitaBottone();"></td>
+					value="<%out.print(surveyReplies.getId());%>"onclick="javascript:abilitaBottone();"></td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getId());
+					out.print(surveyReplies.getId());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getSurveyId());
+					out.print(surveyReplies.getSurveyId());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getUserId());
+					out.print(surveyReplies.getUserId());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getStartTime());
+					out.print(surveyReplies.getStartTime());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getEndTime());
+					out.print(surveyReplies.getEndTime());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getAnswer());
+					out.print(surveyReplies.getAnswer());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getPdfFileName());
+					out.print(surveyReplies.getPdfFileName());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(tableSurveyReplies.getPoints());
+					out.print(surveyReplies.getPoints());
 					%>
 				</td>
 			</tr>

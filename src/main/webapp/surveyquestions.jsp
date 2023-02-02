@@ -1,3 +1,4 @@
+<%@page import="centauri.academy.proxima.cerepro.entity.EntityInterface"%>
 <%@page import="centauri.academy.proxima.cerepro.entity.SurveysQuestions"%>
 <%@page import="proxima.informatica.academy.seventh.service.SurveyquestionsService"%>
 <%@page import="java.util.List"%>
@@ -174,33 +175,34 @@
 					<th scope="col">Position</th>
 				</tr>
 			</thead>	
+
 			<%
-			List<SurveysQuestions> listSurveyquestions = new ArrayList<SurveysQuestions>();
-			listSurveyquestions = SurveyquestionsService.getInstance().getAllSurveyquestions();
-			for (SurveysQuestions sq : listSurveyquestions) {
-				request.setAttribute("id", sq.getId());
+			List<EntityInterface> items = SurveyquestionsService.getInstance().getAllSurveyquestions();
+			for (EntityInterface item : items) {
+				SurveysQuestions surveyQuestions = (SurveysQuestions)item;
+				request.setAttribute("id", surveyQuestions.getId());
 				
 			%>
 			<tr>
-				<th scope="row"><input type="radio" name="sqId" onclick="javascript:abilitaBottone();" value="<%out.print(sq.getId());%>" /></th>
+				<th scope="row"><input type="radio" name="sqId" onclick="javascript:abilitaBottone();" value="<%out.print(surveyQuestions.getId());%>" /></th>
 				<td>
 					<%
-					out.print(sq.getId());
+					out.print(surveyQuestions.getId());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(sq.getSurveyId());
+					out.print(surveyQuestions.getSurveyId());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(sq.getQuestionId());
+					out.print(surveyQuestions.getQuestionId());
 					%>
 				</td>
 				<td>
 					<%
-					out.print(sq.getPosition());
+					out.print(surveyQuestions.getPosition());
 					%>
 				</td>
 			</tr>
