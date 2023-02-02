@@ -39,17 +39,8 @@ public class SurveyRepliesService {
 //	public List<SurveyReplies> selectAllSurveyreplies() {
 //		return surveyRepliesRepository.selectAll();
 //	}
-	public List<SurveysReplies> getAllSurveyReplies() {
-		List<EntityInterface> listEntityInterface = new ArrayList<EntityInterface>();
-		List<SurveysReplies> listSurveysQuestions = new ArrayList<SurveysReplies>();
-
-		listEntityInterface = surveyRepliesRepository.findAll(SurveysReplies.class);
-		
-		for (EntityInterface entity : listEntityInterface) {
-			listSurveysQuestions.add((SurveysReplies)entity);
-		}
-
-		return listSurveysQuestions;
+	public List<EntityInterface> getAllSurveyReplies() {
+		return surveyRepliesRepository.findAll();
 	}
 	
 	public void deleteSurveyreplies(SurveysReplies surveyrepliesToDelete) {
