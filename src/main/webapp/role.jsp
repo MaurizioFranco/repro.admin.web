@@ -111,7 +111,13 @@
 
 	}
 	
-	
+	function deleteRole() {
+		console.log("Delete");
+		document.getElementById("formSelectRole").method = "POST";
+		document.getElementById("formSelectRole").action = "./DeleteRoleServlet";
+		document.getElementById("formSelectRole").submit();
+// 		location.reload()
+	}
 	
 	
 	
@@ -148,7 +154,7 @@
 				
 			%>
 			<tr>
-				<th scope="row"><input type="radio" name="roleRadioId" onclick="javascript:abilitaBottone();" value="<%out.print(role.getId());%>" /></th>
+				<th scope="row"><input type="radio" name="id" onclick="javascript:abilitaBottone();" value="<%out.print(role.getId());%>" /></th>
 				<td>
 					<%
 					out.print(role.getId().toString());
@@ -174,8 +180,7 @@
 			}
 			%>
 		</table>
-		<input class="btn btn-danger" type="submit" class="button" id="deleteButton" value="Delete" disabled onclick="javascript:deleteRole();">
-		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-danger" id="buttonDelete" disabled data-toggle="modal" data-target="#deleteRoleModal">Cancella</button>		<!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" id="updateButton" data-target="#updateRoleModal" onclick="showUpdateRoleModal(); return false;">
   MODIFICA
 </button>
@@ -215,6 +220,27 @@
 	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
 	      </div>
       </form> 
+    </div>
+  </div>
+</div>
+
+<!-- Modal delete-->
+<div class="modal fade" id="deleteRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+ <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminazione role</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Sei sicuro di volre rimuovere questo role?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="javascript:deleteRole();">SI</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+      </div>
     </div>
   </div>
 </div>
