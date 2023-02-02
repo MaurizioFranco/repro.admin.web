@@ -6,7 +6,11 @@ import java.util.List;
 import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import centauri.academy.proxima.cerepro.entity.SurveysQuestions;
 import centauri.academy.proxima.cerepro.repository.SurveyQuestionsRepository;
-
+/**
+ * 
+ * @author Giacomo Della Luna
+ *
+ */
 public class SurveyquestionsService {
 
 	SurveyQuestionsRepository surveyQuestionsRepo = null;

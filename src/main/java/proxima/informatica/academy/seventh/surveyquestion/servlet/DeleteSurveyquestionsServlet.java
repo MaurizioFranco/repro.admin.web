@@ -13,8 +13,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * 
+ * @author Giacomo Della Luna
+ *
+ */
+
+
+/**
  * Servlet implementation class DeleteSurveyquestionsServlet
  */
+
 @WebServlet("/DeleteSurveyquestionsServlet")
 public class DeleteSurveyquestionsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
