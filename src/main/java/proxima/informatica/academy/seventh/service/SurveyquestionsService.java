@@ -43,17 +43,8 @@ public class SurveyquestionsService {
 		return sqRetrived;
 	}
 
-	public List<SurveysQuestions> getAllSurveyquestions() {
-		List<EntityInterface> listEntityInterface = new ArrayList<EntityInterface>();
-		List<SurveysQuestions> listSurveysQuestions = new ArrayList<SurveysQuestions>();
-
-		listEntityInterface = surveyQuestionsRepo.findAll(SurveysQuestions.class);
-		
-		for (EntityInterface entity : listEntityInterface) {
-			listSurveysQuestions.add((SurveysQuestions)entity);
-		}
-
-		return listSurveysQuestions;
+	public List<EntityInterface> getAllSurveyquestions() {
+		return surveyQuestionsRepo.findAll();
 	}
 
 	public boolean deleteSurveyquestion(SurveysQuestions sq) {

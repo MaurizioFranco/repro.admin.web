@@ -68,14 +68,12 @@ public class RegistrationUserServlet extends HttpServlet {
 				user.setImgpath(null);
 			}
 		}
-<<<<<<< HEAD
 
 		boolean responseValue = UserService.getInstance().insert(user);
 		if (responseValue) {
 			response.getWriter().append("OK");
 		} else {
 			response.getWriter().append("KO");
-=======
 		if (user.getImgpath() != null) {
 			if (UserService.getInstance().insert(user)) {
 				request.setAttribute("firstRegistration", "OK");
@@ -85,8 +83,7 @@ public class RegistrationUserServlet extends HttpServlet {
 			}
 		} else {
 			request.getRequestDispatcher("registration.html").forward(request, response);
->>>>>>> branch 'master' of https://github.com/MaurizioFranco/repro.admin.web.git
-		}
+		}}
 		
 	}
 	
