@@ -20,8 +20,8 @@
 
 	function abilitaBottone() {
 		console.log("questa è la console");
- 		document.getElementById("buttonDelete").disabled = false;
- 		document.getElementById("buttonUpdate").disabled = false;
+ 		document.getElementById("deleteButton").disabled = false;
+ 		document.getElementById("updateButton").disabled = false;
 	}
 	
 	//INITIALIZE UPDATE FORM
@@ -229,7 +229,7 @@
 	<form id="formSelectSurvey">
 		<div id="tableData"></div>
 		<button type="button" class="btn btn-danger" id="deleteButton" disabled data-toggle="modal" data-target="#deleteSurveyModal">Cancella</button>
-		<button type="button" class="btn btn-primary" id="updateButton" data-toggle="modal" data-target="#updateSurveyModal" onclick="showUpdateSurveyModal(); return false;">MODIFICA</button>
+		<button type="button" class="btn btn-primary" id="updateButton" disabled data-toggle="modal" data-target="#updateSurveyModal" onclick="showUpdateSurveyModal(); return false;">MODIFICA</button>
 	</form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
