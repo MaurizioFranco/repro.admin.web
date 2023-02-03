@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>proxima.informatica.academy.seventh</groupId>
-	<artifactId>repro.bo.giacomo</artifactId>
+	<artifactId>repro.admin.web</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>repro.bo.giacomo Maven Webapp</name>
+	<name>repro.admin.web Maven Webapp</name>
 	<!-- FIXME change it to the project's website -->
 	<url>http://www.example.com</url>
 	<properties>
@@ -94,7 +94,7 @@
 
 
 	<build>
-		<finalName>repro.bo.giacomo</finalName>
+		<finalName>repro.admin.web</finalName>
 		<pluginManagement>
 			<!-- lock down plugins versions to avoid using Maven defaults (may be 
 				moved to parent pom) -->

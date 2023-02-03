@@ -1,12 +1,14 @@
 package proxima.informatica.academy.seventh.candidates;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import centauri.academy.proxima.cerepro.entity.Candidates;
+import centauri.academy.proxima.cerepro.entity.EntityInterface;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,9 +29,10 @@ public class GetCandidatesServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-	public GetCandidatesServlet() {
-		super();
-	}
+    public GetCandidatesServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,7 +44,7 @@ public class GetCandidatesServlet extends HttpServlet {
 			String itemId = request.getParameter("id") ;
 			logger.debug("GetCandidatesServlet.DEBUG - roleId: " + itemId);
 			int itemIdInt = Integer.parseInt(itemId);
-			item = CandidatesService.getInstance().selectById(itemIdInt);
+			item = CandidatesService.getInstance().selectCandidatesById(itemIdInt);
 			logger.debug("GetCandidatesServlet.DEBUG - retrieving item: " + item);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

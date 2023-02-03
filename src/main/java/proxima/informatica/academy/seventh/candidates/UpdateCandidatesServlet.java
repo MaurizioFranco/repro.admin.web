@@ -38,7 +38,6 @@ public class UpdateCandidatesServlet extends HttpServlet {
 		logger.debug("UpdateCandidatesServlet.doGet DEBUG - id: " + request.getParameter("id"));
 		Candidates candidate = new Candidates();
 		Timestamp Candidacy_date_time = Timestamp.valueOf(LocalDateTime.now());
-		Timestamp Regdate = Timestamp.valueOf(LocalDateTime.now());
 		candidate.setId(Long.parseLong(request.getParameter("id")));
 		candidate.setUser_id(Long.parseLong(request.getParameter("user_id")));
 		candidate.setCourse_code(request.getParameter("course_code"));
@@ -58,7 +57,6 @@ public class UpdateCandidatesServlet extends HttpServlet {
 		logger.debug("UpdateCandidatesServlet.DEBUG - id: " + request.getParameter("id"));
 		Candidates candidate = new Candidates();
 		Timestamp Candidacy_date_time = Timestamp.valueOf(LocalDateTime.now());
-		Timestamp Regdate = Timestamp.valueOf(LocalDateTime.now());
 		candidate.setId(Long.parseLong(request.getParameter("id")));
 		candidate.setUser_id(Long.parseLong(request.getParameter("user_id")));
 		candidate.setCourse_code(request.getParameter("course_code"));

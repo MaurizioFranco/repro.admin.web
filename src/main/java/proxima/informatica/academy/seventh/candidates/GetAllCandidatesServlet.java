@@ -39,16 +39,10 @@ public class GetAllCandidatesServlet extends HttpServlet {
 	} catch (Exception e) {
 		logger.error(e.getMessage());
 	}
-	ObjectMapper mapper = new ObjectMapper();
-	String [] itemsToJson = new String[items.size()];
-	for (int i = 0; i < items.size(); i++) {
-		logger.debug("GetAllCandidatesServlet.DEBUG - item:" + items.get(i));
-		itemsToJson[i] = mapper.writeValueAsString(items.get(i));
-		logger.debug("GetAllCandidatesServlet.DEBUG - jsonItem:" + itemsToJson[i]);
-		response.getWriter().append(itemsToJson[i] + "\n");
-		}
+	ObjectMapper mapper = new ObjectMapper();	
+	String jsonResponse = mapper.writeValueAsString(items);
+	response.getWriter().append(jsonResponse);
 	logger.debug("GetAllCandidatesServlet.END");
-
 	}
 
 }

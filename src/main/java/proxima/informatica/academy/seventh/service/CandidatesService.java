@@ -10,15 +10,14 @@ import centauri.academy.proxima.cerepro.repository.CandidatesRepository;
 
 public class CandidatesService {
 
+	private static CandidatesService instance;
 	private final static org.slf4j.Logger logger = LoggerFactory.getLogger(CandidatesService.class);
 
-	CandidatesRepository candidateRepository = null ;
+	private CandidatesRepository candidatesRepository;
 	
 	private CandidatesService() {
-		candidateRepository = new CandidatesRepository () ; 
+		candidatesRepository = new CandidatesRepository();
 	}
-
-	private static CandidatesService instance;
 
 	public static CandidatesService getInstance() {
 		if (instance == null) {
@@ -26,35 +25,31 @@ public class CandidatesService {
 		}
 		return instance;
 	}
-
-	public boolean insertCandidates(Candidates candidate) {
+	
+	public boolean insertCandidates(Candidates candidatesToInsert) {
 		boolean response = false;
-
-		if (candidateRepository.create(candidate) > 0)
+		if(candidatesRepository.create(candidatesToInsert)>1) {
 			response = true;
+		}
 		return response;
 	}
-
-	public Candidates selectById(int id) {
-		Candidates candidateRetrived = new Candidates();
-		candidateRetrived = (Candidates)candidateRepository.findById((long)id);
-
-		return candidateRetrived;
-	}
-
+	
+//	public List<Candidates> selectAllCandidates() {
+//		return candidatesRepository.selectAll();
+//	}
 	public List<EntityInterface> getAllCandidates() {
-		return candidateRepository.findAll();
+		return candidatesRepository.findAll();
 	}
-
-	public boolean updateCandidates(Candidates candidate) {
-		return candidateRepository.update(candidate) ;
+	
+	public void deleteCandidates(Candidates candidatesToDelete) {
+		candidatesRepository.delete(candidatesToDelete.getId());
 	}
-
-	public boolean deleteById(int id) {
-		boolean response = false;
-
-		if (candidateRepository.delete(id))
-			response = true;
-		return response;
+	
+	public Candidates selectCandidatesById(int id) {
+		return candidatesRepository.findById(id);
+	}
+	
+	public boolean updateCandidates(Candidates item) {
+		return candidatesRepository.update(item);
 	}
 }
