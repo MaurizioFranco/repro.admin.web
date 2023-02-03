@@ -46,11 +46,11 @@ public class InsertSurveyRepliesServlet extends HttpServlet {
 
 		logger.debug("InsertSurveyRepliesServlet - START");
 		
-		String survey_id = request.getParameter("survey_id_input");
-		String user_id = request.getParameter("user_id_input");
-		String answers = request.getParameter("answers_input");
-		String pdfFileName = request.getParameter("pdffilename_input");
-		String points = request.getParameter("points_input");
+		String survey_id = request.getParameter("survey_id");
+		String user_id = request.getParameter("user_id");
+		String answers = request.getParameter("answers");
+		String pdfFileName = request.getParameter("pdffilename");
+		String points = request.getParameter("points");
 		boolean resultValue = false;
 
 		try {
