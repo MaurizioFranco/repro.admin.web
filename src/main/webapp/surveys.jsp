@@ -48,11 +48,13 @@
 		console.log("showUpdateSurveyModal!!!");
 		const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
+			  console.log(this.responseText);
 			  var survey = JSON.parse(this.responseText) ;
 			  console.log(survey);
 			  initializeUpdateForm (survey);
 		    }
-		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetSurveyServlet?id=4", true);
+		  var id = document.querySelector('input[name="surveyRadioId"]:checked').value;
+		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetSurveyServlet?id="+id, true);
 		  xhttp.send();
 	}
 	
@@ -75,20 +77,39 @@
 		var labelToUpdate = document.getElementById("surveyLabelToUpdate").value;
 		var timeToUpdate = document.getElementById("surveyTimeToUpdate").value;
 		var descriptionToUpdate = document.getElementById("surveyDescriptionToUpdate").value;
-		console.log(idToUpdate, labelToUpdate, timeToUpdate, descriptionToUpdate);
+		console.log("idToUpdate"+idToUpdate+"labelToUpdate"+labelToUpdate+"timeToUpdate"+timeToUpdate+"descriptionToUpdate"+descriptionToUpdate);
 		
-		var formData = new FormData();
-		formaData.append("id", idToUpdate);
-		formaData.append("label", labelToUpdate);
-		formaData.append("time", timeToUpdate);
-		formaData.append("description", descriptionToUpdate);
+		var itemToUpdate = {
+        		"id":idToUpdate,
+        		"label":surveyLabelToUpdate,
+        		"time":surveyTimeToUpdate,
+        		"description":surveyDescriptionToUpdate
+        }
 		
-		const xhttp = new XMLHttpRequest();
-		xhttp.onload = function() {
-			console.log(this.responseText);
-		}
-		xhttp.open("POST", "http://localhost:8080/repro.admin.web/UpdateSurveyServlet", true)
-		xhttp.send(formData);
+		$.ajax({
+			  type: "POST",
+			  url: "http://localhost:8080/repro.admin.web/UpdateSurveyServlet",
+			  data: itemToUpdate,
+			  success: function (responseText) {
+				  console.log(responseText);
+				  if (responseText==='OK') {					 
+					  $('#updateSurveyModal').modal('hide');		
+					  location.reload();
+//					  $('#errorUpdateMessage').show();
+//					  $('#errorUpdateMessage').html(responseText);
+//				  } else {
+					  
+				  }
+			  },
+			  dataType: "text"
+			});
+	}
+	
+	function deleteSurvey() {
+		console.log("Delete");
+		document.getElementById("formSelectSurvey").method = "POST";
+		document.getElementById("formSelectSurvey").action = "./DeleteSurveyServlet";
+		document.getElementById("formSelectSurvey").submit();
 	}
 	
 	//INSERT FUNCTION
@@ -126,13 +147,62 @@
 			});
 	}
 	
-	function deleteSurvey(){
-		console.log("delete");
-		document.getElementById("formSelectSurvey").method = "POST";
-		document.getElementById("formSelectSurvey").action = "./DeleteSurveyServlet";
-		document.getElementById("formSelectSurvey").submit();
-// 		location.reload()
+	//load remote data
+	function initializeData () {
+		console.log("initializeData - START");
+		document.getElementById("tableData").innerHTML = "<img src='./img/loader/loading.gif' />" ;
+		
+		const xhttp = new XMLHttpRequest();
+	    xhttp.onload = function() {
+		  console.log(this.responseText);
+		  var items = JSON.parse(this.responseText) ;
+		  console.log(items);
+		  initializeTable (items);
+	    }
+	    xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetAllSurveysServlet", true);
+	    xhttp.send();
 	}
+	
+	function initializeTable (items) {
+		if (items != null) {
+			
+			var dynamicTableContent  = "<table class='table table-striped table-hover  table-bordered'>";
+			dynamicTableContent += "<thead class='thead-dark'><tr>";
+			dynamicTableContent += "<th scope='col'></th>" ;
+			dynamicTableContent += "<th scope='col'>Id</th>" ;
+			dynamicTableContent += "<th scope='col'>Label</th>" ;
+			dynamicTableContent += "<th scope='col'>Time</th>" ;
+			dynamicTableContent += "<th scope='col'>Description</th>" ;
+			dynamicTableContent += "</tr></thead>" ;
+			if (items.length==0) {
+				dynamicTableContent += "<tr><td colspan='4'>NON CI SONO SONDAGGI</td></tr>" ;
+			} else {
+				for (var i=0; i<items.length; i++) {
+					dynamicTableContent += "<tr><td scope='col'><input type='radio' name='id' onclick='javascript:abilitaBottone();' value='" + items[i].id + "' /></td>" ;
+					dynamicTableContent += "<td>" + items[i].id + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].label + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].time + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].description + "</td></tr>" ;
+				}
+			}
+			//
+			dynamicTableContent += "</table>" ;
+			
+						
+						
+						
+						
+						
+					
+			
+			document.getElementById("tableData").innerHTML = dynamicTableContent ;
+		} else {
+			document.getElementById("tableData").innerHTML = "ERRORE LATO SERVER. AL MOMENTO NON E' POSSIBILE AVERE LA LISTA DEI SONDAGGI. RIPROVARE PIU? TARDI.";
+		}
+	}
+	
+	
+	
 </script>
 <meta charset="ISO-8859-1">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -198,8 +268,12 @@
 			}
 			%>
 		</table>
+		<div id="tableData">
+		    
+		</div>	
 		<button type="button" class="btn btn-danger" id="buttonDelete" disabled data-toggle="modal" data-target="#deleteSurveyModal">Cancella</button>
 		<button type="button" class="btn btn-primary" id="buttonUpdate" data-toggle="modal" data-target="#updateSurveyModal" onclick="showUpdateSurveyModal(); return false;">MODIFICA</button>
+		</form>
 	<!-- Modal DELETE-->
 		<div class="modal fade" id="deleteSurveyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
 			<div class="modal-dialog" role="document">
@@ -220,7 +294,6 @@
 			    </div>
 		  	</div>
 		</div>
-	</form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
@@ -293,3 +366,8 @@
 
 </body>
 </html>
+<script>
+
+	initializeData();
+
+</script>

@@ -40,13 +40,8 @@ public class GetAllSurveysServlet extends HttpServlet {
 		logger.error(e.getMessage());
 	}
 	ObjectMapper mapper = new ObjectMapper();
-	String [] itemsToJson = new String[items.size()];
-	for (int i = 0; i < items.size(); i++) {
-		logger.debug("GetAllSurveysServlet.DEBUG - item:" + items.get(i));
-		itemsToJson[i] = mapper.writeValueAsString(items.get(i));
-		logger.debug("GetAllSurveysServlet.DEBUG - jsonItem:" + itemsToJson[i]);
-		response.getWriter().append(itemsToJson[i] + "\n");
-		}
+	String jsonResponse = mapper.writeValueAsString(items);
+	response.getWriter().append(jsonResponse);
 	logger.debug("GetAllSurveysServlet.END");
 
 	}
