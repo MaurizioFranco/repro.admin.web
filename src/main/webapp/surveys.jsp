@@ -53,7 +53,7 @@
 			  console.log(survey);
 			  initializeUpdateForm (survey);
 		    }
-		  var id = document.querySelector('input[name="surveyRadioId"]:checked').value;
+		  var id = document.querySelector('input[name="id"]:checked').value;
 		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetSurveyServlet?id="+id, true);
 		  xhttp.send();
 	}
@@ -94,22 +94,37 @@
 				  console.log(responseText);
 				  if (responseText==='OK') {					 
 					  $('#updateSurveyModal').modal('hide');		
-					  location.reload();
-//					  $('#errorUpdateMessage').show();
-//					  $('#errorUpdateMessage').html(responseText);
-//				  } else {
-					  
+					  initializeData ();
 				  }
 			  },
 			  dataType: "text"
 			});
 	}
 	
+	//DELETE FUNCTION
 	function deleteSurvey() {
-		console.log("Delete");
-		document.getElementById("formSelectSurvey").method = "POST";
-		document.getElementById("formSelectSurvey").action = "./DeleteSurveyServlet";
-		document.getElementById("formSelectSurvey").submit();
+		console.log("DeleteSurvey - Start");
+		var idToDelete= document.querySelector('input[name="id"]:checked').value;
+		console.log("idToDelete: " + idToDelete);
+
+        var itemToDelete = {
+        		"id":idToDelete
+        }
+        
+        $.ajax({
+			  type: "POST",
+			  url: "http://localhost:8080/repro.admin.web/DeleteSurveyServlet",
+			  data: itemToDelete,
+			  success: function (responseText) {
+				  console.log(responseText);
+				  if (responseText==='OK') {					 
+					  $('#deleteSurveyModal').modal('hide');	
+					  initializeData ();					  
+				  }
+			  },
+			  dataType: "text"
+			});
+
 	}
 	
 	//INSERT FUNCTION
@@ -136,11 +151,7 @@
 				  console.log(responseText);
 				  if (responseText==='OK') {					 
 					  $('#insertSurveyModal').modal('hide');		
-					  location.reload();
-// 					  $('#errorUpdateMessage').show();
-// 					  $('#errorUpdateMessage').html(responseText);
-// 				  } else {
-					  
+					  initializeData ();  
 				  }
 			  },
 			  dataType: "text"
@@ -187,14 +198,6 @@
 			}
 			//
 			dynamicTableContent += "</table>" ;
-			
-						
-						
-						
-						
-						
-					
-			
 			document.getElementById("tableData").innerHTML = dynamicTableContent ;
 		} else {
 			document.getElementById("tableData").innerHTML = "ERRORE LATO SERVER. AL MOMENTO NON E' POSSIBILE AVERE LA LISTA DEI SONDAGGI. RIPROVARE PIU? TARDI.";
@@ -224,76 +227,10 @@
 	onclick="showInsertSurveyModal(); return false;">+</button></div>
 	<br>
 	<form id="formSelectSurvey">
-		<table class="table table-striped table-hover  table-bordered">
-			<thead class="thead-dark">
-				<tr>
-					<th scope="col"></th>
-					<th scope="col">Id</th>
-					<th scope="col">Label</th>
-					<th scope="col">Time</th>
-					<th scope="col">Description</th>
-				</tr>
-			</thead>	
-			<%
-			List<EntityInterface> items = SurveyService.getInstance().getAllSurveys();
-			for (EntityInterface item : items) {
-				Surveys survey = (Surveys)item;
-				request.setAttribute("id", survey.getId());
-				
-			%>
-			<tr>
-				<th scope="row"><input type="radio" name="id" onclick="javascript:abilitaBottone();" value="<%out.print(survey.getId());%>" /></th>
-				<td>
-					<%
-					out.print(survey.getId().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(survey.getLabel().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(survey.getTime().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(survey.getDescription().toString());
-					%>
-				</td>
-			</tr>
-			<%
-			}
-			%>
-		</table>
-		<div id="tableData">
-		    
-		</div>	
-		<button type="button" class="btn btn-danger" id="buttonDelete" disabled data-toggle="modal" data-target="#deleteSurveyModal">Cancella</button>
-		<button type="button" class="btn btn-primary" id="buttonUpdate" data-toggle="modal" data-target="#updateSurveyModal" onclick="showUpdateSurveyModal(); return false;">MODIFICA</button>
-		</form>
-	<!-- Modal DELETE-->
-		<div class="modal fade" id="deleteSurveyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title">Eliminazione survey</h5>
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			          <span aria-hidden="true">&times;</span>
-			        </button>
-			      </div>
-			      <div class="modal-body">
-			        <p>Sei sicuro di volre rimuovere questa survey?</p>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-primary" onclick="javascript:deleteSurvey();">SI</button>
-			        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
-			      </div>
-			    </div>
-		  	</div>
-		</div>
+		<div id="tableData"></div>
+		<button type="button" class="btn btn-danger" id="deleteButton" disabled data-toggle="modal" data-target="#deleteSurveyModal">Cancella</button>
+		<button type="button" class="btn btn-primary" id="updateButton" data-toggle="modal" data-target="#updateSurveyModal" onclick="showUpdateSurveyModal(); return false;">MODIFICA</button>
+	</form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
@@ -322,7 +259,6 @@
 		  		
 		  		<label>Description</label><br>
 		  		<input type="text" name="surveyDescriptionToUpdate" id="surveyDescriptionToUpdate" value=""><br>
-			
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -331,6 +267,28 @@
       </form> 
     </div>
   </div>
+</div>
+
+
+	<!-- Modal DELETE-->
+<div class="modal fade" id="deleteSurveyModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Eliminazione survey</h5>
+			    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			    	<span aria-hidden="true">&times;</span>
+			    </button>
+			</div>
+			<div class="modal-body">
+				<p>Sei sicuro di volre rimuovere questa survey?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="javascript:deleteSurvey();">SI</button>
+			   	<button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 <!-- Insert Modal -->
@@ -353,7 +311,7 @@
 		  		<input type="text" name="surveyTimeToInsert" id="surveyTimeToInsert" value=""><br>
 			
 		  		<label>Description</label><br>
-		  		<input type="number" name="roleDescriptionToInsert" id="surveyDescriptionToInsert" value=""><br>		  		
+		  		<input type="number" name="surveyDescriptionToInsert" id="surveyDescriptionToInsert" value=""><br>		  		
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -364,10 +322,10 @@
   </div>
 </div>
 
+
+
 </body>
 </html>
 <script>
-
 	initializeData();
-
 </script>
