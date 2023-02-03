@@ -72,7 +72,7 @@
 				  console.log(item);
 				  initializeUpdateForm (item);
 			    }
-			  var id= document.querySelector('input[name="selectedUserId"]:checked').value;
+			  var id = document.querySelector('input[name="id"]:checked').value;
 			  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetQuestionServlet?id="+id, true);
 			  xhttp.send();
 		}
@@ -82,12 +82,12 @@
 			console.log("showInsertQuestionModal!!!");
 			const xhttp = new XMLHttpRequest();
 			xhttp.onload = function() {
-			console.log(this.responseText);
-			var question = JSON.parse(this.responseText) ;
-			console.log(question);
-			initializeInsertForm (question);
-		    }
-		}
+				console.log(this.responseText);
+				var question = JSON.parse(this.responseText) ;
+				console.log(question);
+				initializeInsertForm (question);
+		    	}
+			}
 
 		//UPDATE FUNCTION
 		function update() {
@@ -111,6 +111,7 @@
 					console.log(result);
 					if(result == 'OK'){
 			        	$('#updateQuestionModal').modal('hide');
+			        	initializeData ();
 					}else{
 						
 					}
@@ -119,45 +120,59 @@
 			});
 		}
 		
-		function deleteQuestion(){
-			console.log("delete");
-			document.getElementById("selectionForm").method = "POST";
-			document.getElementById("selectionForm").action = "./DeleteQuestionServlet";
-			document.getElementById("selectionForm").submit();
-// 			location.reload()
-		}
-		
 		//INSERT FUNCTION
 		function insert() {
 			console.log("insert - START");
-			var questionIdToInsert = $("#questionIdToInsert").val();
 			var questionLabelToInsert = $("#questionLabelToInsert").val();
 			var questionDescriptionToInsert = $("#questionDescriptionToInsert").val();
 			
-			console.log("questionIdToInsert: " + questionIdToInsert + " - questionLabelToInsert: " + questionLabelToInsert + " - questionDescriptionToInsert: " + questionDescriptionToInsert);
+			console.log("questionLabelToInsert: " + questionLabelToInsert + " - questionDescriptionToInsert: " + questionDescriptionToInsert);
 			
 			var itemToInsert = {
-					"id":questionIdToUpdate,
-					"label":questionLabelToUpdate,
-					"description":questionDescriptionToUpdate
+					"label":questionLabelToInsert,
+					"description":questionDescriptionToInsert
 	        }
 	        
 	        $.ajax({
 				  type: "POST",
-				  url: "http://localhost:8080/repro.admin.web/InsertRoleServlet",
+				  url: "http://localhost:8080/repro.admin.web/InsertQuestionServlet",
 				  data: itemToInsert,
 				  success: function (responseText) {
 					  console.log(responseText);
 					  if (responseText==='OK') {					 
 						  $('#insertQuestionModal').modal('hide');		
-						  location.reload();
+						  initializeData ();
 					  }
 				  },
 				  dataType: "text"
 				});
 		}
 		
-		
+		//DELETE FUNCTION
+		function deleteQuestion() {
+			console.log("deleteQuestions - START");
+			var idToDelete= document.querySelector('input[name="id"]:checked').value;
+			console.log("idToDelete: " + idToDelete);
+
+	        var itemToDelete = {
+	        		"id":idToDelete
+	        }
+	        
+	        $.ajax({
+				  type: "POST",
+				  url: "http://localhost:8080/repro.admin.web/DeleteQuestionServlet",
+				  data: itemToDelete,
+				  success: function (responseText) {
+					  console.log(responseText);
+					  if (responseText==='OK') {					 
+						  $('#deleteQuestionModal').modal('hide');	
+						  initializeData ();					  
+					  }
+				  },
+				  dataType: "text"
+				});
+
+		}	
 		
 		//load remote data
 		function initializeData () {
@@ -209,7 +224,7 @@
 					dynamicTableContent += "<tr><td colspan='20'>NON CI SONO DOMANDE</td></tr>" ;
 				} else {
 					for (var i=0; i<items.length; i++) {
-						dynamicTableContent += "<tr><td scope='col'><input type='radio' name='id' onclick='javascript:abilitaBottone();' value='" + items[i].id + "' /></td>" ;
+						dynamicTableContent += "<tr><td scope='col'><input type='radio' name='id' onclick='javascript:abilitaButton();' value='" + items[i].id + "' /></td>" ;
 						dynamicTableContent += "<td>" + items[i].id + "</td>" ;
 						dynamicTableContent += "<td>" + items[i].label + "</td>" ;
 						dynamicTableContent += "<td>" + items[i].description + "</td>" ;
@@ -245,147 +260,28 @@
 </head>
 <body>
 <%@include file="header.jsp"%>
-				<%
-				if(insertStatus!=null){
-				%>
-				<div class="alert alert-success" role="alert">
-				<% out.print("Question inserted correctly"); %>
-				</div>
-				<%
-				}
-				%>
 				
-				<%
-
-				List<EntityInterface> lista = null;
-				lista = QuestionsService.getIstance().selectAll();
-					if(lista.size() == 0){
-				%>
-					<div class="alert alert-danger" role="alert">
-					<% out.print("There are no questions saved, create a new one"); %>
-					</div>
-				<%
-				}
-				%>
-				<%
-				if(lista.size() > 0){
-				%>
 	<div class="container-fluid">
 	<h1 style="text-align: left;">Questions List</h1>
 	<!-- Button trigger Insert Modal -->
-	<div style="text-align: right;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertQuestionModal"
-	onclick="showInsertQuestionModal(); return false;">+</button></div>
+	<div style="text-align: right;">
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertQuestionModal" onclick="showInsertQuestionModal(); return false;">+</button>
+	</div>
 	<br>
 	<form id="selectionForm">
-			<table class="table table-striped">
-				<thead>
-				    <tr>
-				    <th scope="col">#</th>
-				      <th scope="col">id</th>
-				      <th scope="col">label</th>
-				      <th scope="col">description</th>
-				      <th scope="col">ansa</th>
-				      <th scope="col">ansb</th>
-				      <th scope="col">ansc</th>
-				      <th scope="col">ansd</th>
-				      <th scope="col">anse</th>
-				      <th scope="col">ansf</th>
-				      <th scope="col">ansg</th>
-				      <th scope="col">ansh</th>
-				      <th scope="col">cansa</th>
-				      <th scope="col">cansb</th>
-				      <th scope="col">cansc</th>
-				      <th scope="col">cansd</th>
-				      <th scope="col">canse</th>
-				      <th scope="col">cansf</th>
-				      <th scope="col">cansg</th>
-				      <th scope="col">cansh</th>
-				      <th scope="col">full_answer</th>
-				    </tr>
-				  </thead>
-				<%
-					if(deleteStatus != null){
-				%>
-					<div class="alert alert-danger" role="alert">
-					<% out.print("Question deleted successfully"); %>
-					</div>
-					<%
-					}
-					%>
-				<%
-					
-			   
-			   for (EntityInterface entity : lista) {
-				   Questions item = (Questions)entity;
-				%>
-			    <tbody>
-			    	<tr>
-				    	<td><input type="radio" name="id" value="<%out.print(item.getId());%>" onclick="javascript:abilitaButton()"></td>
-				    	<td><%= item.getId() %></td>
-		 		    	<td><%= item.getLabel() %></td>
-		 		    	<td><%= item.getDescription() %></td>
-		 		    	<td><%= item.getAnsa() %></td>
-		 		    	<td><%= item.getAnsb() %></td>
-		 		    	<td><%= item.getAnsc() %></td>
-		 		    	<td><%= item.getAnsd()%></td>
-		 		    	<td><%= item.getAnse()%></td>
-		 		    	<td><%= item.getAnsf() %></td>
-		 		    	<td><%= item.getAnsg() %></td>
-		 		    	<td><%= item.getAnsh()%></td>
-		 		    	<td><%= item.getCansa() %></td>
-		 		    	<td><%= item.getCansb() %></td>
-		 		    	<td><%= item.getCansc() %></td>
-		 		    	<td><%= item.getCansd()%></td>
-		 		    	<td><%= item.getCanse()%></td>
-		 		    	<td><%= item.getCansf() %></td>
-		 		    	<td><%= item.getCansg() %></td>
-		 		    	<td><%= item.getCansh()%></td>
-		 		    	<td><%= item.getFullAnswer()%></td>
-	 		    	</tr>
-	 		     
-				</tbody>
-				<%
-				  }
-				}
-				%>
-			</table>
 			
 			<div id="tableData">
 		    
 			</div>
 
 			<button type="button" class="btn btn-danger" id="deleteButton" disabled data-toggle="modal" data-target="#deleteQuestionModal">Cancella</button>
-			<button type="button" class="btn btn-primary" id="modifyButton" disabled data-toggle="modal" data-target="#updateQuestionModal" onclick="showUpdateQuestionModal(); return false;">
-			  MODIFICA
-			</button>
+			<button type="button" class="btn btn-primary" id="modifyButton" disabled data-toggle="modal" data-target="#updateQuestionModal" onclick="showUpdateQuestionModal(); return false;">MODIFICA</button>
 	
-			</form>
+	</form>
 		<a href="insertQuestion.jsp">
 			<button type="button" class="btn btn-info" id="insertButton" >Inserisci question</button>
 		</a>
-			
-		<!-- Modal DELETE-->
-		<div class="modal fade" id="deleteQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title">Eliminazione question</h5>
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		          <span aria-hidden="true">&times;</span>
-		        </button>
-		      </div>
-		      <div class="modal-body">
-		        <p>Sei sicuro di volre rimuovere questa Question?</p>
-		      </div>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-primary" onclick="javascript:deleteQuestion();">SI</button>
-		        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
-		      </div>
-		    </div>
-		  </div>
-		</div>
-	
-	</form>
+
 	</div>
 			
 	<!-- Modal UPDATE-->
@@ -419,9 +315,30 @@
 		    </div>
 		  </div>
 		</div>
+		
+		<!-- Modal DELETE-->
+		<div class="modal fade" id="deleteQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title">Eliminazione question</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		        <p>Sei sicuro di volre rimuovere questa Question?</p>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-primary" onclick="javascript:deleteQuestion();">SI</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 	
 	<!-- Insert Modal -->
-	<div class="modal fade" id="insertRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+	<div class="modal fade" id="insertQuestionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
   		<div class="modal-dialog" role="document">
    			<div class="modal-content">
       			<div class="modal-header">
@@ -434,13 +351,11 @@
 	      		<div class="modal-body">
 			
 		  		<label>Label</label><br>
-		  		<input type="text" name="roleLabelToInsert" id="roleLabelToInsert" value=""><br>
+		  		<input type="text" name="roleLabelToInsert" id="questionLabelToInsert" value=""><br>
 		  		
 		  		<label>Description</label><br>
-		  		<input type="text" name="roleDescriptionToInsert" id="roleDescriptionToInsert" value=""><br>
-			
-		  		<label>Level</label><br>
-		  		<input type="number" name="roleLevelToInsert" id="roleLevelToInsert" value=""><br>		  		
+		  		<input type="text" name="roleDescriptionToInsert" id="questionDescriptionToInsert" value=""><br>
+					  		
 	      		</div>
 	      		<div class="modal-footer">
 	        		<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
