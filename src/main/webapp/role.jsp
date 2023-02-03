@@ -332,7 +332,5 @@
 </body>
 </html>
 <script>
-
     initializeData();
-
 </script>

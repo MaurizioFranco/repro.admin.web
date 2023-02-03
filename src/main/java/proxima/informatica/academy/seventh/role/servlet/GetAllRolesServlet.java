@@ -43,7 +43,6 @@ public class GetAllRolesServlet extends HttpServlet {
 		String jsonResponse = mapper.writeValueAsString(items);
 		response.getWriter().append(jsonResponse);
 		logger.debug("GetAllRolesServlet.END");
-
 	}
 
 }
