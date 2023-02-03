@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import proxima.informatica.academy.seventh.service.RoleService;
 import proxima.informatica.academy.seventh.service.SurveyRepliesService;
 
 import java.io.IOException;
@@ -39,14 +40,9 @@ public class GetAllSurveyRepliesServlet extends HttpServlet {
 	} catch (Exception e) {
 		logger.error(e.getMessage());
 	}
-	ObjectMapper mapper = new ObjectMapper();
-	String [] itemsToJson = new String[items.size()];
-	for (int i = 0; i < items.size(); i++) {
-		logger.debug("GetAllSurveyRepliesServlet.DEBUG - item:" + items.get(i));
-		itemsToJson[i] = mapper.writeValueAsString(items.get(i));
-		logger.debug("GetAllSurveyRepliesServlet.DEBUG - jsonItem:" + itemsToJson[i]);
-		response.getWriter().append(itemsToJson[i] + "\n");
-		}
+	ObjectMapper mapper = new ObjectMapper();	
+	String jsonResponse = mapper.writeValueAsString(items);
+	response.getWriter().append(jsonResponse);
 	logger.debug("GetAllSurveyRepliesServlet.END");
 
 	}

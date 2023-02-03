@@ -198,6 +198,62 @@ if(request.getAttribute("loginMessage") != null){
 			  dataType: "text"
 			});
 	}
+		
+		//load remote data
+		function initializeData () {
+			console.log("initializeData - START");
+			document.getElementById("tableData").innerHTML = "<img src='./img/loader/loading.gif' />" ;
+			
+			const xhttp = new XMLHttpRequest();
+		    xhttp.onload = function() {
+			  console.log(this.responseText);
+			  var items = JSON.parse(this.responseText) ;
+			  console.log(items);
+			  initializeTable (items);
+		    }
+		    xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetAllSurveyRepliesServlet", true);
+		    xhttp.send();
+		}
+		
+		function initializeTable (items) {
+			if (items != null) {
+				
+				var dynamicTableContent  = "<table class='table table-striped table-hover  table-bordered'>";
+				dynamicTableContent += "<thead class='thead-dark'><tr>";
+				dynamicTableContent += "<th scope='col'></th>" ;
+				dynamicTableContent += "<th scope='col'>Id</th>" ;
+				dynamicTableContent += "<th scope='col'>Survey_Id</th>" ;
+				dynamicTableContent += "<th scope='col'>User_Id</th>" ;
+				dynamicTableContent += "<th scope='col'>StartTime</th>" ;
+				dynamicTableContent += "<th scope='col'>EndTime</th>" ;
+				dynamicTableContent += "<th scope='col'>Answers</th>" ;
+				dynamicTableContent += "<th scope='col'>PdfFileName</th>" ;
+				dynamicTableContent += "<th scope='col'>Points</th>" ;
+				dynamicTableContent += "</tr></thead>" ;
+				if (items.length==0) {
+					dynamicTableContent += "<tr><td colspan='5'>NON CI SONO RUOLI</td></tr>" ;
+				} else {
+					for (var i=0; i<items.length; i++) {
+						dynamicTableContent += "<tr><td scope='col'><input type='radio' name='id' onclick='javascript:abilitaBottone();' value='" + items[i].id + "' /></td>" ;
+						dynamicTableContent += "<td>" + items[i].id + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].surveyId + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].userId + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].startTime + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].endTime + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].answer + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].pdfFileName + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].points + "</td></tr>" ;
+					}
+				}
+				//
+				dynamicTableContent += "</table>" ;			
+				
+				document.getElementById("tableData").innerHTML = dynamicTableContent ;
+			} else {
+				document.getElementById("tableData").innerHTML = "ERRORE LATO SERVER. AL MOMENTO NON E' POSSIBILE AVERE LA LISTA DEI RUOLI. RIPROVARE PIU? TARDI.";
+			}
+	}
+		
 </script>
 
 </head>
@@ -283,6 +339,10 @@ if(request.getAttribute("loginMessage") != null){
 			%>
 		</table>
 		<br />
+		
+		<div id="tableData">
+		    
+		</div>	
 		
 		<button type="button" id="deleteButton"  class="btn btn-danger"  data-toggle="modal" data-target="#deleteSurveyRepliesModal" disabled>ELIMINA</button>
 		<button type="button" id="modificaButton" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveyRepliesModal" disabled onclick="showUpdateSurveyRepliesModal(); return false;">MODIFICA</button>
@@ -394,3 +454,9 @@ if(request.getAttribute("loginMessage") != null){
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>
 </body>
 </html>
+
+<script>
+
+initializeData();
+
+</script>
