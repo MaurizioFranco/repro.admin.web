@@ -14,6 +14,50 @@
 <head>
 
 <script type="text/javascript">
+	
+	function initializeData () {
+		console.log("initializeData - START");
+		document.getElementById("tableData").innerHTML = "<img src='./img/loader/loading.gif' />" ;
+		
+		const xhttp = new XMLHttpRequest();
+	    xhttp.onload = function() {
+		  console.log(this.responseText);
+		  var items = JSON.parse(this.responseText) ;
+		  console.log(items);
+		  initializeTable (items);
+	    }
+	    xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetAllRolesServlet", true);
+	    xhttp.send();
+	}
+	
+	function initializeTable (items) {
+		if (items != null) {
+			
+			var dynamicTableContent  = "<table class='table table-striped table-hover  table-bordered'>";
+			dynamicTableContent += "<thead class='thead-dark'><tr>";
+			dynamicTableContent += "<th scope='col'></th>" ;
+			dynamicTableContent += "<th scope='col'>Id</th>" ;
+			dynamicTableContent += "<th scope='col'>Label</th>" ;
+			dynamicTableContent += "<th scope='col'>Description</th>" ;
+			dynamicTableContent += "<th scope='col'>Level</th>" ;
+			dynamicTableContent += "</tr></thead>" ;
+			if (items.length==0) {
+				dynamicTableContent += "<tr><td colspan='5'>NON CI SONO RUOLI</td></tr>" ;
+			} else {
+				for (var i=0; i<items.length; i++) {
+					dynamicTableContent += "<tr><td scope='col'><input type='radio' name='id' onclick='javascript:abilitaBottone();' value='" + items[i].id + "' /></td>" ;
+					dynamicTableContent += "<td>" + items[i].id + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].label + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].description + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].level + "</td></tr>" ;
+				}
+			}
+			dynamicTableContent += "</table>" ;
+			document.getElementById("tableData").innerHTML = dynamicTableContent ;
+		} else {
+			document.getElementById("tableData").innerHTML = "ERRORE LATO SERVER. AL MOMENTO NON E' POSSIBILE AVERE LA LISTA DEI RUOLI. RIPROVARE PIU? TARDI.";
+		}
+	}
 
 	function abilitaBottone() {
 		console.log("questa è la console");
@@ -50,7 +94,6 @@
 		<table class="table table-striped table-hover table-bordered">
 			  <thead class="thead-dark">
 			<tr>
-			
 				<th scope="col"></th>
 				<th scope="col">Id</th>
 				<th scope="col">First Name</th>
@@ -92,6 +135,8 @@
 			}
 			%>
 		</table>
+		<div id="tableData">
+		</div>
 		<button type="button" class="btn btn-danger" id=buttonDelete disabled data-toggle="modal" data-target="#deleteUserModal">Cancella</button>
 		<input class="btn btn-primary" type="submit" class="button"	id="buttonUpdate" value="Update" disabled onclick="javascript:updateUser();">
 	<!-- Modal DELETE-->
@@ -122,3 +167,6 @@
 
 </body>
 </html>
+<script>
+    initializeData();
+</script>
