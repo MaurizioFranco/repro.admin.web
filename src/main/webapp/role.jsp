@@ -27,8 +27,8 @@
 
 	function abilitaBottone() {
 		console.log("questa è la console");
- 		document.getElementById("buttonDelete").disabled = false;
- 		document.getElementById("buttonUpdate").disabled = false;
+ 		document.getElementById("deleteButton").disabled = false;
+ 		document.getElementById("updateButton").disabled = false;
 	}
 	
 	//INITIALIZE UPDATE FORM
@@ -61,7 +61,7 @@
 			  console.log(role);
 			  initializeUpdateForm (role);
 		    }
-		  var id= document.querySelector('input[name="roleRadioId"]:checked').value;
+		  var id= document.querySelector('input[name="id"]:checked').value;
 		  xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetRoleServlet?id="+id, true);
 		  xhttp.send();
 	}
@@ -101,25 +101,40 @@
 			  success: function (responseText) {
 				  console.log(responseText);
 				  if (responseText==='OK') {					 
-					  $('#updateRoleModal').modal('hide');		
-					  location.reload();
-// 					  $('#errorUpdateMessage').show();
-// 					  $('#errorUpdateMessage').html(responseText);
-// 				  } else {
-					  
+					  $('#updateRoleModal').modal('hide');	
+					  initializeData ();					  
 				  }
 			  },
 			  dataType: "text"
 			});
 
 	}
+	
+	//DELETE FUNCTION
+	function deleteRole () {
+		console.log("deleteRole - START");
+		var idToDelete= document.querySelector('input[name="id"]:checked').value;
+		console.log("idToDelete: " + idToDelete);
 
-	function deleteRole() {
-		console.log("Delete");
-		document.getElementById("formSelectRole").method = "POST";
-		document.getElementById("formSelectRole").action = "./DeleteRoleServlet";
-		document.getElementById("formSelectRole").submit();
-	}
+        var itemToDelete = {
+        		"id":idToDelete
+        }
+        
+        $.ajax({
+			  type: "POST",
+			  url: "http://localhost:8080/repro.admin.web/DeleteRoleServlet",
+			  data: itemToDelete,
+			  success: function (responseText) {
+				  console.log(responseText);
+				  if (responseText==='OK') {					 
+					  $('#deleteRoleModal').modal('hide');	
+					  initializeData ();					  
+				  }
+			  },
+			  dataType: "text"
+			});
+
+	}	
 	
 	//INSERT FUNCTION
 	function insert () {
@@ -145,11 +160,7 @@
 				  console.log(responseText);
 				  if (responseText==='OK') {					 
 					  $('#insertRoleModal').modal('hide');		
-					  location.reload();
-// 					  $('#errorUpdateMessage').show();
-// 					  $('#errorUpdateMessage').html(responseText);
-// 				  } else {
-					  
+					  initializeData ();
 				  }
 			  },
 			  dataType: "text"
@@ -195,16 +206,7 @@
 					dynamicTableContent += "<td>" + items[i].level + "</td></tr>" ;
 				}
 			}
-			//
 			dynamicTableContent += "</table>" ;
-			
-						
-						
-						
-						
-						
-					
-			
 			document.getElementById("tableData").innerHTML = dynamicTableContent ;
 		} else {
 			document.getElementById("tableData").innerHTML = "ERRORE LATO SERVER. AL MOMENTO NON E' POSSIBILE AVERE LA LISTA DEI RUOLI. RIPROVARE PIU? TARDI.";
@@ -220,8 +222,6 @@
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
-<link rel="stylesheet" href="list.css">
-
 </head>
 <body>
 	<%@include file="header.jsp"%>
@@ -231,59 +231,10 @@
 	<div style="text-align: right;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertRoleModal"
 	onclick="showInsertRoleModal(); return false;">+</button></div>
 	<br>
-	<form id="formSelectRole">
-		<table class="table table-striped table-hover  table-bordered">
-			<thead class="thead-dark">
-				<tr>
-					<th scope="col"></th>
-					<th scope="col">Id</th>
-					<th scope="col">Label</th>
-					<th scope="col">Description</th>
-					<th scope="col">Level</th>
-				</tr>
-			</thead>	
-			<%
-			List<EntityInterface> roles = RoleService.getInstance().getAllRoles();
-			for (EntityInterface item : roles) {
-				Roles role = (Roles)item ;
-				request.setAttribute("id", role.getId());
-				
-			%>
-			<tr>
-				<td scope="row"><input type="radio" name="id" onclick="javascript:abilitaBottone();" value="<%out.print(role.getId());%>" /></td>
-				<td>
-					<%
-					out.print(role.getId().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(role.getLabel().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(role.getDescription().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(role.getLevel().toString());
-					%>
-				</td>
-			</tr>
-			<%
-			}
-			%>
-		</table>
-		<div id="tableData">
-		    
-		</div>		
-		<button type="button" class="btn btn-danger" id="buttonDelete" disabled data-toggle="modal" data-target="#deleteRoleModal">Cancella</button>		<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" id="updateButton" data-target="#updateRoleModal" onclick="showUpdateRoleModal(); return false;">
-  MODIFICA
-</button>
-
+	<form id="formSelectRole">		
+		<div id="tableData"></div>		
+		<button type="button" class="btn btn-danger"  id="deleteButton" disabled data-toggle="modal" data-target="#deleteRoleModal">Cancella</button>
+        <button type="button" class="btn btn-primary" id="updateButton" data-toggle="modal"  data-target="#updateRoleModal" onclick="showUpdateRoleModal(); return false;">MODIFICA</button>
 	</form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
@@ -341,6 +292,9 @@
         <button type="button" class="btn btn-primary" onclick="javascript:deleteRole();">SI</button>
         <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
       </div>
+    </div>
+  </div>
+</div>
 
 <!-- Insert Modal -->
 <div class="modal fade" id="insertRoleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
@@ -372,6 +326,8 @@
     </div>
   </div>
 </div>
+
+
 
 </body>
 </html>
