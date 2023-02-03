@@ -144,6 +144,51 @@
 			});
 	}
 	
+	//load remote data
+	function initializeData () {
+		console.log("initializeData - START");
+		document.getElementById("tableData").innerHTML = "<img src='./img/loader/loading.gif' class='mx-auto d-block' style='max-width:10%'/>" ;
+		
+		const xhttp = new XMLHttpRequest();
+	    xhttp.onload = function() {
+		  console.log(this.responseText);
+		  var items = JSON.parse(this.responseText) ;
+		  console.log(items);
+		  initializeTable (items);
+	    }
+	    xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetAllSurveyQuestionsServlet", true);
+	    xhttp.send();
+	}
+	
+	function initializeTable (items) {
+		if (items != null) {
+			
+			var dynamicTableContent  = "<table class='table table-striped table-hover  table-bordered'>";
+			dynamicTableContent += "<thead class='thead-dark'><tr>";
+			dynamicTableContent += "<th scope='col'></th>" ;
+			dynamicTableContent += "<th scope='col'>Id</th>" ;
+			dynamicTableContent += "<th scope='col'>Survey Id</th>" ;
+			dynamicTableContent += "<th scope='col'>Question Id</th>" ;
+			dynamicTableContent += "<th scope='col'>Position</th>" ;
+			dynamicTableContent += "</tr></thead>" ;
+			if (items.length==0) {
+				dynamicTableContent += "<tr><td colspan='5'style='text-align:center;'>NON CI SONO SURVEY QUESTION</td></tr>" ;
+			} else {
+				for (var i=0; i<items.length; i++) {
+					dynamicTableContent += "<tr><td scope='col'><input type='radio' name='id' onclick='javascript:abilitaBottone();' value='" + items[i].id + "' /></td>" ;
+					dynamicTableContent += "<td>" + items[i].id + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].surveyId + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].questionId + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].position + "</td></tr>" ;
+				}
+			}
+			//
+			dynamicTableContent += "</table>" ;
+			document.getElementById("tableData").innerHTML = dynamicTableContent ;
+		} else {
+			document.getElementById("tableData").innerHTML = "ERRORE LATO SERVER. AL MOMENTO NON E' POSSIBILE AVERE LA LISTA DEI SURVEY QUESTION. RIPROVARE PIU TARDI.";
+		}
+	}
 	
 </script>
 <meta charset="ISO-8859-1">
@@ -162,54 +207,58 @@
 	<h1>Survey Question List</h1>
 	<!-- Button trigger Insert Modal -->
 	<div style="text-align: right;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertSurveyQuestionsModal"
-	onclick="showInsertSurveyQuestionsModal(); return false;">+</button></div>
+	onclick="showInsertSurveysQuestionsModal(); return false;">+</button></div>
 	<br>
 	<form id="formSelectSurveyquestions">
-		<table class="table table-striped table-hover  table-bordered">
-			<thead class="thead-dark">
-				<tr>
-					<th scope="col"></th>
-					<th scope="col">Id</th>
-					<th scope="col">Survey ID</th>
-					<th scope="col">Question ID</th>
-					<th scope="col">Position</th>
-				</tr>
-			</thead>	
+<!-- 		<table class="table table-striped table-hover  table-bordered"> -->
+<!-- 			<thead class="thead-dark"> -->
+<!-- 				<tr> -->
+<!-- 					<th scope="col"></th> -->
+<!-- 					<th scope="col">Id</th> -->
+<!-- 					<th scope="col">Survey ID</th> -->
+<!-- 					<th scope="col">Question ID</th> -->
+<!-- 					<th scope="col">Position</th> -->
+<!-- 				</tr> -->
+<!-- 			</thead>	 -->
 
 			<%
-			List<EntityInterface> items = SurveyquestionsService.getInstance().getAllSurveyquestions();
-			for (EntityInterface item : items) {
-				SurveysQuestions surveyQuestions = (SurveysQuestions)item;
-				request.setAttribute("id", surveyQuestions.getId());
+// 			List<EntityInterface> items = SurveyquestionsService.getInstance().getAllSurveyquestions();
+// 			for (EntityInterface item : items) {
+// 				SurveysQuestions surveyQuestions = (SurveysQuestions)item;
+// 				request.setAttribute("id", surveyQuestions.getId());
 				
 			%>
-			<tr>
-				<th scope="row"><input type="radio" name="sqId" onclick="javascript:abilitaBottone();" value="<%out.print(surveyQuestions.getId());%>" /></th>
-				<td>
+<!-- 			<tr> -->
+<%-- 				<th scope="row"><input type="radio" name="sqId" onclick="javascript:abilitaBottone();" value="<%out.print(surveyQuestions.getId());%>" /></th> --%>
+<!-- 				<td> -->
 					<%
-					out.print(surveyQuestions.getId());
+// 					out.print(surveyQuestions.getId());
 					%>
-				</td>
-				<td>
+<!-- 				</td> -->
+<!-- 				<td> -->
 					<%
-					out.print(surveyQuestions.getSurveyId());
+// 					out.print(surveyQuestions.getSurveyId());
 					%>
-				</td>
-				<td>
+<!-- 				</td> -->
+<!-- 				<td> -->
 					<%
-					out.print(surveyQuestions.getQuestionId());
+// 					out.print(surveyQuestions.getQuestionId());
 					%>
-				</td>
-				<td>
+<!-- 				</td> -->
+<!-- 				<td> -->
 					<%
-					out.print(surveyQuestions.getPosition());
+// 					out.print(surveyQuestions.getPosition());
 					%>
-				</td>
-			</tr>
+<!-- 				</td> -->
+<!-- 			</tr> -->
 			<%
-			}
+// 			}
 			%>
-		</table>
+<!-- 		</table> -->
+		
+		<div id="tableData">
+	   	</div> 	
+
 		<button type="button" id="buttonDelete" class="btn btn-danger" data-toggle="modal" data-target="#deleteSurveysQuestionsModal" disabled>Delete</button>
 		<button type="button" id="buttonUpdate" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveysQuestionsModal" disabled onclick="showUpdateSurveysQuestionsModal(); return false;">Update</button>
 
@@ -307,3 +356,9 @@
 
 </body>
 </html>
+
+<script>
+
+    initializeData();
+
+</script>
