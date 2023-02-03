@@ -60,17 +60,6 @@ if(request.getAttribute("loginMessage") != null){
 		document.getElementById("deleteButton").disabled=false;
 		document.getElementById("modificaButton").disabled=false;
 	}
-	function updateSurveyreplies(){
-		console.log("modifica");
-		document.getElementById("formSelezioneSurveyreplies").action = "./updateSurveyreplies.jsp";
-		document.getElementById("formSelezioneSurveyreplies").submit();
-	}
-	function deleteSurveyreplies(){
-		console.log("delete");
-		document.getElementById("formSelezioneSurveyreplies").method="POST";
-		document.getElementById("formSelezioneSurveyreplies").action = "./DeleteSurveyRepliesServlet";
-		document.getElementById("formSelezioneSurveyreplies").submit();
-	}
 	
 	//INITIALIZE UPDATE FORM
 	function initializeUpdateForm (item) {
@@ -105,13 +94,13 @@ if(request.getAttribute("loginMessage") != null){
 			  console.log(surveyReplies);
 			  initializeUpdateForm (surveyReplies);
 		    }
-		  var id = document.querySelector('input[name="selectedSurveyrepliesId"]:checked').value;
+		  var id = document.querySelector('input[name="id"]:checked').value;
 		  xhttp.open("GET", "http://localhost:8080/repro.bo.giacomo/GetSurveyRepliesServlet?id=" + id +"", true);
 		  xhttp.send();
 	}
 	
 	//SHOW INSERT MODAL
-	function showInsertRoleModal () {
+	function showInsertSurveyRepliesModal () {
 		console.log("showInsertSurveryRepliesModal!!!");
 		const xhttp = new XMLHttpRequest();
 		  xhttp.onload = function() {
@@ -149,10 +138,7 @@ if(request.getAttribute("loginMessage") != null){
 				console.log(result);
 				if(result == 'OK'){
 		        	$('#updateSurveyRepliesModal').modal('hide');
-				}else{
-					result = 'KO';
-					$('#errorUpdateMessage').show();
-					$('#errorUpdateMessage').html(result);
+		        	initializeData ();
 				}
 			},
 			dataType:"text"
@@ -160,15 +146,41 @@ if(request.getAttribute("loginMessage") != null){
 
 	}
 	
+	//DELETE FUNCTION
+	function deleteSurveyReplies () {
+		console.log("deleteSurveyReplies - START");
+		var idToDelete= document.querySelector('input[name="id"]:checked').value;
+		console.log("idToDelete: " + idToDelete);
+
+        var itemToDelete = {
+        		"id":idToDelete
+        }
+        
+        $.ajax({
+			  type: "POST",
+			  url: "http://localhost:8080/repro.admin.web/DeleteSurveyRepliesServlet",
+			  data: itemToDelete,
+			  success: function (responseText) {
+				  console.log(responseText);
+				  if (responseText==='OK') {					 
+					  $('#deleteSurveyRepliesModal').modal('hide');	
+					  initializeData ();					  
+				  }
+			  },
+			  dataType: "text"
+			});
+
+	}	
+	
 	//INSERT FUNCTION
 	function insert () {
 		console.log("insert - START");
 		
-		var survey_IdToUpdate = $("#survey_IdToInsert").val();
-		var user_IdToUpdate = $("#user_IdToInsert").val();
-		var answersToUpdate = $("#answersToInsert").val();
-		var pdfFileNameToUpdate = $("#pdfFileNameToInsert").val();
-		var pointsToUpdate = $("#pointsToInsert").val();
+		var survey_IdToInsert = $("#survey_IdToInsert").val();
+		var user_IdToInsert = $("#user_IdToInsert").val();
+		var answersToInsert = $("#answersToInsert").val();
+		var pdfFileNameToInsert = $("#pdfFileNameToInsert").val();
+		var pointsToInsert = $("#pointsToInsert").val();
 		
 		console.log("survey_IdToInsert: " + survey_IdToInsert + " - user_IdToInsert: " + user_IdToInsert + " - answersToInsert: " + answersToInsert);
 		
@@ -188,11 +200,7 @@ if(request.getAttribute("loginMessage") != null){
 				  console.log(responseText);
 				  if (responseText==='OK') {					 
 					  $('#insertSurveyRepliesModal').modal('hide');		
-					  location.reload();
-// 					  $('#errorUpdateMessage').show();
-// 					  $('#errorUpdateMessage').html(responseText);
-// 				  } else {
-					  
+					  initializeData ();  
 				  }
 			  },
 			  dataType: "text"
@@ -269,103 +277,12 @@ if(request.getAttribute("loginMessage") != null){
 	<h3 style="text-align:center;"><%= surveyRepliesModificato%></h3>
 	<h3 style="text-align:center;"><%= loginMessage%></h3>
 
-	<form id="formSelezioneSurveyreplies">
-		<table class="table table-striped table-hover table-bordered">
-		<thead class="thead-dark">
-			<tr>
-				<th scope="col"></th>
-				<th scope="col">ID</th>
-				<th scope="col">SURVEY_ID</th>
-				<th scope="col">USER_ID</th>
-				<th scope="col">STARTTIME</th>
-				<th scope="col">ENDTIME</th>
-				<th scope="col">ANSWERS</th>
-				<th scope="col">PDFFILENAME</th>
-				<th scope="col">POINTS</th>
-			</tr>
-			<%
-			List<EntityInterface> items = SurveyRepliesService.getInstance().getAllSurveyReplies();
-			for (EntityInterface item : items) {
-				SurveysReplies surveyReplies = (SurveysReplies)item;
-				request.setAttribute("id", surveyReplies.getId());
-				
-			%>
-			<tr>
-				<td><input type="radio" name="selectedSurveyrepliesId"
-					value="<%out.print(surveyReplies.getId());%>"onclick="javascript:abilitaBottone();"></td>
-				<td>
-					<%
-					out.print(surveyReplies.getId());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(surveyReplies.getSurveyId());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(surveyReplies.getUserId());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(surveyReplies.getStartTime());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(surveyReplies.getEndTime());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(surveyReplies.getAnswer());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(surveyReplies.getPdfFileName());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(surveyReplies.getPoints());
-					%>
-				</td>
-			</tr>
-			<%
-			}
-			%>
-		</table>
-		<br />
-		
-		<div id="tableData">
-		    
-		</div>	
-		
+	<form id="formSelezioneSurveyreplies">	
+		<div id="tableData">	    
+		</div>		
 		<button type="button" id="deleteButton"  class="btn btn-danger"  data-toggle="modal" data-target="#deleteSurveyRepliesModal" disabled>ELIMINA</button>
 		<button type="button" id="modificaButton" class="btn btn-primary" data-toggle="modal" data-target="#updateSurveyRepliesModal" disabled onclick="showUpdateSurveyRepliesModal(); return false;">MODIFICA</button>
 
-<div class="modal" id=deleteSurveyRepliesModal tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">Eliminazione SurveyReplies</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p>Sei sicuro di volre rimuovere questo Survey Replies</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="javascript:deleteSurveyreplies();">SI</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 	</form>
 </div>
@@ -410,6 +327,27 @@ if(request.getAttribute("loginMessage") != null){
 	        <button type="button" class="btn btn-primary" onClick="update();">Save changes</button>
 	      </div>
       </form> 
+    </div>
+  </div>
+</div>
+
+<!-- Modal delete-->
+<div class="modal" id=deleteSurveyRepliesModal tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Eliminazione SurveyReplies</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Sei sicuro di volre rimuovere questo Survey Replies</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="javascript:deleteSurveyReplies();">SI</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+      </div>
     </div>
   </div>
 </div>
