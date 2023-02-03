@@ -156,6 +156,90 @@
 				  dataType: "text"
 				});
 		}
+		
+		
+		
+		//load remote data
+		function initializeData () {
+			console.log("initializeData - START");
+			document.getElementById("tableData").innerHTML = "<img src='./img/loader/loading.gif' />" ;
+			
+			const xhttp = new XMLHttpRequest();
+		    xhttp.onload = function() {
+			  console.log(this.responseText);
+			  var items = JSON.parse(this.responseText) ;
+			  console.log(items);
+			  initializeTable (items);
+		    }
+		    xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetAllQuestionsServlet", true);
+		    xhttp.send();
+		}
+		
+		function initializeTable (items) {
+			console.log("initializeTable - START");
+			console.log("Item");
+			console.log(items.length);
+			if (items != null) {
+				
+				var dynamicTableContent  = "<table class='table table-striped table-hover  table-bordered'>";
+				dynamicTableContent += "<thead class='thead-dark'><tr>";
+				dynamicTableContent += "<th scope='col'></th>" ;
+				dynamicTableContent += "<th scope='col'>Id</th>" ;
+				dynamicTableContent += "<th scope='col'>Label</th>" ;
+				dynamicTableContent += "<th scope='col'>Description</th>" ;
+				dynamicTableContent += "<th scope='col'>Ans_a</th>" ;
+				dynamicTableContent += "<th scope='col'>Ans_b</th>" ;
+				dynamicTableContent += "<th scope='col'>Ans_c</th>" ;
+				dynamicTableContent += "<th scope='col'>Ans_d</th>" ;
+				dynamicTableContent += "<th scope='col'>Ans_e</th>" ;
+				dynamicTableContent += "<th scope='col'>Ans_f</th>" ;
+				dynamicTableContent += "<th scope='col'>Ans_g</th>" ;
+				dynamicTableContent += "<th scope='col'>Ans_h</th>" ;
+				dynamicTableContent += "<th scope='col'>Cans_a</th>" ;
+				dynamicTableContent += "<th scope='col'>Cans_b</th>" ;
+				dynamicTableContent += "<th scope='col'>Cans_c</th>" ;
+				dynamicTableContent += "<th scope='col'>Cans_d</th>" ;
+				dynamicTableContent += "<th scope='col'>Cans_e</th>" ;
+				dynamicTableContent += "<th scope='col'>Cans_f</th>" ;
+				dynamicTableContent += "<th scope='col'>Cans_g</th>" ;
+				dynamicTableContent += "<th scope='col'>Cans_h</th>" ;
+				dynamicTableContent += "<th scope='col'>Full answer</th>" ;
+				dynamicTableContent += "</tr></thead>" ;
+				if (items.length==0) {
+					dynamicTableContent += "<tr><td colspan='20'>NON CI SONO DOMANDE</td></tr>" ;
+				} else {
+					for (var i=0; i<items.length; i++) {
+						dynamicTableContent += "<tr><td scope='col'><input type='radio' name='id' onclick='javascript:abilitaBottone();' value='" + items[i].id + "' /></td>" ;
+						dynamicTableContent += "<td>" + items[i].id + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].label + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].description + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].ansa + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].ansb + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].ansc + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].ansd + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].anse + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].ansf + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].ansg + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].ansh + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].cansh + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].cansh + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].cansh + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].cansh + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].cansh + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].cansh + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].cansh + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].cansh + "</td>" ;
+						dynamicTableContent += "<td>" + items[i].full_answer+ "</td></tr>" ;
+					}
+				}
+				//
+				dynamicTableContent += "</table>" ;
+				
+				document.getElementById("tableData").innerHTML = dynamicTableContent ;
+			} else {
+				document.getElementById("tableData").innerHTML = "ERRORE LATO SERVER. AL MOMENTO NON E' POSSIBILE AVERE LA LISTA DEI RUOLI. RIPROVARE PIU? TARDI.";
+			}
+		}
 
 		</script>
 </head>
@@ -266,6 +350,9 @@
 				%>
 			</table>
 			
+			<div id="tableData">
+		    
+			</div>
 
 			<button type="button" class="btn btn-danger" id="deleteButton" disabled data-toggle="modal" data-target="#deleteQuestionModal">Cancella</button>
 			<button type="button" class="btn btn-primary" id="modifyButton" disabled data-toggle="modal" data-target="#updateQuestionModal" onclick="showUpdateQuestionModal(); return false;">
@@ -369,3 +456,9 @@
 
 </body>
 </html>
+
+<script>
+
+    initializeData();
+
+</script>

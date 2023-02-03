@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import proxima.informatica.academy.seventh.service.QuestionsService;
+import proxima.informatica.academy.seventh.service.RoleService;
 
 import java.io.IOException;
 import java.util.List;
@@ -32,22 +33,17 @@ public class GetAllQuestionsServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-	logger.debug("GetAllQuestionsServlet.START");
-	List<EntityInterface> items = null;
-	try {
-		items = QuestionsService.getIstance().selectAll();
-	} catch (Exception e) {
-		logger.error(e.getMessage());
-	}
-	ObjectMapper mapper = new ObjectMapper();
-	String [] itemsToJson = new String[items.size()];
-	for (int i = 0; i < items.size(); i++) {
-		logger.debug("GetAllQuestionsServlet.DEBUG - item:" + items.get(i));
-		itemsToJson[i] = mapper.writeValueAsString(items.get(i));
-		logger.debug("GetAllQuestionsServlet.DEBUG - jsonItem:" + itemsToJson[i]);
-		response.getWriter().append(itemsToJson[i] + "\n");
+		logger.debug("GetAllQuestionsServlet.START");
+		List<EntityInterface> items = null;
+		try {
+			items = QuestionsService.getIstance().selectAll();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
-	logger.debug("GetAllQuestionsServlet.END");
+		ObjectMapper mapper = new ObjectMapper();	
+		String jsonResponse = mapper.writeValueAsString(items);
+		response.getWriter().append(jsonResponse);
+		logger.debug("GetAllQuestionsServlet.END");
 
 	}
 
