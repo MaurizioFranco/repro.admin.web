@@ -39,14 +39,9 @@ public class GetAllSurveyQuestionsServlet extends HttpServlet {
 	} catch (Exception e) {
 		logger.error(e.getMessage());
 	}
-	ObjectMapper mapper = new ObjectMapper();
-	String [] itemsToJson = new String[items.size()];
-	for (int i = 0; i < items.size(); i++) {
-		logger.debug("GetAllSurveyQuestionsServlet.DEBUG - item:" + items.get(i));
-		itemsToJson[i] = mapper.writeValueAsString(items.get(i));
-		logger.debug("GetAllSurveyQuestionsServlet.DEBUG - jsonItem:" + itemsToJson[i]);
-		response.getWriter().append(itemsToJson[i] + "\n");
-		}
+	ObjectMapper mapper = new ObjectMapper();	
+	String jsonResponse = mapper.writeValueAsString(items);
+	response.getWriter().append(jsonResponse);
 	logger.debug("GetAllSurveyQuestionsServlet.END");
 
 	}
