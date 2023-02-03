@@ -32,22 +32,17 @@ public class GetAllRolesServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	
-	logger.debug("GetAllRolesServlet.START");
-	List<EntityInterface> items = null;
-	try {
-		items = RoleService.getInstance().getAllRoles();
-	} catch (Exception e) {
-		logger.error(e.getMessage());
-	}
-	ObjectMapper mapper = new ObjectMapper();
-	String [] itemsToJson = new String[items.size()];
-	for (int i = 0; i < items.size(); i++) {
-		logger.debug("GetAllRolesServlet.DEBUG - item:" + items.get(i));
-		itemsToJson[i] = mapper.writeValueAsString(items.get(i));
-		logger.debug("GetAllRolesServlet.DEBUG - jsonItem:" + itemsToJson[i]);
-		response.getWriter().append(itemsToJson[i] + "\n");
+		logger.debug("GetAllRolesServlet.START");
+		List<EntityInterface> items = null;
+		try {
+			items = RoleService.getInstance().getAllRoles();
+		} catch (Exception e) {
+			logger.error(e.getMessage());
 		}
-	logger.debug("GetAllRolesServlet.END");
+		ObjectMapper mapper = new ObjectMapper();	
+		String jsonResponse = mapper.writeValueAsString(items);
+		response.getWriter().append(jsonResponse);
+		logger.debug("GetAllRolesServlet.END");
 
 	}
 

@@ -119,7 +119,6 @@
 		document.getElementById("formSelectRole").method = "POST";
 		document.getElementById("formSelectRole").action = "./DeleteRoleServlet";
 		document.getElementById("formSelectRole").submit();
-// 		location.reload()
 	}
 	
 	//INSERT FUNCTION
@@ -156,6 +155,62 @@
 			  dataType: "text"
 			});
 	}
+	
+	
+	//load remote data
+	function initializeData () {
+		console.log("initializeData - START");
+		document.getElementById("tableData").innerHTML = "<img src='./img/loader/loading.gif' />" ;
+		
+		const xhttp = new XMLHttpRequest();
+	    xhttp.onload = function() {
+		  console.log(this.responseText);
+		  var items = JSON.parse(this.responseText) ;
+		  console.log(items);
+		  initializeTable (items);
+	    }
+	    xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetAllRolesServlet", true);
+	    xhttp.send();
+	}
+	
+	function initializeTable (items) {
+		if (items != null) {
+			
+			var dynamicTableContent  = "<table class='table table-striped table-hover  table-bordered'>";
+			dynamicTableContent += "<thead class='thead-dark'><tr>";
+			dynamicTableContent += "<th scope='col'></th>" ;
+			dynamicTableContent += "<th scope='col'>Id</th>" ;
+			dynamicTableContent += "<th scope='col'>Label</th>" ;
+			dynamicTableContent += "<th scope='col'>Description</th>" ;
+			dynamicTableContent += "<th scope='col'>Level</th>" ;
+			dynamicTableContent += "</tr></thead>" ;
+			if (items.length==0) {
+				dynamicTableContent += "<tr><td colspan='5'>NON CI SONO RUOLI</td></tr>" ;
+			} else {
+				for (var i=0; i<items.length; i++) {
+					dynamicTableContent += "<tr><td scope='col'><input type='radio' name='id' onclick='javascript:abilitaBottone();' value='" + items[i].id + "' /></td>" ;
+					dynamicTableContent += "<td>" + items[i].id + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].label + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].description + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].level + "</td></tr>" ;
+				}
+			}
+			//
+			dynamicTableContent += "</table>" ;
+			
+						
+						
+						
+						
+						
+					
+			
+			document.getElementById("tableData").innerHTML = dynamicTableContent ;
+		} else {
+			document.getElementById("tableData").innerHTML = "ERRORE LATO SERVER. AL MOMENTO NON E' POSSIBILE AVERE LA LISTA DEI RUOLI. RIPROVARE PIU? TARDI.";
+		}
+	}
+	
 	
 	
 </script>
@@ -195,7 +250,7 @@
 				
 			%>
 			<tr>
-				<th scope="row"><input type="radio" name="id" onclick="javascript:abilitaBottone();" value="<%out.print(role.getId());%>" /></th>
+				<td scope="row"><input type="radio" name="id" onclick="javascript:abilitaBottone();" value="<%out.print(role.getId());%>" /></td>
 				<td>
 					<%
 					out.print(role.getId().toString());
@@ -221,6 +276,9 @@
 			}
 			%>
 		</table>
+		<div id="tableData">
+		    
+		</div>		
 		<button type="button" class="btn btn-danger" id="buttonDelete" disabled data-toggle="modal" data-target="#deleteRoleModal">Cancella</button>		<!-- Button trigger modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" id="updateButton" data-target="#updateRoleModal" onclick="showUpdateRoleModal(); return false;">
   MODIFICA
@@ -317,3 +375,8 @@
 
 </body>
 </html>
+<script>
+
+    initializeData();
+
+</script>
