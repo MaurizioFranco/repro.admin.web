@@ -33,7 +33,7 @@ public class DeleteCandidatesServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		logger.debug(this.getClass().getSimpleName() + ".START");
-		int id = Integer.parseInt(request.getParameter("id"));
+		Long id = Long.parseLong(request.getParameter("id"));
 		
 		boolean responseValue = CandidatesService.getInstance().deleteById(id) ;
         logger.debug(this.getClass().getSimpleName() + ".DEBUG - responseValue: " + responseValue);
