@@ -22,13 +22,13 @@
  		document.getElementById("buttonUpdate").disabled = false;
 	}
 	
-	function deleteSurveyquestions() {
-		console.log("Delete");
-		document.getElementById("formSelectSurveyquestions").action = "./DeleteSurveyquestionsServlet";
-		document.getElementById("formSelectSurveyquestions").method = "post";
-		document.getElementById("formSelectSurveyquestions").submit;
-// 		location.reload()
-	}
+// 	function deleteSurveyquestions() {
+// 		console.log("Delete");
+// 		document.getElementById("formSelectSurveyquestions").action = "./DeleteSurveyquestionsServlet";
+// 		document.getElementById("formSelectSurveyquestions").method = "post";
+// 		document.getElementById("formSelectSurveyquestions").submit;
+// // 		location.reload()
+// 	}
 	
 	//INITIALIZE UPDATE FORM
 	function initializeUpdateForm (item) {
@@ -101,6 +101,7 @@
 				console.log(result);
 				if(result == 'OK'){
 		        	$('#updateSurveysQuestionsModal').modal('hide');
+		        	initializeData ();
 				}else{
 					result = 'KO';
 					$('#errorUpdateMessage').show();
@@ -114,12 +115,12 @@
 	//INSERT FUNCTION
 	function insert () {
 		console.log("insert - START");
-		var surveyIdToUpdate = $("#surveysQuestionsSurveyIdToInsert").val(); 
-		var questionIdToUpdate = $("#surveysQuestionsQuestionIdToInsert").val(); 
-		var positionToUpdate = $("#surveysQuestionsPositionToInsert").val(); 
+		var surveyIdToInsert = $("#surveyIdToInsert").val(); 
+		var questionIdToInsert = $("#questionIdToInsert").val(); 
+		var positionToInsert = $("#positionToInsert").val(); 
 		console.log("surveyIdToInsert: " + surveyIdToInsert + " - questionIdToInsert: " + questionIdToInsert + " - positionToInsert: " + positionToInsert);
 		
-		var itemToUpdate = {
+		var itemToInsert = {
 				"surveyId":surveyIdToInsert,
 				"questionId":questionIdToInsert,
 				"position":positionToInsert
@@ -127,13 +128,13 @@
         
         $.ajax({
 			  type: "POST",
-			  url: "http://localhost:8080/repro.admin.web/InsertSurveyQuestionsServlet",
+			  url: "http://localhost:8080/repro.admin.web/InsertSurveyquestionsServlet",
 			  data: itemToInsert,
 			  success: function (responseText) {
 				  console.log(responseText);
 				  if (responseText==='OK') {					 
-					  $('#insertSurveyQuestionsModal').modal('hide');		
-					  location.reload();
+					  $('#insertSurveyQuestionModal').modal('hide');		
+					  initializeData ();
 // 					  $('#errorUpdateMessage').show();
 // 					  $('#errorUpdateMessage').html(responseText);
 // 				  } else {
@@ -143,6 +144,32 @@
 			  dataType: "text"
 			});
 	}
+	
+	//DELETE FUNCTION
+	function deleteSurveyquestions () {
+		console.log("deleteSurveyQuestions - START");
+		var idToDelete= document.querySelector('input[name="id"]:checked').value;
+		console.log("idToDelete: " + idToDelete);
+
+        var itemToDelete = {
+        		"id":idToDelete
+        }
+        
+        $.ajax({
+			  type: "POST",
+			  url: "http://localhost:8080/repro.admin.web/DeleteSurveyquestionsServlet",
+			  data: itemToDelete,
+			  success: function (responseText) {
+				  console.log(responseText);
+				  if (responseText==='OK') {					 
+					  $('#deleteRoleModal').modal('hide');	
+					  initializeData ();					  
+				  }
+			  },
+			  dataType: "text"
+			});
+
+	}	
 	
 	//load remote data
 	function initializeData () {
@@ -206,56 +233,11 @@
 <div class="container-fluid">
 	<h1>Survey Question List</h1>
 	<!-- Button trigger Insert Modal -->
-	<div style="text-align: right;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertSurveyQuestionsModal"
+	<div style="text-align: right;"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertSurveyQuestionModal"
 	onclick="showInsertSurveysQuestionsModal(); return false;">+</button></div>
 	<br>
 	<form id="formSelectSurveyquestions">
-<!-- 		<table class="table table-striped table-hover  table-bordered"> -->
-<!-- 			<thead class="thead-dark"> -->
-<!-- 				<tr> -->
-<!-- 					<th scope="col"></th> -->
-<!-- 					<th scope="col">Id</th> -->
-<!-- 					<th scope="col">Survey ID</th> -->
-<!-- 					<th scope="col">Question ID</th> -->
-<!-- 					<th scope="col">Position</th> -->
-<!-- 				</tr> -->
-<!-- 			</thead>	 -->
 
-			<%
-// 			List<EntityInterface> items = SurveyquestionsService.getInstance().getAllSurveyquestions();
-// 			for (EntityInterface item : items) {
-// 				SurveysQuestions surveyQuestions = (SurveysQuestions)item;
-// 				request.setAttribute("id", surveyQuestions.getId());
-				
-			%>
-<!-- 			<tr> -->
-<%-- 				<th scope="row"><input type="radio" name="sqId" onclick="javascript:abilitaBottone();" value="<%out.print(surveyQuestions.getId());%>" /></th> --%>
-<!-- 				<td> -->
-					<%
-// 					out.print(surveyQuestions.getId());
-					%>
-<!-- 				</td> -->
-<!-- 				<td> -->
-					<%
-// 					out.print(surveyQuestions.getSurveyId());
-					%>
-<!-- 				</td> -->
-<!-- 				<td> -->
-					<%
-// 					out.print(surveyQuestions.getQuestionId());
-					%>
-<!-- 				</td> -->
-<!-- 				<td> -->
-					<%
-// 					out.print(surveyQuestions.getPosition());
-					%>
-<!-- 				</td> -->
-<!-- 			</tr> -->
-			<%
-// 			}
-			%>
-<!-- 		</table> -->
-		
 		<div id="tableData">
 	   	</div> 	
 
@@ -277,7 +259,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input class="btn btn-danger" type="submit" value="Confirm" onclick="javascript:deleteSurveyqurestions();">
+        <input class="btn btn-danger" type="submit" value="Confirm" onclick="javascript:deleteSurveyquestions();">
       </div>
     </div>
   </div>

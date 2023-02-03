@@ -41,9 +41,9 @@ public class DeleteSurveyquestionsServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		logger.debug("ID SurveyquestionsDto received" + request.getParameter("sqId"));
+		logger.debug("ID SurveyquestionsDto received" + request.getParameter("id"));
 
-		int id = Integer.parseInt(request.getParameter("sqId"));
+		int id = Integer.parseInt(request.getParameter("id"));
 		boolean responseValue = SurveyquestionsService.getInstance().deleteById(id);
 
 		if (responseValue) {
