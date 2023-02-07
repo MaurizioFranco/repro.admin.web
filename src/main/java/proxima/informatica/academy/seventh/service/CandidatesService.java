@@ -35,9 +35,9 @@ public class CandidatesService {
 		return response;
 	}
 
-	public Candidates selectById(int id) {
+	public Candidates selectById(long id) {
 		Candidates candidateRetrived = new Candidates();
-		candidateRetrived = (Candidates)candidateRepository.findById((long)id);
+		candidateRetrived = (Candidates)candidateRepository.findById(id);
 
 		return candidateRetrived;
 	}
@@ -50,7 +50,7 @@ public class CandidatesService {
 		return candidateRepository.update(candidate) ;
 	}
 
-	public boolean deleteById(int id) {
+	public boolean deleteById(Long id) {
 		boolean response = false;
 
 		if (candidateRepository.delete(id))
