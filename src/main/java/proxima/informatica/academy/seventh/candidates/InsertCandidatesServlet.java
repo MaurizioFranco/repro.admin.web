@@ -40,9 +40,11 @@ public class InsertCandidatesServlet extends HttpServlet {
 		logger.debug("InsertCandidatesServlet.START");
 		Candidates candidate = new Candidates();
 		
-		Timestamp Candidacy_date_time = Timestamp.valueOf(LocalDateTime.now());
+		candidate.setCourse_code(request.getParameter("id"));
+		candidate.setCourse_code(request.getParameter("user_id"));
 		candidate.setCourse_code(request.getParameter("course_code"));
-		candidate.setCandidacy_date_time(Candidacy_date_time);
+		String candidacy_date_time_string = request.getParameter("candidacy_date_time");
+		candidate.setCandidacy_date_time(Timestamp.valueOf(candidacy_date_time_string));
 		
 		boolean responseValue = CandidatesService.getInstance().insertCandidates(candidate) ;
         logger.debug("InsertCandidateServlet.DEBUG - responseValue: " + responseValue);
