@@ -23,7 +23,7 @@ import centauri.academy.proxima.cerepro.entity.SurveysQuestions;
 /**
  * Servlet implementation class InsertSurveyquestionServlet
  */
-@WebServlet("/InsertSurveyquestionServlet")
+@WebServlet("/InsertSurveyquestionsServlet")
 public class InsertSurveyquestionsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final static Logger logger = LoggerFactory.getLogger(InsertSurveyquestionsServlet.class);
