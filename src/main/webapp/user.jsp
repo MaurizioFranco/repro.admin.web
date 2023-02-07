@@ -26,7 +26,7 @@
 		  console.log(items);
 		  initializeTable (items);
 	    }
-	    xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetAllRolesServlet", true);
+	    xhttp.open("GET", "http://localhost:8080/repro.admin.web/GetAllUsersServlet", true);
 	    xhttp.send();
 	}
 	
@@ -37,25 +37,40 @@
 			dynamicTableContent += "<thead class='thead-dark'><tr>";
 			dynamicTableContent += "<th scope='col'></th>" ;
 			dynamicTableContent += "<th scope='col'>Id</th>" ;
-			dynamicTableContent += "<th scope='col'>Label</th>" ;
-			dynamicTableContent += "<th scope='col'>Description</th>" ;
-			dynamicTableContent += "<th scope='col'>Level</th>" ;
+			dynamicTableContent += "<th scope='col'>Email</th>" ;
+			dynamicTableContent += "<th scope='col'>Password</th>" ;
+			dynamicTableContent += "<th scope='col'>First Name</th>" ;
+			dynamicTableContent += "<th scope='col'>Last Name</th>" ;
+			dynamicTableContent += "<th scope='col'>Date of Birth</th>" ;
+			dynamicTableContent += "<th scope='col'>Registration Date</th>" ;
+			dynamicTableContent += "<th scope='col'>Role</th>" ;
+			dynamicTableContent += "<th scope='col'>ImgPath</th>" ;
+			dynamicTableContent += "<th scope='col'>Note</th>" ;
+			dynamicTableContent += "<th scope='col'>Enabled</th>" ;
 			dynamicTableContent += "</tr></thead>" ;
 			if (items.length==0) {
-				dynamicTableContent += "<tr><td colspan='5'>NON CI SONO RUOLI</td></tr>" ;
+				dynamicTableContent += "<tr><td colspan='5'>NON CI SONO USERS</td></tr>" ;
 			} else {
 				for (var i=0; i<items.length; i++) {
 					dynamicTableContent += "<tr><td scope='col'><input type='radio' name='id' onclick='javascript:abilitaBottone();' value='" + items[i].id + "' /></td>" ;
 					dynamicTableContent += "<td>" + items[i].id + "</td>" ;
-					dynamicTableContent += "<td>" + items[i].label + "</td>" ;
-					dynamicTableContent += "<td>" + items[i].description + "</td>" ;
-					dynamicTableContent += "<td>" + items[i].level + "</td></tr>" ;
+					dynamicTableContent += "<td>" + items[i].email + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].password + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].firstname + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].lastname + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].dateofbirth + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].regdate + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].role + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].imgpath + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].note + "</td>" ;
+					dynamicTableContent += "<td>" + items[i].enabled + "</td></tr>" ;
+
 				}
 			}
 			dynamicTableContent += "</table>" ;
 			document.getElementById("tableData").innerHTML = dynamicTableContent ;
 		} else {
-			document.getElementById("tableData").innerHTML = "ERRORE LATO SERVER. AL MOMENTO NON E' POSSIBILE AVERE LA LISTA DEI RUOLI. RIPROVARE PIU? TARDI.";
+			document.getElementById("tableData").innerHTML = "ERRORE LATO SERVER. AL MOMENTO NON E' POSSIBILE AVERE LA LISTA DEGLI USER. RIPROVARE PIU? TARDI.";
 		}
 	}
 
@@ -70,7 +85,7 @@
 		document.getElementById("formSelectUser").method = "POST";
 		document.getElementById("formSelectUser").action = "./DeleteUserServlet";
 		document.getElementById("formSelectUser").submit();
-// 		location.reload()
+ 		initializeData ();
 	}
 	
 </script>
@@ -89,52 +104,7 @@
 <body>
 	<%@include file="header.jsp"%>
 <div class="container-fluid">
-<h1>User List</h1>
-	<form id="formSelectUser">
-		<table class="table table-striped table-hover table-bordered">
-			  <thead class="thead-dark">
-			<tr>
-				<th scope="col"></th>
-				<th scope="col">Id</th>
-				<th scope="col">First Name</th>
-				<th scope="col">Last Name</th>
-				<th scope="col">Email</th>
-			</tr>
-			</thead>
-			<%
-			List<EntityInterface> items = UserService.getInstance().getAllUsers();
-			for (EntityInterface item : items) {
-				User user = (User)item;
-				request.setAttribute("id", user.getId());
-				
-			%>
-			<tr>
-				<th scope="row"><input type="radio" name="id" onclick="javascript:abilitaBottone();" value="<%out.print(user.getId());%>" /></th>
-				<td>
-					<%
-					out.print(user.getId().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(user.getFirstname().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(user.getLastname().toString());
-					%>
-				</td>
-				<td>
-					<%
-					out.print(user.getEmail().toString());
-					%>
-				</td>
-			</tr>
-			<%
-			}
-			%>
-		</table>
+<h1>User List</h1>		
 		<div id="tableData">
 		</div>
 		<button type="button" class="btn btn-danger" id=buttonDelete disabled data-toggle="modal" data-target="#deleteUserModal">Cancella</button>
@@ -159,8 +129,6 @@
 		    </div>
 		  </div>
 		</div>
-	
-	</form>
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.min.js" integrity="sha384-+sLIOodYLS7CIrQpBjl+C7nPvqq+FbNUBDunl/OZv93DB7Ln/533i8e/mZXLi/P+" crossorigin="anonymous"></script>

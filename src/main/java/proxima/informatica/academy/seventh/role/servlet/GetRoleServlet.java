@@ -41,7 +41,7 @@ public class GetRoleServlet extends HttpServlet {
 			String itemId = request.getParameter("id") ;
 			logger.debug("GetRoleServlet.DEBUG - roleId: " + itemId);
 			int itemIdInt = Integer.parseInt(itemId);
-			item = RoleService.getInstance().selectById(itemIdInt);
+			item = RoleService.getInstance().selectById((long) itemIdInt);
 			logger.debug("GetRoleServlet.DEBUG - retrieving item: " + item);
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);

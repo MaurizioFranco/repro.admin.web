@@ -40,7 +40,7 @@ public class DeleteCandidateStatesServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int itemId = Integer.parseInt(request.getParameter("id"));
-		boolean responseValue = CandidateStatesService.getInstance().deleteById(itemId) ;
+		boolean responseValue = CandidateStatesService.getInstance().deleteById((long) itemId) ;
         logger.debug(this.getClass().getSimpleName() + ".DEBUG - responseValue: " + responseValue);
         
         if (responseValue) {
